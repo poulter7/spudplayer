@@ -18,7 +18,7 @@ public final class UCTSimpleStrategy extends UCTGamer {
 
 
 	/**
-	 * Random rollout
+	 * Random rollout to a terminal state
 	 */
 	protected List<Double> completeRollout(MachineState from, int fromLvl) {
 		// TODO Auto-generated method stub

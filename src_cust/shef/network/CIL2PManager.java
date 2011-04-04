@@ -89,27 +89,43 @@ public class CIL2PManager {
 
     }
 
-//    private HashMap<GameState, Double> stateValue = new HashMap<GameState, Double>();
     /**
      * Get the value of a given state by querying the CIL2P shef.network.
      * @param state
      * @param player
      */
     public List<Double> getStateValues(final MachineState state){
+    	propagateInput(state);
+        
+        ArrayList<Double> scores = new ArrayList<Double>();
+        for(Term playerName : playerList){
+        	scores.add(getPlayerScore(playerName));
+        }
+    	return scores;
+    }
+    
+    /**
+     * Get the value of a given state by querying the CIL2P shef.network.
+     * @param state
+     * @param player
+     */
+    public double getStateValue(final MachineState state, int playerID){
+    	propagateInput(state);
+        return getPlayerScore(playerList.get(playerID));
+
+    }
+    
+    public void propagateInput(final MachineState state){
     	Set<GdlSentence> stateElements = state.getContents();
-    	System.out.println(stateElements);
-    	System.out.println(network.queryHashGGPBase);
-    		
+		
         // reset the state
         for (Neuron in : network.inputLayer.getNeurons()) {
             in.setInput(0);
         }
        	for (Entry<GdlRelation, Neuron> fact : network.queryHashGGPBase.entrySet()) {
        		if(stateElements.contains(fact.getKey())){
-       			System.out.println("true");
        			fact.getValue().setInput(1d);
        		} else {
-       			System.out.println("false");
        			fact.getValue().setInput(-1d);
        		}
        	}
@@ -118,13 +134,6 @@ public class CIL2PManager {
         for (int i = 0; i < CALCULATE_MULTIPLE_TIMES; i++) {
             this.network.n.calculate();
         }
-        
-        ArrayList<Double> scores = new ArrayList<Double>();
-        for(Term playerName : playerList){
-        	scores.add(getPlayerScore(playerName));
-        	
-        }
-    	return scores;
     }
 
 

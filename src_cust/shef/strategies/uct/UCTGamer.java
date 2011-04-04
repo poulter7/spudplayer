@@ -2,6 +2,7 @@ package shef.strategies.uct;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -39,7 +40,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * C in the UCT equation, this alters the balance between exploration and
 	 * exploitation
 	 */
-	private static final float C = 50;
+	protected static final float C = 50;
 
 	/** Role of the player */
 	private Role myRole;
@@ -53,7 +54,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	/** UCT tree */
 	private Tree tree;
 
-	/** Number of roles played */
+	/** Number of moves played */
 	private int moveCount;
 
 	/** Handle to the StateMachine governing this player */
@@ -71,7 +72,10 @@ public abstract class UCTGamer extends StateMachineGamer {
 	}
 
 	/**
-	 * Setup the UCT game tree
+	 * Setup the UCT game tree and perform rollouts for as long as possible.
+	 * 
+	 * @param timeout
+	 *            time in ms this meta game stage should be finished by
 	 */
 	@Override
 	public void stateMachineMetaGame(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
@@ -104,6 +108,8 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * As many times as possible in the time available perform rollouts from the
 	 * current state
 	 * 
+	 * @param timeout
+	 *            when in ms this move selection should be completed by
 	 * @return the move attributed to the most promising {@link StateActionPair}
 	 */
 	@Override
@@ -141,7 +147,6 @@ public abstract class UCTGamer extends StateMachineGamer {
 		}
 		long stop = System.currentTimeMillis();
 
-
 		moveCount++;
 		// StringBuilder sb = new StringBuilder();
 		// tree.print(sb);
@@ -150,6 +155,10 @@ public abstract class UCTGamer extends StateMachineGamer {
 		System.out.println(rollCount + " " + selection);
 		return selection;
 	}
+
+	
+	private List<StateActionPair> backupSAPs;
+	private List<StateModel> backupStates;
 
 	/**
 	 * Perform a single UCT rollout
@@ -160,8 +169,6 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * @throws TransitionDefinitionException
 	 * @throws GoalDefinitionException
 	 */
-	private List<StateActionPair> backupSAPs;
-	private List<StateModel> backupStates;
 	private void rollout(StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		StateModel traverser = rolloutRootSM;
 		List<StateActionPair> actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
@@ -170,7 +177,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 
 		boolean expandLeaf = true;
 		int lvl = 0;
-		
+
 		while (!actions.isEmpty()) {
 			List<Move> toPlay = new ArrayList<Move>();
 			// for each player
@@ -223,7 +230,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 		} else {
 			outcome = theMachine.getDoubleGoals(traverser.state);
 		}
-		
+
 		// distribute goal to each player
 		backpropogate(backupSAPs, backupStates, outcome);
 	}
@@ -238,7 +245,16 @@ public abstract class UCTGamer extends StateMachineGamer {
 	protected abstract List<Double> completeRollout(MachineState from, int fromLvl);
 
 	/**
-	 * Update every state visited in this path and update its average
+	 * Discount factor applied to each backup of the reward. The reward should
+	 * have a great effect on the states close to it and less to those further
+	 * away.
+	 */
+	private static final double discountFactor = 0.9;
+
+	/**
+	 * Update every state visited in this path and update its average. Applying
+	 * a discount factor to the result at every stage.
+	 * 
 	 * 
 	 * @param backupStatesPairs
 	 * @param outcome
@@ -248,8 +264,12 @@ public abstract class UCTGamer extends StateMachineGamer {
 		for (StateModel m : backupStates) {
 			m.timesExplored++;
 		}
+		Collections.reverse(backupStatesPairs);
 		for (StateActionPair s : backupStatesPairs) {
 			s.updateAverage(outcome);
+			for (int i = 0; i < roleCount; i++) {
+				outcome.set(i, outcome.get(i) * discountFactor);
+			}
 		}
 	}
 

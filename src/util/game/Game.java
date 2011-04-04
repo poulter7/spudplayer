@@ -63,7 +63,6 @@ public final class Game {
         this.theRepositoryURL = theRepositoryURL;
         this.theStylesheet = theStylesheet;
         this.theRules = theRules;
-        System.out.println(this.theRules);
     }
 
     public String getKey() {
@@ -145,7 +144,6 @@ public final class Game {
 
             // Deserialize the rulesheet
             String theRulesheet = theGameObject.getString("theProcessedRulesheet");
-            System.out.println("RULE "+theRulesheet);
             SymbolList ruleList = (SymbolList) SymbolFactory.create(theRulesheet);
             List<Gdl> theRules = new ArrayList<Gdl>();
             for (int i = 0; i < ruleList.size(); i++)

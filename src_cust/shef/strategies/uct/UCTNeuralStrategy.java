@@ -2,14 +2,13 @@ package shef.strategies.uct;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+
+import org.encog.mathutil.randomize.GaussianRandomizer;
 
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
 import util.statemachine.MachineState;
-import util.statemachine.Move;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
@@ -21,20 +20,21 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  */
 public class UCTNeuralStrategy extends UCTGamer {
 
-	int MAX_ROLLDEPTH = 5;
+	int MAX_ROLLDEPTH = 10;
 	private CIL2PManager cil2pManager;
+	protected static final float C = 50;
+	private double sigmaOverTwo = 0.1; 
+	private GaussianRandomizer e = new GaussianRandomizer(0, sigmaOverTwo*sigmaOverTwo);
 
 	/**
 	 * Setup the UCT game tree
 	 */
 	@Override
 	public void stateMachineMetaGame(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-		long start = System.currentTimeMillis();
+		System.out.println("init: " + timeout);
 		CIL2PNet net = CIL2PFactory.modeNetFromGame(getMatch().getGame());
 		cil2pManager = new CIL2PManager(net);
-		long duration = System.currentTimeMillis() - start;
-
-		super.stateMachineMetaGame(duration);
+		super.stateMachineMetaGame(timeout);
 	}
 
 	protected List<Double> completeRollout(MachineState from, int fromLvl) {
@@ -46,12 +46,13 @@ public class UCTNeuralStrategy extends UCTGamer {
 			try {
 				
 				List<MachineState> nextStats = theMachine.getNextStates(current);
-				float bestChildScore = 0;
+				double bestChildScore = 0;
 				int bestChildIndex = 0;
 				int nextStateCount = nextStats.size();
 				for (int i = 0; i < nextStateCount; i++) {
-					List<Double> svs = cil2pManager.getStateValues(nextStats.get(i));
-					if (svs.get(levelPlayer) > bestChildScore) {
+					double childScore = cil2pManager.getStateValue(nextStats.get(i), levelPlayer);
+					if (childScore > bestChildScore) {
+						bestChildScore = childScore;
 						bestChildIndex = i;
 					}
 				}
@@ -66,14 +67,7 @@ public class UCTNeuralStrategy extends UCTGamer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} while (!theMachine.isTerminal(current) && simDepth < MAX_ROLLDEPTH);
-		//        
-		if (!theMachine.isTerminal(current)) {
-			// TODO return the cil2p result
-			List<Double> go = cil2pManager.getStateValues(current);
-			System.out.println("returning state value from NN" + go);
-			return go;
-		}
+		} while (!theMachine.isTerminal(current));
 		// the node was terminal
 		try {
 			return theMachine.getDoubleGoals(current);
@@ -85,7 +79,10 @@ public class UCTNeuralStrategy extends UCTGamer {
 
 	@Override
 	public String getName() {
-		return "Neural UCT Gamer";
+		return "Neural Gamer";
 	}
+	
+	
+	
 
 }
