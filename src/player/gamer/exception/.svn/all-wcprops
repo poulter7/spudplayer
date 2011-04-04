@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/18/trunk/ggp-base/src/player/gamer/exception
+END
+GameCycleException.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/18/trunk/ggp-base/src/player/gamer/exception/GameCycleException.java
+END
+MetaGamingException.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/18/trunk/ggp-base/src/player/gamer/exception/MetaGamingException.java
+END
+MoveSelectionException.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/18/trunk/ggp-base/src/player/gamer/exception/MoveSelectionException.java
+END

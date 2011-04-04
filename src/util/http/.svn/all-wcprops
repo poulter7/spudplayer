@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/297/trunk/ggp-base/src/util/http
+END
+HttpReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/297/trunk/ggp-base/src/util/http/HttpReader.java
+END
+HttpWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/297/trunk/ggp-base/src/util/http/HttpWriter.java
+END
+Test_Http.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/244/trunk/ggp-base/src/util/http/Test_Http.java
+END

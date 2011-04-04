@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/293/trunk/ggp-base/src/util/statemachine
+END
+FailsafeStateMachine.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/18/trunk/ggp-base/src/util/statemachine/FailsafeStateMachine.java
+END
+Role.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/212/trunk/ggp-base/src/util/statemachine/Role.java
+END
+StateMachine.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/278/trunk/ggp-base/src/util/statemachine/StateMachine.java
+END
+MachineState.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/293/trunk/ggp-base/src/util/statemachine/MachineState.java
+END
+Move.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/126/trunk/ggp-base/src/util/statemachine/Move.java
+END

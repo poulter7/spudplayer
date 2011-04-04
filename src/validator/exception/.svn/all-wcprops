@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/305/trunk/ggp-base/src/validator/exception
+END
+MaxDepthException.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/18/trunk/ggp-base/src/validator/exception/MaxDepthException.java
+END
+MonotonicityException.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/18/trunk/ggp-base/src/validator/exception/MonotonicityException.java
+END
+StaticValidatorException.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/305/trunk/ggp-base/src/validator/exception/StaticValidatorException.java
+END

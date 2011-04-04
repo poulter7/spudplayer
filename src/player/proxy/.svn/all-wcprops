@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/303/trunk/ggp-base/src/player/proxy
+END
+ProxyMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/18/trunk/ggp-base/src/player/proxy/ProxyMessage.java
+END
+ProxyGamePlayerClient.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/176/trunk/ggp-base/src/player/proxy/ProxyGamePlayerClient.java
+END
+ProxyGamePlayer.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/303/trunk/ggp-base/src/player/proxy/ProxyGamePlayer.java
+END
+WorkingResponseSelectedEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/18/trunk/ggp-base/src/player/proxy/WorkingResponseSelectedEvent.java
+END

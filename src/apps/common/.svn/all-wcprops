@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/276/trunk/ggp-base/src/apps/common
+END
+PublishButton.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/276/trunk/ggp-base/src/apps/common/PublishButton.java
+END
+ConsolePanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/135/trunk/ggp-base/src/apps/common/ConsolePanel.java
+END
+GameLoaderPrompt.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/220/trunk/ggp-base/src/apps/common/GameLoaderPrompt.java
+END
+NativeUI.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/18/trunk/ggp-base/src/apps/common/NativeUI.java
+END
+GameSelector.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/276/trunk/ggp-base/src/apps/common/GameSelector.java
+END

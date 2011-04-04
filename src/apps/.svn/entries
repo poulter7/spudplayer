@@ -1,0 +1,61 @@
+10
+
+dir
+306
+http://ggp-base.googlecode.com/svn/trunk/ggp-base/src/apps
+http://ggp-base.googlecode.com/svn
+
+
+
+2011-03-22T07:30:48.320693Z
+302
+sam.schreiber@gmail.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+716a755e-b13f-cedc-210d-596dafc6fb9b
+
+frontend
+dir
+
+kiosk
+dir
+
+validator
+dir
+
+consoles
+dir
+
+apollo
+dir
+
+server
+dir
+
+common
+dir
+
+utilities
+dir
+
+tiltyard
+dir
+
+player
+dir
+
+examples
+dir
+

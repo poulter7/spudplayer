@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/56/trunk/ggp-base/games/images/Checkers
+END
+red_pawn.png
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/56/trunk/ggp-base/games/images/Checkers/red_pawn.png
+END
+empty_blocked.png
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/56/trunk/ggp-base/games/images/Checkers/empty_blocked.png
+END
+black_pawn.png
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/56/trunk/ggp-base/games/images/Checkers/black_pawn.png
+END
+red_king.png
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/56/trunk/ggp-base/games/images/Checkers/red_king.png
+END
+black_king.png
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/56/trunk/ggp-base/games/images/Checkers/black_king.png
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/18/trunk/ggp-base/src/player/event
+END
+PlayerDroppedPacketEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/18/trunk/ggp-base/src/player/event/PlayerDroppedPacketEvent.java
+END
+PlayerReceivedMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/18/trunk/ggp-base/src/player/event/PlayerReceivedMessageEvent.java
+END
+PlayerSentMessageEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/18/trunk/ggp-base/src/player/event/PlayerSentMessageEvent.java
+END
+PlayerTimeEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/18/trunk/ggp-base/src/player/event/PlayerTimeEvent.java
+END

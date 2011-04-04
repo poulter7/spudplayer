@@ -1,0 +1,431 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/292/trunk/ggp-base/games/stylesheets
+END
+peg.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/peg.xsl
+END
+blocker.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/blocker.xsl
+END
+blocksWorld.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/blocksWorld.xsl
+END
+skirmish.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/skirmish.xsl
+END
+ruleDepthQuadratic.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ruleDepthQuadratic.xsl
+END
+connectFourSuicide.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/connectFourSuicide.xsl
+END
+ticTacToeParallel.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ticTacToeParallel.xsl
+END
+asteroids.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/asteroids.xsl
+END
+ticTacToeLargeSuicide.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ticTacToeLargeSuicide.xsl
+END
+lightsOnSimultaneous.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/lightsOnSimultaneous.xsl
+END
+nineBoardTicTacToe.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/nineBoardTicTacToe.xsl
+END
+pacman3p.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/pacman3p.xsl
+END
+pentagoSuicide.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/pentagoSuicide.xsl
+END
+checkersBarrelNoKings.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/checkersBarrelNoKings.xsl
+END
+duplicateStateMedium.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/duplicateStateMedium.xsl
+END
+blocks.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/blocks.xsl
+END
+amazonsSuicide.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/amazonsSuicide.xsl
+END
+ticTacToeSerial.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ticTacToeSerial.xsl
+END
+ttcc4.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ttcc4.xsl
+END
+lightsOn.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/lightsOn.xsl
+END
+simultaneousWin2.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/simultaneousWin2.xsl
+END
+breakthroughSuicide.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/292/trunk/ggp-base/games/stylesheets/breakthroughSuicide.xsl
+END
+maze.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/maze.xsl
+END
+knightsTourLarge.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/knightsTourLarge.xsl
+END
+ghostMaze2p.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ghostMaze2p.xsl
+END
+bomberman2p.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/bomberman2p.xsl
+END
+amazonsTorus.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/amazonsTorus.xsl
+END
+chineseCheckers1.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/chineseCheckers1.xsl
+END
+amazons.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/amazons.xsl
+END
+chineseCheckers2.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/chineseCheckers2.xsl
+END
+chineseCheckers3.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/chineseCheckers3.xsl
+END
+chineseCheckers4.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/chineseCheckers4.xsl
+END
+quarto.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/quarto.xsl
+END
+chineseCheckers6.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/chineseCheckers6.xsl
+END
+breakthroughSmall.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/breakthroughSmall.xsl
+END
+beatMania.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/beatMania.xsl
+END
+knightsTour.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/knightsTour.xsl
+END
+wargame01.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/wargame01.xsl
+END
+connectFour.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/connectFour.xsl
+END
+checkers.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/checkers.xsl
+END
+ticTicToe.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ticTicToe.xsl
+END
+3pConnectFour.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/3pConnectFour.xsl
+END
+tictactoesuicideextra.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/tictactoesuicideextra.xsl
+END
+stateSpaceMedium.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/stateSpaceMedium.xsl
+END
+pentago.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/pentago.xsl
+END
+blockerParallel.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/blockerParallel.xsl
+END
+blocksWorldParallel.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/blocksWorldParallel.xsl
+END
+duplicateStateSmall.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/duplicateStateSmall.xsl
+END
+asteroidsParallel.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/asteroidsParallel.xsl
+END
+eightPuzzle.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/eightPuzzle.xsl
+END
+snakeParallel.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/snakeParallel.xsl
+END
+checkersSmall.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/checkersSmall.xsl
+END
+breakthroughHoles.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/292/trunk/ggp-base/games/stylesheets/breakthroughHoles.xsl
+END
+blockerSerial.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/blockerSerial.xsl
+END
+qyshinsu.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/qyshinsu.xsl
+END
+skirmishFinal1.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/skirmishFinal1.xsl
+END
+breakthrough.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/292/trunk/ggp-base/games/stylesheets/breakthrough.xsl
+END
+lightsOnSimul4.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/lightsOnSimul4.xsl
+END
+blocksWorldSerial.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/blocksWorldSerial.xsl
+END
+skirmishFinal2.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/skirmishFinal2.xsl
+END
+stateSpaceSmall.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/stateSpaceSmall.xsl
+END
+duplicateStateLarge.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/duplicateStateLarge.xsl
+END
+skirmishFinal3.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/skirmishFinal3.xsl
+END
+ruleDepthLinear.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ruleDepthLinear.xsl
+END
+ticTacToeLarge.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ticTacToeLarge.xsl
+END
+checkersTiny.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/checkersTiny.xsl
+END
+asteroidsSerial.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/asteroidsSerial.xsl
+END
+snake2p.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/snake2p.xsl
+END
+ruleDepthExponential.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/ruleDepthExponential.xsl
+END
+lightsOnParallel.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/lightsOnParallel.xsl
+END
+stateSpaceLarge.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/287/trunk/ggp-base/games/stylesheets/stateSpaceLarge.xsl
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/298/trunk/ggp-base/src/util/propnet/factory
+END
+PropNetFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/126/trunk/ggp-base/src/util/propnet/factory/PropNetFactory.java
+END
+CachedPropNetFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/103/trunk/ggp-base/src/util/propnet/factory/CachedPropNetFactory.java
+END
+OptimizingPropNetFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/298/trunk/ggp-base/src/util/propnet/factory/OptimizingPropNetFactory.java
+END
+Assignments.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/298/trunk/ggp-base/src/util/propnet/factory/Assignments.java
+END

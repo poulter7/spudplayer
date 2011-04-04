@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/126/trunk/ggp-base/src/util/statemachine/implementation/propnet
+END
+PropNetRole.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/126/trunk/ggp-base/src/util/statemachine/implementation/propnet/PropNetRole.java
+END
+PropNetStateMachine.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/126/trunk/ggp-base/src/util/statemachine/implementation/propnet/PropNetStateMachine.java
+END
+PropNetMachineState.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/106/trunk/ggp-base/src/util/statemachine/implementation/propnet/PropNetMachineState.java
+END
+PropNetMove.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/126/trunk/ggp-base/src/util/statemachine/implementation/propnet/PropNetMove.java
+END

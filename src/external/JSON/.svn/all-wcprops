@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON
+END
+JSONString.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/JSONString.java
+END
+JSONObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/JSONObject.java
+END
+XML.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/XML.java
+END
+JSONTokener.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/JSONTokener.java
+END
+CDL.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/CDL.java
+END
+JSONML.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/JSONML.java
+END
+CookieList.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/CookieList.java
+END
+JSONWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/JSONWriter.java
+END
+HTTPTokener.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/HTTPTokener.java
+END
+JSONArray.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/JSONArray.java
+END
+Cookie.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/Cookie.java
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/README
+END
+HTTP.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/HTTP.java
+END
+JSONStringer.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/JSONStringer.java
+END
+XMLTokener.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/XMLTokener.java
+END
+JSONException.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/191/trunk/ggp-base/src/external/JSON/JSONException.java
+END

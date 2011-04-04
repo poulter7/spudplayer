@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="GGP_Base">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../usr/lib/eclipse"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.junit4_4.5.0.v20090824/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.jar"/>
+    </path>
+    <path id="GGP_Base.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="src/external/FlyingSaucer/core-renderer.jar"/>
+        <pathelement location="src/external/JTidy/Tidy.jar"/>
+        <pathelement location="src/external/JGoodiesForms/forms-1.2.1.jar"/>
+        <pathelement location="src/external/Jython/jython.jar"/>
+        <pathelement location="src/external/Clojure/clojure.jar"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="../../dissertation/ggp_agent/lib/neuroph-2.5b/neuroph-2.5b.jar"/>
+        <pathelement location="../../code2/eclipse/ggp_agent/lib/JavaProver.jar"/>
+        <pathelement location="../../code2/eclipse/ggp_agent/lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
+        <pathelement location="../../code2/eclipse/ggp_agent/lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.uad"/>
+                <exclude name="**/*.ucd"/>
+                <exclude name="**/*.uld"/>
+                <exclude name="**/*.upd"/>
+                <exclude name="**/*.udd"/>
+                <exclude name="**/*.uod"/>
+                <exclude name="**/*.usd"/>
+                <exclude name="**/*.utd"/>
+                <exclude name="**/*.uud"/>
+                <exclude name="**/*.odd"/>
+                <exclude name="**/*.ead"/>
+                <exclude name="**/*.ecd"/>
+                <exclude name="**/*.eld"/>
+                <exclude name="**/*.epd"/>
+                <exclude name="**/*.edd"/>
+                <exclude name="**/*.eod"/>
+                <exclude name="**/*.esd"/>
+                <exclude name="**/*.etd"/>
+                <exclude name="**/*.eud"/>
+                <exclude name="**/*.urd"/>
+                <exclude name="**/*.uml"/>
+                <exclude name="**/*.ecore"/>
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+                <exclude name="strategies/uct/UCTNeuralStrategy.java"/>
+                <exclude name="strategies/uct/UCTSimpleStrategy.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src_py">
+                <exclude name="**/*.uad"/>
+                <exclude name="**/*.ucd"/>
+                <exclude name="**/*.uld"/>
+                <exclude name="**/*.upd"/>
+                <exclude name="**/*.udd"/>
+                <exclude name="**/*.uod"/>
+                <exclude name="**/*.usd"/>
+                <exclude name="**/*.utd"/>
+                <exclude name="**/*.uud"/>
+                <exclude name="**/*.odd"/>
+                <exclude name="**/*.ead"/>
+                <exclude name="**/*.ecd"/>
+                <exclude name="**/*.eld"/>
+                <exclude name="**/*.epd"/>
+                <exclude name="**/*.edd"/>
+                <exclude name="**/*.eod"/>
+                <exclude name="**/*.esd"/>
+                <exclude name="**/*.etd"/>
+                <exclude name="**/*.eud"/>
+                <exclude name="**/*.urd"/>
+                <exclude name="**/*.uml"/>
+                <exclude name="**/*.ecore"/>
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src_clj">
+                <exclude name="**/*.uad"/>
+                <exclude name="**/*.ucd"/>
+                <exclude name="**/*.uld"/>
+                <exclude name="**/*.upd"/>
+                <exclude name="**/*.udd"/>
+                <exclude name="**/*.uod"/>
+                <exclude name="**/*.usd"/>
+                <exclude name="**/*.utd"/>
+                <exclude name="**/*.uud"/>
+                <exclude name="**/*.odd"/>
+                <exclude name="**/*.ead"/>
+                <exclude name="**/*.ecd"/>
+                <exclude name="**/*.eld"/>
+                <exclude name="**/*.epd"/>
+                <exclude name="**/*.edd"/>
+                <exclude name="**/*.eod"/>
+                <exclude name="**/*.esd"/>
+                <exclude name="**/*.etd"/>
+                <exclude name="**/*.eud"/>
+                <exclude name="**/*.urd"/>
+                <exclude name="**/*.uml"/>
+                <exclude name="**/*.ecore"/>
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src_cust">
+                <exclude name="**/*.uad"/>
+                <exclude name="**/*.ucd"/>
+                <exclude name="**/*.uld"/>
+                <exclude name="**/*.upd"/>
+                <exclude name="**/*.udd"/>
+                <exclude name="**/*.uod"/>
+                <exclude name="**/*.usd"/>
+                <exclude name="**/*.utd"/>
+                <exclude name="**/*.uud"/>
+                <exclude name="**/*.odd"/>
+                <exclude name="**/*.ead"/>
+                <exclude name="**/*.ecd"/>
+                <exclude name="**/*.eld"/>
+                <exclude name="**/*.epd"/>
+                <exclude name="**/*.edd"/>
+                <exclude name="**/*.eod"/>
+                <exclude name="**/*.esd"/>
+                <exclude name="**/*.etd"/>
+                <exclude name="**/*.eud"/>
+                <exclude name="**/*.urd"/>
+                <exclude name="**/*.uml"/>
+                <exclude name="**/*.ecore"/>
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+                <exclude name="strategies/uct/UCTBaseStrategy.java"/>
+                <exclude name="strategies/uct/tree/package-info.java"/>
+                <exclude name="strategies/uct/NEWCIL2PNet.java"/>
+                <exclude name="network/package-info.java"/>
+                <exclude name="strategies/uct/package-info.java"/>
+                <exclude name="shef/strategies/uct/package-info.java"/>
+                <exclude name="shef/network/package-info.java"/>
+                <exclude name="shef/strategies/uct/tree/package-info.java"/>
+                <exclude name="shef/instantiator/andortree/package-info.java"/>
+                <exclude name="shef/instantiator/package-info.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="test">
+                <exclude name="**/*.uad"/>
+                <exclude name="**/*.ucd"/>
+                <exclude name="**/*.uld"/>
+                <exclude name="**/*.upd"/>
+                <exclude name="**/*.udd"/>
+                <exclude name="**/*.uod"/>
+                <exclude name="**/*.usd"/>
+                <exclude name="**/*.utd"/>
+                <exclude name="**/*.uud"/>
+                <exclude name="**/*.odd"/>
+                <exclude name="**/*.ead"/>
+                <exclude name="**/*.ecd"/>
+                <exclude name="**/*.eld"/>
+                <exclude name="**/*.epd"/>
+                <exclude name="**/*.edd"/>
+                <exclude name="**/*.eod"/>
+                <exclude name="**/*.esd"/>
+                <exclude name="**/*.etd"/>
+                <exclude name="**/*.eud"/>
+                <exclude name="**/*.urd"/>
+                <exclude name="**/*.uml"/>
+                <exclude name="**/*.ecore"/>
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <exclude name="strategies/uct/UCTNeuralStrategy.java"/>
+            <exclude name="strategies/uct/UCTSimpleStrategy.java"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src_py"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src_clj"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src_cust"/>
+            <exclude name="strategies/uct/UCTBaseStrategy.java"/>
+            <exclude name="strategies/uct/tree/package-info.java"/>
+            <exclude name="strategies/uct/NEWCIL2PNet.java"/>
+            <exclude name="network/package-info.java"/>
+            <exclude name="strategies/uct/package-info.java"/>
+            <exclude name="shef/strategies/uct/package-info.java"/>
+            <exclude name="shef/network/package-info.java"/>
+            <exclude name="shef/strategies/uct/tree/package-info.java"/>
+            <exclude name="shef/instantiator/andortree/package-info.java"/>
+            <exclude name="shef/instantiator/package-info.java"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="test"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </javac>
+    </target>
+    <target name="ServerPanel">
+        <java classname="apps.server.ServerPanel" failonerror="true" fork="yes">
+            <classpath refid="GGP_Base.classpath"/>
+        </java>
+    </target>
+    <target name="Kiosk">
+        <java classname="apps.kiosk.Kiosk" failonerror="true" fork="yes">
+            <classpath refid="GGP_Base.classpath"/>
+        </java>
+    </target>
+    <target name="PlayerPanel">
+        <java classname="apps.player.PlayerPanel" failonerror="true" fork="yes">
+            <arg line="4001"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </java>
+    </target>
+    <target name="UCTPlayer">
+        <java classname="player.GamePlayer" failonerror="true" fork="yes">
+            <arg line="4002 1"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </java>
+    </target>
+    <target name="NeuralPlayer">
+        <java classname="player.GamePlayer" failonerror="true" fork="yes">
+            <arg line="4001 2"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </java>
+    </target>
+</project>

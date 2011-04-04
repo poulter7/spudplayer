@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/103/trunk/ggp-base/src/util/propnet/architecture/components
+END
+Not.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/103/trunk/ggp-base/src/util/propnet/architecture/components/Not.java
+END
+Or.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/103/trunk/ggp-base/src/util/propnet/architecture/components/Or.java
+END
+And.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/103/trunk/ggp-base/src/util/propnet/architecture/components/And.java
+END
+Proposition.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/103/trunk/ggp-base/src/util/propnet/architecture/components/Proposition.java
+END
+Constant.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/103/trunk/ggp-base/src/util/propnet/architecture/components/Constant.java
+END
+Transition.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/103/trunk/ggp-base/src/util/propnet/architecture/components/Transition.java
+END

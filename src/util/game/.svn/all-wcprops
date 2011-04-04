@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/276/trunk/ggp-base/src/util/game
+END
+CloudGameRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/276/trunk/ggp-base/src/util/game/CloudGameRepository.java
+END
+LocalGameRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/234/trunk/ggp-base/src/util/game/LocalGameRepository.java
+END
+RemoteGameRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/276/trunk/ggp-base/src/util/game/RemoteGameRepository.java
+END
+Game.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/252/trunk/ggp-base/src/util/game/Game.java
+END
+GameRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/276/trunk/ggp-base/src/util/game/GameRepository.java
+END

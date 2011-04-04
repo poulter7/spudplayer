@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/304/trunk/ggp-base/src/util/gdl/transforms
+END
+GdlCleaner.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/180/trunk/ggp-base/src/util/gdl/transforms/GdlCleaner.java
+END
+DeORer.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/126/trunk/ggp-base/src/util/gdl/transforms/DeORer.java
+END
+ConstantFinder.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/298/trunk/ggp-base/src/util/gdl/transforms/ConstantFinder.java
+END
+CondensationIsolator.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/298/trunk/ggp-base/src/util/gdl/transforms/CondensationIsolator.java
+END
+TransformTester.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/218/trunk/ggp-base/src/util/gdl/transforms/TransformTester.java
+END
+Relationizer.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/240/trunk/ggp-base/src/util/gdl/transforms/Relationizer.java
+END
+CommonTransforms.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/180/trunk/ggp-base/src/util/gdl/transforms/CommonTransforms.java
+END
+CrudeSplitter.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/180/trunk/ggp-base/src/util/gdl/transforms/CrudeSplitter.java
+END
+LegalSplitter.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/180/trunk/ggp-base/src/util/gdl/transforms/LegalSplitter.java
+END
+SimpleCondensationIsolator.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/180/trunk/ggp-base/src/util/gdl/transforms/SimpleCondensationIsolator.java
+END
+VariableConstrainer.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/180/trunk/ggp-base/src/util/gdl/transforms/VariableConstrainer.java
+END
