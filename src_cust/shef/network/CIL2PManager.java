@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.encog.mathutil.randomize.GaussianRandomizer;
 import org.neuroph.core.Connection;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.Neuron;
@@ -112,9 +113,24 @@ public class CIL2PManager {
     public double getStateValue(final MachineState state, int playerID){
     	propagateInput(state);
         return getPlayerScore(playerList.get(playerID));
-
     }
     
+    private static final double sigmaOverTwo = 0.1; 
+	private static final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwo*sigmaOverTwo);
+    
+	 /**
+     * Get a state Gaussian
+     * @param state
+     * @param player
+     * @return a Gaussian value for the state and player with a Gaussian random factor
+     */
+    public double getStateValueGaussian(final MachineState state, int playerID){
+    	propagateInput(state);
+    	double sc = getPlayerScore(playerList.get(playerID))/100d;
+    	double gaussR = gauss.randomize(0);
+        return sc + gaussR;
+    }
+	
     public void propagateInput(final MachineState state){
     	Set<GdlSentence> stateElements = state.getContents();
 		

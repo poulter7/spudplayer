@@ -3,8 +3,6 @@ package shef.strategies.uct;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.encog.mathutil.randomize.GaussianRandomizer;
-
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
@@ -23,8 +21,6 @@ public class UCTNeuralStrategy extends UCTGamer {
 	int MAX_ROLLDEPTH = 10;
 	private CIL2PManager cil2pManager;
 	protected static final float C = 50;
-	private double sigmaOverTwo = 0.1; 
-	private GaussianRandomizer e = new GaussianRandomizer(0, sigmaOverTwo*sigmaOverTwo);
 
 	/**
 	 * Setup the UCT game tree
@@ -46,17 +42,27 @@ public class UCTNeuralStrategy extends UCTGamer {
 			try {
 				
 				List<MachineState> nextStats = theMachine.getNextStates(current);
-				double bestChildScore = 0;
-				int bestChildIndex = 0;
 				int nextStateCount = nextStats.size();
+				
+//				double bestChildScore = 0;
+//				int bestChildIndex = 0;
+//				for (int i = 0; i < nextStateCount; i++) {
+//					double childScore = cil2pManager.getStateValue(nextStats.get(i), levelPlayer);
+//					if (childScore > bestChildScore) {
+//						bestChildScore = childScore;
+//						bestChildIndex = i;
+//					}
+//				}
+				double bestChildScoreGAUSS = 0;
+				int bestChildIndexGAUSS = 0;
 				for (int i = 0; i < nextStateCount; i++) {
-					double childScore = cil2pManager.getStateValue(nextStats.get(i), levelPlayer);
-					if (childScore > bestChildScore) {
-						bestChildScore = childScore;
-						bestChildIndex = i;
+					double childScoreGAUSS = cil2pManager.getStateValueGaussian(nextStats.get(i), levelPlayer);
+					if (childScoreGAUSS > bestChildScoreGAUSS) {
+						bestChildScoreGAUSS = childScoreGAUSS;
+						bestChildIndexGAUSS = i;
 					}
 				}
-				current = nextStats.get(bestChildIndex);
+				current = nextStats.get(bestChildIndexGAUSS);
 				simDepth++;
 				
 				levelPlayer = (simDepth %roleCount);

@@ -16,5 +16,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="lib" path="/home/jonathan/code2/eclipse/ggp_agent/lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
 	<classpathentry kind="lib" path="/home/jonathan/code2/eclipse/ggp_agent/lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-1.6.1/slf4j-simple-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-1.6.1/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
