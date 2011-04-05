@@ -11,12 +11,12 @@
 	<classpathentry kind="lib" path="src/external/Jython/jython.jar"/>
 	<classpathentry kind="lib" path="src/external/Clojure/clojure.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/home/jonathan/dissertation/ggp_agent/lib/neuroph-2.5b/neuroph-2.5b.jar"/>
-	<classpathentry kind="lib" path="/home/jonathan/code2/eclipse/ggp_agent/lib/JavaProver.jar"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="lib" path="/home/jonathan/code2/eclipse/ggp_agent/lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
-	<classpathentry kind="lib" path="/home/jonathan/code2/eclipse/ggp_agent/lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-1.6.1/slf4j-simple-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-1.6.1/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/JavaProver.jar"/>
+	<classpathentry kind="lib" path="lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/neuroph-2.5b/neuroph-2.5b.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
