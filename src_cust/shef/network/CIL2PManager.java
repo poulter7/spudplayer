@@ -4,6 +4,7 @@ package shef.network;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -115,9 +116,9 @@ public class CIL2PManager {
         return getPlayerScore(playerList.get(playerID));
     }
     
-    private static final double sigmaOverTwo = 0.1; 
-	private static final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwo*sigmaOverTwo);
-    
+    private final double sigmaOverTwo = 0.8; 
+	private final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwo*sigmaOverTwo);
+    private final HashMap<MachineState, Double> mem = new HashMap<MachineState, Double>(); 
 	 /**
      * Get a state Gaussian
      * @param state
@@ -125,9 +126,13 @@ public class CIL2PManager {
      * @return a Gaussian value for the state and player with a Gaussian random factor
      */
     public double getStateValueGaussian(final MachineState state, int playerID){
+    	if(mem.containsKey(state)){
+    		return mem.get(state);
+    	}
     	propagateInput(state);
     	double sc = getPlayerScore(playerList.get(playerID))/100d;
     	double gaussR = gauss.randomize(0);
+    	mem.put(state, gaussR);
         return sc + gaussR;
     }
 	
