@@ -22,6 +22,8 @@
         <pathelement location="src/external/JGoodiesForms/forms-1.2.1.jar"/>
         <pathelement location="src/external/Jython/jython.jar"/>
         <pathelement location="src/external/Clojure/clojure.jar"/>
+    	<pathelement location="lib/slf4j-1.6.1/slf4j-simple-1.6.1.jar"/>
+		<pathelement location="lib/slf4j-1.6.1/slf4j-api-1.6.1.jar"/>
         <path refid="JUnit 4.libraryclasspath"/>
         <pathelement location="../../dissertation/ggp_agent/lib/neuroph-2.5b/neuroph-2.5b.jar"/>
         <pathelement location="../../code2/eclipse/ggp_agent/lib/JavaProver.jar"/>
