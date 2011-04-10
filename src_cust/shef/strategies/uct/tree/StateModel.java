@@ -1,11 +1,8 @@
 package shef.strategies.uct.tree;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Map.Entry;
 
 import util.statemachine.MachineState;

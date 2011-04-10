@@ -85,12 +85,12 @@ public abstract class StateMachine
     
     public List<List<Move>> getLegalJointMoves(MachineState state) throws MoveDefinitionException
     {
-        List<List<Move>> legals = new ArrayList<List<Move>>();
+        final List<List<Move>> legals = new ArrayList<List<Move>>();
         for (Role role : getRoles()) {
             legals.add(getLegalMoves(state, role));
         }
 
-        List<List<Move>> crossProduct = new ArrayList<List<Move>>();
+        final List<List<Move>> crossProduct = new ArrayList<List<Move>>();
         crossProductLegalMoves(legals, crossProduct, new LinkedList<Move>());
 
         return crossProduct;

@@ -59,7 +59,6 @@ public final class Tree {
 			if(stateLists.size() <= depthN){
 				childLevel = new Level();
 				stateLists.add(childLevel);
-				
 			} else {
 				childLevel = stateLists.get(depthN);
 			}
