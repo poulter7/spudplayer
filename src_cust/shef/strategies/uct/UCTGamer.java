@@ -1,9 +1,12 @@
 package shef.strategies.uct;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -49,7 +52,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	private int myRoleID;
 
 	/** Total number of players */
-	protected int roleCount;
+	public static int roleCount;
 
 	/** UCT tree */
 	private Tree tree;
@@ -78,9 +81,9 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 *            time in ms this meta game stage should be finished by
 	 */
 	@Override
-	public void stateMachineMetaGame(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
+	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 		System.out.println("init");
-		long finishBy = timeout - 1000;
+		final long finishBy = timeout; // - 1000;
 
 		theMachine = getStateMachine();
 		myRole = getRole();
@@ -94,11 +97,12 @@ public abstract class UCTGamer extends StateMachineGamer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		StateModel currentSM = tree.getStateLists().get(moveCount).states.get(getStateMachine().getInitialState());
+		final StateModel currentSM = tree.getStateLists().get(moveCount).states.get(getStateMachine().getInitialState());
 		int rollCount = 0;
 		System.out.println("beginning rollouts");
 		while (System.currentTimeMillis() < finishBy) {
 			rollout(currentSM);
+
 			rollCount++;
 		}
 		System.out.println(rollCount + " initial");
@@ -113,13 +117,13 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * @return the move attributed to the most promising {@link StateActionPair}
 	 */
 	@Override
-	public Move stateMachineSelectMove(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-		long start = System.currentTimeMillis();
-		long finishBy = timeout - 1000;
-		MachineState cState = getCurrentState();
-		StateModel currentSM = tree.getStateLists().get(moveCount).states.get(cState);
+	public Move stateMachineSelectMove(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
+		final long start = System.currentTimeMillis();
+		final long finishBy = timeout; // - 1000;
+		final MachineState cState = getCurrentState();
+		final StateModel currentSM = tree.getStateLists().get(moveCount).states.get(cState);
+		final List<Move> moves = theMachine.getLegalMoves(cState, myRole);
 
-		List<Move> moves = theMachine.getLegalMoves(cState, myRole);
 		Move selection = moves.get(0);
 		int rollCount = 0;
 
@@ -130,7 +134,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 				List<Move> maxMove = null;
 				HashMap<List<Move>, StateActionPair> saps = currentSM.actionsPairs;
 				for (Entry<List<Move>, StateActionPair> sap : saps.entrySet()) {
-					System.out.println("Move " + sap.getKey() + " explored " + sap.getValue().timesExplored + " " + Arrays.toString(sap.getValue().value));
+					System.out.println("Move " + sap.getKey() + " explored " + sap.getValue().exploreCount + " " + Arrays.toString(sap.getValue().value));
 					double v = sap.getValue().value[myRoleID];
 					if (v > maxVal || maxMove == null) {
 						maxMove = sap.getKey();
@@ -145,7 +149,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 			rollCount++;
 
 		}
-		long stop = System.currentTimeMillis();
+		final long stop = System.currentTimeMillis();
 
 		moveCount++;
 		// StringBuilder sb = new StringBuilder();
@@ -156,9 +160,8 @@ public abstract class UCTGamer extends StateMachineGamer {
 		return selection;
 	}
 
-	
-	private List<StateActionPair> backupSAPs;
-	private List<StateModel> backupStates;
+	private Deque<StateActionPair> backupSAPs;
+	private Deque<StateModel> backupStates;
 
 	/**
 	 * Perform a single UCT rollout
@@ -169,11 +172,13 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * @throws TransitionDefinitionException
 	 * @throws GoalDefinitionException
 	 */
-	private void rollout(StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
+	private void rollout(final StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		StateModel traverser = rolloutRootSM;
 		List<StateActionPair> actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
-		backupSAPs = new ArrayList<StateActionPair>();
-		backupStates = new ArrayList<StateModel>();
+		backupSAPs = new ArrayDeque<StateActionPair>(); // new
+														// ArrayList<StateActionPair>();
+		backupStates = new ArrayDeque<StateModel>();// new
+													// ArrayList<StateModel>();
 
 		boolean expandLeaf = true;
 		int lvl = 0;
@@ -186,11 +191,11 @@ public abstract class UCTGamer extends StateMachineGamer {
 				int i = 0;
 				float[] v = new float[actions.size()];
 				for (StateActionPair sap : actions) {
-					if (sap.timesExplored == 0) {
+					if (sap.exploreCount == 0) {
 						v[i] = Float.POSITIVE_INFINITY;
 						expandLeaf = false;
 					} else {
-						float uctBonus = (float) Math.sqrt(Math.log(traverser.timesExplored) / (float) sap.timesExplored);
+						float uctBonus = (float) Math.sqrt(Math.log(traverser.timesExplored) / (float) sap.exploreCount);
 						v[i] = (float) (sap.value[p] + C * uctBonus);
 					}
 					i++;
@@ -207,10 +212,10 @@ public abstract class UCTGamer extends StateMachineGamer {
 				}
 				toPlay.add(actions.get(index).action.get(p));
 			}
-			backupStates.add(traverser);
+			backupStates.push(traverser);
 
 			StateActionPair chosenSAP = traverser.actionsPairs.get(toPlay);
-			backupSAPs.add(chosenSAP);
+			backupSAPs.push(chosenSAP);
 			traverser = chosenSAP.result;
 			actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
 			lvl++;
@@ -219,9 +224,9 @@ public abstract class UCTGamer extends StateMachineGamer {
 
 		backupStates.add(traverser);
 		if (expandLeaf && !theMachine.isTerminal(traverser.state)) {
-			tree.expandNode(traverser);
-			Level cur = tree.getStateLists().get(traverser.depth + 1);
-			traverser = cur.states.get(theMachine.getRandomNextState(traverser.state));
+			tree.expandNode(traverser, lvl);
+//			Level cur = tree.getStateLists().get(traverser.depth + 1);
+//			traverser = cur.states.get(theMachine.getRandomNextState(traverser.state));
 		}
 
 		List<Double> outcome;
@@ -230,7 +235,6 @@ public abstract class UCTGamer extends StateMachineGamer {
 		} else {
 			outcome = theMachine.getDoubleGoals(traverser.state);
 		}
-
 		// distribute goal to each player
 		backpropogate(backupSAPs, backupStates, outcome);
 	}
@@ -241,8 +245,11 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * @param from
 	 *            the state to complete rollout from
 	 * @return the terminal state reached
+	 * @throws MoveDefinitionException
+	 * @throws TransitionDefinitionException
+	 * @throws GoalDefinitionException
 	 */
-	protected abstract List<Double> completeRollout(MachineState from, int fromLvl);
+	protected abstract List<Double> completeRollout(final MachineState from, final int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException;
 
 	/**
 	 * Discount factor applied to each backup of the reward. The reward should
@@ -255,21 +262,26 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * Update every state visited in this path and update its average. Applying
 	 * a discount factor to the result at every stage.
 	 * 
+	 * degrade reward to prefer earlier wins
 	 * 
 	 * @param backupStatesPairs
 	 * @param outcome
 	 */
-	private void backpropogate(final List<StateActionPair> backupStatesPairs, final List<StateModel> backupStates, List<Double> outcome) {
-		// degrade reward to prefer earlier wins
+	private void backpropogate(final Deque<StateActionPair> backupStatesPairs, final Deque<StateModel> backupStates, final List<Double> outcome) {
+	
 		for (StateModel m : backupStates) {
 			m.timesExplored++;
 		}
-		Collections.reverse(backupStatesPairs);
-		for (StateActionPair s : backupStatesPairs) {
+		
+		int size = backupStatesPairs.size();
+		while (size > 0) {
+			StateActionPair s = backupStatesPairs.pop();
 			s.updateAverage(outcome);
-			for (int i = 0; i < roleCount; i++) {
-				outcome.set(i, outcome.get(i) * discountFactor);
-			}
+			
+//			for (int i = 0; i < roleCount; i++) {
+//				outcome.set(i, outcome.get(i) * discountFactor);
+//			}	
+			size--;
 		}
 	}
 

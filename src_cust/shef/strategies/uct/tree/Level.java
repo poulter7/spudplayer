@@ -13,7 +13,7 @@ import util.statemachine.MachineState;
  *
  */
 public class Level {
-	public final HashMap<MachineState, StateModel> states = new HashMap<MachineState, StateModel>();
+	public final HashMap<MachineState, StateModel> states = new HashMap<MachineState, StateModel>(50);
 
 	public void print(StringBuilder b) {
 		for (Iterator<Entry<MachineState, StateModel>> iterator = states.entrySet().iterator(); iterator.hasNext();) {

@@ -21,15 +21,13 @@ import util.statemachine.Move;
  */
 public class StateModel {
 
-	public int timesExplored = 0;
-	// final MachineState state;
-	public final HashMap<List<Move>, StateActionPair> actionsPairs = new HashMap<List<Move>, StateActionPair>();
-	public MachineState state;
-	public int depth;
+	public final HashMap<List<Move>, StateActionPair> actionsPairs = new HashMap<List<Move>, StateActionPair>(50);
+	public final MachineState state;
 
-	public StateModel(MachineState s, int i) {
+	public int timesExplored = 0;
+
+	public StateModel(MachineState s) {
 		state = s;
-		depth = i;
 	}
 
 	public void print(StringBuilder b) {
@@ -37,7 +35,7 @@ public class StateModel {
 			Entry<List<Move>, StateActionPair> type = iterator.next();
 			List<Move> moveDesc = type.getKey();
 			StateActionPair state = type.getValue();
-			b.append("\t"+moveDesc + " " + state.timesExplored + " " +state.value +"\n");
+			b.append("\t"+moveDesc + " " + state.exploreCount + " " +state.value +"\n");
 		}
 		
 	}

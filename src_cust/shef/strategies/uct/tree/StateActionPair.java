@@ -2,6 +2,7 @@ package shef.strategies.uct.tree;
 
 import java.util.List;
 
+import shef.strategies.uct.UCTGamer;
 import util.statemachine.Move;
 
 /**
@@ -10,16 +11,18 @@ import util.statemachine.Move;
  *
  */
 public class StateActionPair {
-	public int timesExplored = 0;
-//	public float[] runningTotal;
-	public double[] value;
-	public StateModel result;
-	public List<Move> action;
+	public final StateModel result;
+	public final List<Move> action;
+	public final double[] value;
+	public static int numOfMe = 0;
+	
+	public int exploreCount = 0;
 
-	public StateActionPair(StateModel result, List<Move> action, int roleCount) {
-		value = new double[roleCount];
+	public StateActionPair(StateModel result, List<Move> action) {
+		this.value 	= new double[UCTGamer.roleCount];
 		this.action = action;
 		this.result = result;
+		numOfMe++;
 	}
 
 	/**
@@ -28,9 +31,10 @@ public class StateActionPair {
 	 * @param outcome
 	 */
 	public void updateAverage(List<Double> outcome) {
-		for (int i=0; i < outcome.size(); i++) {
-			value[i] = ((value[i] * timesExplored) + outcome.get(i)) / (float) (timesExplored + 1);
+		for (int i=0; i < UCTGamer.roleCount; i++) {
+			value[i] = ((value[i] * exploreCount) + outcome.get(i)) / (exploreCount + 1d);
 		}
-		timesExplored++;
+		exploreCount++;
 	}
+
 }

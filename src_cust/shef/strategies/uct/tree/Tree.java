@@ -18,7 +18,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * 
  */
 public final class Tree {
-	private final ArrayList<Level> stateLists = new ArrayList<Level>();
+	private final ArrayList<Level> stateLists = new ArrayList<Level>(100);
 	private final StateMachine sm;
 	private final int num_players;
 
@@ -37,7 +37,7 @@ public final class Tree {
 		this.sm = smg.getStateMachine();
 		this.num_players = num_players;
 		Level rootLevel = new Level();
-		StateModel rootNodeModel = new StateModel(initMatch, 0);
+		StateModel rootNodeModel = new StateModel(initMatch);
 		stateLists.add(rootLevel);
 		
 		// add the root
@@ -45,26 +45,29 @@ public final class Tree {
 		rootLevel.states.put(rootNode, rootNodeModel);
 		
 		// expand the root
-		expandNode(rootNodeModel);
+		expandNode(rootNodeModel, 0);
 	}
 
-	public void expandNode(StateModel nodeModel) throws MoveDefinitionException, TransitionDefinitionException {
+	public void expandNode(StateModel nodeModel, int lvl) throws MoveDefinitionException, TransitionDefinitionException {
 		List<List<Move>> legalMoves = sm.getLegalJointMoves(nodeModel.state);
+		MachineState cState = nodeModel.state;
+		int depthN = lvl+1;
 		for(List<Move> m: legalMoves){
-			MachineState nextState = sm.getNextState(nodeModel.state, m);
-			StateModel nextStateModel = new StateModel( nextState, nodeModel.depth+1);
+			MachineState nextState = sm.getNextState(cState, m);
+			StateModel nextStateModel = new StateModel( nextState);
 			Level childLevel = null;
-			if(stateLists.size() <= nodeModel.depth+1){
+			if(stateLists.size() <= depthN){
 				childLevel = new Level();
 				stateLists.add(childLevel);
+				
 			} else {
-				childLevel = stateLists.get(nodeModel.depth+1);
+				childLevel = stateLists.get(depthN);
 			}
 			childLevel.states.put(nextState, nextStateModel);
 			
 			// make a connection between the two
-			nodeModel.actionsPairs.put(m, new StateActionPair(nextStateModel, m, num_players));
-			
+			nodeModel.actionsPairs.put(m, new StateActionPair(nextStateModel, m));
+
 		}
 		
 	}
