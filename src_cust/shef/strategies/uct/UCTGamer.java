@@ -1,8 +1,10 @@
 package shef.strategies.uct;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -158,7 +160,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	}
 
 	
-	private List<StateActionPair> backupSAPs;
+	private Deque<StateActionPair> backupSAPs;
 	private List<StateModel> backupStates;
 
 	/**
@@ -173,11 +175,10 @@ public abstract class UCTGamer extends StateMachineGamer {
 	private void rollout(final StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		StateModel traverser = rolloutRootSM;
 		List<StateActionPair> actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
-		backupSAPs = new ArrayList<StateActionPair>();
+		backupSAPs = new ArrayDeque<StateActionPair>();
 		backupStates = new ArrayList<StateModel>();
 
 		boolean expandLeaf = true;
-//		int lvl = 0;
 
 		while (!actions.isEmpty()) {
 			List<Move> toPlay = new ArrayList<Move>();
@@ -260,14 +261,14 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * @param backupStatesPairs
 	 * @param outcome
 	 */
-	private void backpropogate(final List<StateActionPair> backupStatesPairs, final List<StateModel> backupStates, List<Double> outcome) {
+	private void backpropogate(final Deque<StateActionPair> backupStatesPairs, final List<StateModel> backupStates, List<Double> outcome) {
 		// degrade reward to prefer earlier wins
 		for (StateModel m : backupStates) {
 			m.timesExplored++;
 		}
-		Collections.reverse(backupStatesPairs);
-		for (StateActionPair s : backupStatesPairs) {
-			s.updateAverage(outcome);
+		
+		for(int j=0; j < outcome.size(); j++){
+			backupStatesPairs.pop().updateAverage(outcome);
 			for (int i = 0; i < roleCount; i++) {
 				outcome.set(i, outcome.get(i) * discountFactor);
 			}
