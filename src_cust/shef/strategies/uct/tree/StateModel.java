@@ -1,11 +1,8 @@
 package shef.strategies.uct.tree;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Map.Entry;
 
 import util.statemachine.MachineState;
@@ -22,9 +19,9 @@ import util.statemachine.Move;
 public class StateModel {
 
 	public int timesExplored = 0;
-	// final MachineState state;
+	
 	public final HashMap<List<Move>, StateActionPair> actionsPairs = new HashMap<List<Move>, StateActionPair>();
-	public MachineState state;
+	public final MachineState state;
 	public int depth;
 
 	public StateModel(MachineState s, int i) {

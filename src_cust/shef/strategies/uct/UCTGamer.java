@@ -267,7 +267,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 			m.timesExplored++;
 		}
 		
-		for(int j=0; j < outcome.size(); j++){
+		for(int j=0; j < backupStatesPairs.size(); j++){
 			backupStatesPairs.pop().updateAverage(outcome);
 			for (int i = 0; i < roleCount; i++) {
 				outcome.set(i, outcome.get(i) * discountFactor);

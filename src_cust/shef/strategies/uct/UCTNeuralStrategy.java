@@ -1,6 +1,5 @@
 package shef.strategies.uct;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import shef.network.CIL2PFactory;
