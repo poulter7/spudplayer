@@ -3,7 +3,6 @@ package shef.strategies.uct;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.Map.Entry;
 import player.gamer.statemachine.StateMachineGamer;
 import player.gamer.statemachine.reflex.event.ReflexMoveSelectionEvent;
 import player.gamer.statemachine.reflex.gui.ReflexDetailPanel;
-import shef.strategies.uct.tree.Level;
 import shef.strategies.uct.tree.StateActionPair;
 import shef.strategies.uct.tree.StateModel;
 import shef.strategies.uct.tree.Tree;
@@ -220,7 +218,11 @@ public abstract class UCTGamer extends StateMachineGamer {
 		
 		backupStates.add(traverser);
 		if (expandLeaf && !theMachine.isTerminal(traverser.state)) {
-			traverser = tree.expandNodeAndReturnRandom(traverser);
+			StateActionPair nextAction = tree.expandNodeAndReturnRandom(traverser);
+			// add the randomly chosen action
+			traverser = nextAction.RESULT;
+			backupStates.add(traverser);
+			backupSAPs.add(nextAction);
 		}
 
 		List<Double> outcome;

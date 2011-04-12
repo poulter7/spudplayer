@@ -52,11 +52,11 @@ public final class Tree {
 	
 	Random random = new Random();
 	
-	public StateModel expandNodeAndReturnRandom(StateModel nodeModel) throws MoveDefinitionException, TransitionDefinitionException {
+	public StateActionPair expandNodeAndReturnRandom(StateModel nodeModel) throws MoveDefinitionException, TransitionDefinitionException {
 		final List<List<Move>> legalMoves = sm.getLegalJointMoves(nodeModel.state);
 		final int moveCount =  legalMoves.size();
 		
-		StateModel randomNext = null;
+		StateActionPair randomNext = null;
 		int randomIndex = random.nextInt(moveCount);
 		
 		for(int i = 0; i < moveCount; i++){
@@ -73,9 +73,10 @@ public final class Tree {
 			childLevel.states.put(nextState, nextStateModel);
 			
 			// make a connection between the two
-			nodeModel.actionsPairs.put(m, new StateActionPair(nextStateModel, m, num_players));
+			StateActionPair act = new StateActionPair(nextStateModel, m, num_players);
+			nodeModel.actionsPairs.put(m, act);
 			if(i == randomIndex){
-				randomNext = nextStateModel;
+				randomNext = act;
 			}
 			
 		}
