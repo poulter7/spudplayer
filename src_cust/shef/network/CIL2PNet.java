@@ -261,8 +261,11 @@ public class CIL2PNet {
 				e1.printStackTrace();
 			}
 		}
+		
 
 	}
+
+
 
 	/**
 	 * Add an input neuron if necessary this method also populates a record of

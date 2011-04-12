@@ -9,11 +9,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.encog.mathutil.randomize.GaussianRandomizer;
+import org.encog.engine.EncogEngine;
+import org.encog.engine.EngineNeuralNetwork;
+import org.encog.engine.opencl.kernels.EncogKernel;
 import org.neuroph.core.Connection;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.Neuron;
+import org.neuroph.nnet.MultiLayerPerceptron;
+import org.neuroph.nnet.Neuroph;
 import org.neuroph.nnet.comp.ThresholdNeuron;
+import org.neuroph.util.NeuralNetworkType;
 
 import shef.instantiator.andortree.Node;
 import shef.instantiator.andortree.Tuple;
@@ -47,7 +52,7 @@ public class CIL2PManager {
      * 
      * This MAY not be necessary, but all sample code thus far suggests
      */
-    public final int CALCULATE_MULTIPLE_TIMES = 8;
+    public final int CALCULATE_MULTIPLE_TIMES = 7;
 
     /**
      * Network being managed
@@ -58,6 +63,12 @@ public class CIL2PManager {
      * Create a manager for this shef.network
      */
     public CIL2PManager(CIL2PNet network) {
+    	Neuroph.getInstance().setFlattenNetworks(true);
+//    	EncogEngine.getInstance().initCL();
+//        EncogEngine.getInstance().getCL().disableAllCPUs();
+        network.n.setNetworkType(NeuralNetworkType.NEURO_FUZZY_REASONER);
+        System.out.println(network.n.getNetworkType());
+        
         this.network = network;
         // generate player list
         for (Predicate g : network.goalHash.keySet()) {
@@ -117,7 +128,7 @@ public class CIL2PManager {
     }
     
     private final double sigmaOverTwo = 0.8; 
-	private final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwo*sigmaOverTwo);
+//	private final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwo*sigmaOverTwo);
     private final HashMap<MachineState, Double> mem = new HashMap<MachineState, Double>(); 
 	 /**
      * Get a state Gaussian
@@ -131,7 +142,8 @@ public class CIL2PManager {
     	}
     	propagateInput(state);
     	double sc = getPlayerScore(playerList.get(playerID))/100d;
-    	double gaussR = gauss.randomize(0);
+//    	double gaussR = gauss.randomize(0);
+    	double gaussR = 0;
     	mem.put(state, gaussR);
         return sc + gaussR;
     }
@@ -140,9 +152,8 @@ public class CIL2PManager {
     	Set<GdlSentence> stateElements = state.getContents();
 		
         // reset the state
-        for (Neuron in : network.inputLayer.getNeurons()) {
-            in.setInput(0);
-        }
+    	this.network.n.reset();
+    	
        	for (Entry<GdlRelation, Neuron> fact : network.queryHashGGPBase.entrySet()) {
        		if(stateElements.contains(fact.getKey())){
        			fact.getValue().setInput(1d);
@@ -152,9 +163,11 @@ public class CIL2PManager {
        	}
 
         // calculate
+        NeuralNetwork net = this.network.n;
         for (int i = 0; i < CALCULATE_MULTIPLE_TIMES; i++) {
-            this.network.n.calculate();
+            net.calculate();
         }
+//        this.network.n.save(z)
     }
 
 

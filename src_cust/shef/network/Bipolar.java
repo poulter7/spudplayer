@@ -21,8 +21,7 @@ public class Bipolar extends TransferFunction {
 	}
 	
 	public double getOutput(final double net) {
-		double exp = Math.exp(this.slope * -net);
-		return (2 / (1 + exp)) - 1;
+		return (2 / (1 + Math.exp(this.slope * -net))) - 1;
 	}
 	
 }

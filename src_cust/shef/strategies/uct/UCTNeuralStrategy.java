@@ -1,13 +1,11 @@
 package shef.strategies.uct;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
 import util.statemachine.MachineState;
-import util.statemachine.Move;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
@@ -38,7 +36,7 @@ public class UCTNeuralStrategy extends UCTGamer {
 		int simDepth = fromLvl;
 		int levelPlayer = (simDepth % roleCount);
 		MachineState current = from;
-		
+
 		do { // play the best move for the current player
 
 			List<MachineState> nextStats = theMachine.getNextStates(current);
@@ -59,6 +57,7 @@ public class UCTNeuralStrategy extends UCTGamer {
 
 			levelPlayer = (simDepth % roleCount);
 		} while (!theMachine.isTerminal(current));
+
 		// the node was terminal
 		return theMachine.getDoubleGoals(current);
 

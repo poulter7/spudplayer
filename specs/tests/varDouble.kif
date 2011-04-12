@@ -1,0 +1,17 @@
+(role W)
+
+(<= (goal W 100)
+	P)
+
+(<= P
+	(true (A ?x ?y))
+	(B ?x ?y ?z)
+	(C ?x)
+	)
+
+	
+(<= (B ?x ?y ?z)
+	(door ?x ?y ?z))
+
+(door 4 3 2)
+(C 3)

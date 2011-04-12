@@ -1,0 +1,2 @@
+(<= (goal white 100)
+	(not (true B)))

@@ -14,7 +14,6 @@ public class StateActionPair {
 	public final StateModel result;
 	public final List<Move> action;
 	public final double[] value;
-	public static int numOfMe = 0;
 	
 	public int exploreCount = 0;
 
@@ -22,7 +21,6 @@ public class StateActionPair {
 		this.value 	= new double[UCTGamer.roleCount];
 		this.action = action;
 		this.result = result;
-		numOfMe++;
 	}
 
 	/**

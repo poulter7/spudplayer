@@ -1,0 +1,9 @@
+(<= (goal white 100)
+	(true A)
+	valid_pred)
+
+(<= valid_pred
+	(true B))
+
+(<= valid_pred
+	(true C))

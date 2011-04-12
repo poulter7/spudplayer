@@ -225,8 +225,8 @@ public abstract class UCTGamer extends StateMachineGamer {
 		backupStates.add(traverser);
 		if (expandLeaf && !theMachine.isTerminal(traverser.state)) {
 			tree.expandNode(traverser, lvl);
-//			Level cur = tree.getStateLists().get(traverser.depth + 1);
-//			traverser = cur.states.get(theMachine.getRandomNextState(traverser.state));
+			Level cur = tree.getStateLists().get(lvl);
+			traverser = cur.states.get(theMachine.getRandomNextState(traverser.state));
 		}
 
 		List<Double> outcome;
@@ -278,9 +278,9 @@ public abstract class UCTGamer extends StateMachineGamer {
 			StateActionPair s = backupStatesPairs.pop();
 			s.updateAverage(outcome);
 			
-//			for (int i = 0; i < roleCount; i++) {
-//				outcome.set(i, outcome.get(i) * discountFactor);
-//			}	
+			for (int i = 0; i < roleCount; i++) {
+				outcome.set(i, outcome.get(i) * discountFactor);
+			}	
 			size--;
 		}
 	}
