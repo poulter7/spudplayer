@@ -10,16 +10,19 @@ import util.statemachine.Move;
  *
  */
 public class StateActionPair {
+	public final double[] VALUE;
+	public final StateModel RESULT;
+	public final List<Move> ACTION;
+	private final int ROLECOUNT;
+	
 	public int timesExplored = 0;
-//	public float[] runningTotal;
-	public double[] value;
-	public StateModel result;
-	public List<Move> action;
+	
 
 	public StateActionPair(StateModel result, List<Move> action, int roleCount) {
-		value = new double[roleCount];
-		this.action = action;
-		this.result = result;
+		this.VALUE = new double[roleCount];
+		this.ROLECOUNT = roleCount;
+		this.ACTION = action;
+		this.RESULT = result;
 	}
 
 	/**
@@ -28,8 +31,8 @@ public class StateActionPair {
 	 * @param outcome
 	 */
 	public void updateAverage(List<Double> outcome) {
-		for (int i=0; i < outcome.size(); i++) {
-			value[i] = ((value[i] * timesExplored) + outcome.get(i)) / (float) (timesExplored + 1);
+		for (int i=0; i < ROLECOUNT; i++) {
+			VALUE[i] = ((VALUE[i] * timesExplored) + outcome.get(i)) / (float) (timesExplored + 1);
 		}
 		timesExplored++;
 	}

@@ -1,7 +1,9 @@
 package shef.strategies.uct.tree;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import player.gamer.statemachine.StateMachineGamer;
 import util.statemachine.MachineState;
@@ -45,12 +47,20 @@ public final class Tree {
 		rootLevel.states.put(rootNode, rootNodeModel);
 		
 		// expand the root
-		expandNode(rootNodeModel);
+		expandNodeAndReturnRandom(rootNodeModel);
 	}
-
-	public void expandNode(StateModel nodeModel) throws MoveDefinitionException, TransitionDefinitionException {
-		List<List<Move>> legalMoves = sm.getLegalJointMoves(nodeModel.state);
-		for(List<Move> m: legalMoves){
+	
+	Random random = new Random();
+	
+	public StateModel expandNodeAndReturnRandom(StateModel nodeModel) throws MoveDefinitionException, TransitionDefinitionException {
+		final List<List<Move>> legalMoves = sm.getLegalJointMoves(nodeModel.state);
+		final int moveCount =  legalMoves.size();
+		
+		StateModel randomNext = null;
+		int randomIndex = random.nextInt(moveCount);
+		
+		for(int i = 0; i < moveCount; i++){
+			List<Move> m = legalMoves.get(i);
 			MachineState nextState = sm.getNextState(nodeModel.state, m);
 			StateModel nextStateModel = new StateModel( nextState, nodeModel.depth+1);
 			Level childLevel = null;
@@ -64,9 +74,12 @@ public final class Tree {
 			
 			// make a connection between the two
 			nodeModel.actionsPairs.put(m, new StateActionPair(nextStateModel, m, num_players));
+			if(i == randomIndex){
+				randomNext = nextStateModel;
+			}
 			
 		}
-		
+		return randomNext;
 	}
 
 	public void print(StringBuilder b) {

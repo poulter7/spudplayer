@@ -37,7 +37,7 @@ public class StateModel {
 			Entry<List<Move>, StateActionPair> type = iterator.next();
 			List<Move> moveDesc = type.getKey();
 			StateActionPair state = type.getValue();
-			b.append("\t"+moveDesc + " " + state.timesExplored + " " +state.value +"\n");
+			b.append("\t"+moveDesc + " " + state.timesExplored + " " +state.VALUE +"\n");
 		}
 		
 	}

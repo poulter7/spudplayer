@@ -78,9 +78,9 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 *            time in ms this meta game stage should be finished by
 	 */
 	@Override
-	public void stateMachineMetaGame(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-		System.out.println("init");
-		long finishBy = timeout - 1000;
+	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
+		System.out.println("init " + this.getClass());
+		final long finishBy = timeout - 1000;
 
 		theMachine = getStateMachine();
 		myRole = getRole();
@@ -94,7 +94,8 @@ public abstract class UCTGamer extends StateMachineGamer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		StateModel currentSM = tree.getStateLists().get(moveCount).states.get(getStateMachine().getInitialState());
+		final StateModel currentSM = tree.getStateLists().get(moveCount).states.get(getStateMachine().getInitialState());
+		
 		int rollCount = 0;
 		System.out.println("beginning rollouts");
 		while (System.currentTimeMillis() < finishBy) {
@@ -113,13 +114,13 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * @return the move attributed to the most promising {@link StateActionPair}
 	 */
 	@Override
-	public Move stateMachineSelectMove(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-		long start = System.currentTimeMillis();
-		long finishBy = timeout - 1000;
-		MachineState cState = getCurrentState();
-		StateModel currentSM = tree.getStateLists().get(moveCount).states.get(cState);
-
-		List<Move> moves = theMachine.getLegalMoves(cState, myRole);
+	public Move stateMachineSelectMove(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
+		final long start = System.currentTimeMillis();
+		final long finishBy = timeout - 1000;
+		final MachineState cState = getCurrentState();
+		final StateModel currentSM = tree.getStateLists().get(moveCount).states.get(cState);
+		final List<Move> moves = theMachine.getLegalMoves(cState, myRole);
+		
 		Move selection = moves.get(0);
 		int rollCount = 0;
 
@@ -130,8 +131,8 @@ public abstract class UCTGamer extends StateMachineGamer {
 				List<Move> maxMove = null;
 				HashMap<List<Move>, StateActionPair> saps = currentSM.actionsPairs;
 				for (Entry<List<Move>, StateActionPair> sap : saps.entrySet()) {
-					System.out.println("Move " + sap.getKey() + " explored " + sap.getValue().timesExplored + " " + Arrays.toString(sap.getValue().value));
-					double v = sap.getValue().value[myRoleID];
+					System.out.println("Move " + sap.getKey() + " explored " + sap.getValue().timesExplored + " " + Arrays.toString(sap.getValue().VALUE));
+					double v = sap.getValue().VALUE[myRoleID];
 					if (v > maxVal || maxMove == null) {
 						maxMove = sap.getKey();
 						maxVal = v;
@@ -145,8 +146,8 @@ public abstract class UCTGamer extends StateMachineGamer {
 			rollCount++;
 
 		}
-		long stop = System.currentTimeMillis();
-
+		
+		final long stop = System.currentTimeMillis();
 		moveCount++;
 		// StringBuilder sb = new StringBuilder();
 		// tree.print(sb);
@@ -169,14 +170,14 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * @throws TransitionDefinitionException
 	 * @throws GoalDefinitionException
 	 */
-	private void rollout(StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
+	private void rollout(final StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		StateModel traverser = rolloutRootSM;
 		List<StateActionPair> actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
 		backupSAPs = new ArrayList<StateActionPair>();
 		backupStates = new ArrayList<StateModel>();
 
 		boolean expandLeaf = true;
-		int lvl = 0;
+//		int lvl = 0;
 
 		while (!actions.isEmpty()) {
 			List<Move> toPlay = new ArrayList<Move>();
@@ -191,7 +192,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 						expandLeaf = false;
 					} else {
 						float uctBonus = (float) Math.sqrt(Math.log(traverser.timesExplored) / (float) sap.timesExplored);
-						v[i] = (float) (sap.value[p] + C * uctBonus);
+						v[i] = (float) (sap.VALUE[p] + C * uctBonus);
 					}
 					i++;
 				}
@@ -205,28 +206,25 @@ public abstract class UCTGamer extends StateMachineGamer {
 						lowest = v[j];
 					}
 				}
-				toPlay.add(actions.get(index).action.get(p));
+				toPlay.add(actions.get(index).ACTION.get(p));
 			}
 			backupStates.add(traverser);
 
 			StateActionPair chosenSAP = traverser.actionsPairs.get(toPlay);
 			backupSAPs.add(chosenSAP);
-			traverser = chosenSAP.result;
+			traverser = chosenSAP.RESULT;
 			actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
-			lvl++;
 
 		}
-
+		
 		backupStates.add(traverser);
 		if (expandLeaf && !theMachine.isTerminal(traverser.state)) {
-			tree.expandNode(traverser);
-			Level cur = tree.getStateLists().get(traverser.depth + 1);
-			traverser = cur.states.get(theMachine.getRandomNextState(traverser.state));
+			traverser = tree.expandNodeAndReturnRandom(traverser);
 		}
 
 		List<Double> outcome;
 		if (!theMachine.isTerminal(traverser.state)) {
-			outcome = completeRollout(traverser.state, lvl);
+			outcome = completeRollout(traverser.state, traverser.depth+1);
 		} else {
 			outcome = theMachine.getDoubleGoals(traverser.state);
 		}
@@ -241,8 +239,11 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * @param from
 	 *            the state to complete rollout from
 	 * @return the terminal state reached
+	 * @throws MoveDefinitionException 
+	 * @throws TransitionDefinitionException 
+	 * @throws GoalDefinitionException 
 	 */
-	protected abstract List<Double> completeRollout(MachineState from, int fromLvl);
+	protected abstract List<Double> completeRollout(final MachineState from, final int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException;
 
 	/**
 	 * Discount factor applied to each backup of the reward. The reward should

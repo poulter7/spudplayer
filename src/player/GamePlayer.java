@@ -118,4 +118,5 @@ public final class GamePlayer extends Thread implements Subject {
 			System.exit(3);
 		}
 	}
+	
 }
