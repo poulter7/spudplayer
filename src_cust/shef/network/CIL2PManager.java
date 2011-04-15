@@ -47,7 +47,7 @@ public class CIL2PManager {
      * 
      * This MAY not be necessary, but all sample code thus far suggests
      */
-    public final int CALCULATE_MULTIPLE_TIMES = 8;
+    public final int CALCULATE_MULTIPLE_TIMES = 10;
 
     /**
      * Network being managed
@@ -126,13 +126,9 @@ public class CIL2PManager {
      * @return a Gaussian value for the state and player with a Gaussian random factor
      */
     public double getStateValueGaussian(final MachineState state, int playerID){
-    	if(mem.containsKey(state)){
-    		return mem.get(state);
-    	}
     	propagateInput(state);
     	double sc = getPlayerScore(playerList.get(playerID))/100d;
-    	double gaussR = gauss.randomize(0);
-    	mem.put(state, gaussR);
+    	double gaussR = 0;//gauss.randomize(0);
         return sc + gaussR;
     }
 	
@@ -140,9 +136,8 @@ public class CIL2PManager {
     	Set<GdlSentence> stateElements = state.getContents();
 		
         // reset the state
-        for (Neuron in : network.inputLayer.getNeurons()) {
-            in.setInput(0);
-        }
+    	network.n.reset();
+    	
        	for (Entry<GdlRelation, Neuron> fact : network.queryHashGGPBase.entrySet()) {
        		if(stateElements.contains(fact.getKey())){
        			fact.getValue().setInput(1d);
@@ -158,17 +153,16 @@ public class CIL2PManager {
     }
 
 
-	private double getPlayerScore(Term playerName) {
+	private double getPlayerScore(final Term playerName) {
         // get outputs
-        float playerSum = 0f;
-        float totalSum = 0f;
+        double playerSum = 0f;
+        double totalSum = 0f;
         for (Entry<Goal, ThresholdNeuron> goal : network.goalHash.entrySet()) {
             Goal goalClause = goal.getKey();
             ThresholdNeuron goalNeuron = goal.getValue();
 
             // modulate the neuron output between 0 and 1
-            double vNeuron = (goalNeuron.getOutput() + 1) / 2f;
-
+            double vNeuron = (goalNeuron.getOutput() + 1d) / 2d;
             // should be modulated betwen 0 and 1
             assert vNeuron <= 1 && vNeuron >= 0;
             

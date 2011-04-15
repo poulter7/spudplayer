@@ -1,6 +1,7 @@
 package shef.strategies.uct;
 
 import java.util.List;
+import java.util.Random;
 
 import shef.strategies.uct.UCTGamer;
 import util.statemachine.MachineState;
@@ -16,6 +17,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  */
 public final class UCTSimpleStrategy extends UCTGamer {
 
+	Random r = new Random();
 	/**
 	 * Random rollout to a terminal state
 	 * @throws MoveDefinitionException 
