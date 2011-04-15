@@ -50,14 +50,11 @@ public class UCTNeuralStrategy extends UCTGamer {
 					bestChildScoreGAUSS = childScoreGAUSS;
 					bestChildIndexGAUSS = i;
 				}
-				System.out.println(childScoreGAUSS );
 			}
 			terminal = nextStates.get(bestChildIndexGAUSS);
 			simDepth++;
 			levelPlayer = (simDepth % roleCount);
-			System.out.println("roll");
 		} while (!theMachine.isTerminal(terminal));
-		System.out.println("--");
 		// the node was terminal
 		return theMachine.getDoubleGoals(terminal);
 	}
