@@ -23,7 +23,11 @@ public final class UCTSimpleStrategy extends UCTGamer {
 	 * @throws GoalDefinitionException 
 	 */
 	protected List<Double> completeRollout(MachineState from, int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-		MachineState terminal = theMachine.performDepthCharge(from, null);
+		MachineState terminal = from;
+		do{
+            terminal = theMachine.getNextState(terminal, theMachine.getRandomJointMove(terminal));
+        }
+		while(!theMachine.isTerminal(terminal));
 		return theMachine.getDoubleGoals(terminal);
 
 	}

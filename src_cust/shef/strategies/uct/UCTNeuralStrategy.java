@@ -17,7 +17,6 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  */
 public class UCTNeuralStrategy extends UCTGamer {
 
-	int MAX_ROLLDEPTH = 10;
 	private CIL2PManager cil2pManager;
 	protected static final float C = 50;
 

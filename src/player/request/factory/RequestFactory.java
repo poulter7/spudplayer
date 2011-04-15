@@ -145,7 +145,7 @@ public final class RequestFactory
         return new PingRequest(gamer);
     }       
 
-	private List<Gdl> parseDescription(SymbolList list) throws GdlFormatException
+	public List<Gdl> parseDescription(SymbolList list) throws GdlFormatException
 	{
 		List<Gdl> description = new ArrayList<Gdl>();
 		for (int i = 0; i < list.size(); i++)
