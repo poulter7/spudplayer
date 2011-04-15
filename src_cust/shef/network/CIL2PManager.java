@@ -116,9 +116,9 @@ public class CIL2PManager {
         return getPlayerScore(playerList.get(playerID));
     }
     
-    private final double sigmaOverTwo = 0.8; 
-	private final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwo*sigmaOverTwo);
-    private final HashMap<MachineState, Double> mem = new HashMap<MachineState, Double>(); 
+    private final double sigmaOverTwo = 0.00005;
+    private final double sigmaOverTwoSq = sigmaOverTwo*sigmaOverTwo; 
+	private final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwoSq);
 	 /**
      * Get a state Gaussian
      * @param state
@@ -128,7 +128,7 @@ public class CIL2PManager {
     public double getStateValueGaussian(final MachineState state, int playerID){
     	propagateInput(state);
     	double sc = getPlayerScore(playerList.get(playerID))/100d;
-    	double gaussR = 0;//gauss.randomize(0);
+    	double gaussR = gauss.randomize(0);
         return sc + gaussR;
     }
 	

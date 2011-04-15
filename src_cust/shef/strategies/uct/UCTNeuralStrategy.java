@@ -41,16 +41,26 @@ public class UCTNeuralStrategy extends UCTGamer {
 			
 			List<MachineState> nextStates = theMachine.getNextStates(terminal);
 			int nextStateCount = nextStates.size();
-
 			double bestChildScoreGAUSS = 0;
 			int bestChildIndexGAUSS = 0;
 			for (int i = 0; i < nextStateCount; i++) {
-				double childScoreGAUSS = cil2pManager.getStateValue(nextStates.get(i), levelPlayer);
+				double childScoreGAUSS = cil2pManager.getStateValueGaussian(nextStates.get(i), levelPlayer);
 				if (childScoreGAUSS > bestChildScoreGAUSS) {
 					bestChildScoreGAUSS = childScoreGAUSS;
 					bestChildIndexGAUSS = i;
 				}
 			}
+			
+//			double bestChildScore = 0;
+//			int bestChildIndex= 0;
+//			for (int i = 0; i < nextStateCount; i++) {
+//				double childScore= cil2pManager.getStateValue(nextStates.get(i), levelPlayer);
+//				if (childScore> bestChildScore) {
+//					bestChildScore= childScore;
+//					bestChildIndex= i;
+//				}
+//			}
+//			System.out.println(bestChildIndex == bestChildIndexGAUSS);
 			terminal = nextStates.get(bestChildIndexGAUSS);
 			simDepth++;
 			levelPlayer = (simDepth % roleCount);
