@@ -3,6 +3,7 @@ package shef.strategies.uct;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -166,7 +167,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	}
 
 	
-	private Deque<StateActionPair> backupSAPs;
+	private List<StateActionPair> backupSAPs;
 	private List<StateModel> backupStates;
 
 	/**
@@ -181,7 +182,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	private void rollout(final StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		StateModel traverser = rolloutRootSM;
 		List<StateActionPair> actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
-		backupSAPs = new ArrayDeque<StateActionPair>();
+		backupSAPs = new ArrayList<StateActionPair>();
 		backupStates = new ArrayList<StateModel>();
 
 		boolean expandLeaf = true;
@@ -267,16 +268,15 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * Update every state visited in this path and update its average. Applying
 	 * a discount factor to the result at every stage.
 	 * 
-	 * 
 	 * @param backupStatesPairs
 	 * @param outcome
 	 */
-	private void backpropogate(final Deque<StateActionPair> backupStatesPairs, final List<StateModel> backupStates, List<Double> outcome) {
+	private void backpropogate(final List<StateActionPair> backupStatesPairs, final List<StateModel> backupStates, List<Double> outcome) {
 		// degrade reward to prefer earlier wins
 		for (StateModel m : backupStates) {
 			m.timesExplored++;
 		}
-		
+		Collections.reverse(backupStatesPairs);
 		for(StateActionPair sap : backupStatesPairs){
 			sap.updateAverage(outcome);
 			for (int i = 0; i < roleCount; i++) {
