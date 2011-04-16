@@ -21,20 +21,21 @@ public class UCTNeuralStrategy extends UCTGamer {
 	private CIL2PManager cil2pManager;
 
 	/**
-	 * Setup the UCT game tree
+	 * Create the network which will be guiding the out of tree play
 	 */
 	@Override
-	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-		System.out.println("init: " + timeout);
+	public void strategyMetaSetup() {
+		// create network
 		CIL2PNet net = CIL2PFactory.modeNetFromGame(getMatch().getGame());
-		cil2pManager = new CIL2PManager(net);
-		super.stateMachineMetaGame(timeout);
+		cil2pManager = new CIL2PManager(net, roles);
+		
 	}
 
-	Random r = new Random();
 	protected List<Double> completeRollout(final MachineState from, final int fromLvl) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		int simDepth = fromLvl;
 		int levelPlayer = (simDepth % roleCount);
+		System.out.println(fromLvl);
+		
 		
 		MachineState terminal = from;
 		do { // play the best move for the current player
@@ -50,7 +51,6 @@ public class UCTNeuralStrategy extends UCTGamer {
 					bestChildIndexGAUSS = i;
 				}
 			}
-			
 //			double bestChildScore = 0;
 //			int bestChildIndex= 0;
 //			for (int i = 0; i < nextStateCount; i++) {
@@ -60,7 +60,6 @@ public class UCTNeuralStrategy extends UCTGamer {
 //					bestChildIndex= i;
 //				}
 //			}
-//			System.out.println(bestChildIndex == bestChildIndexGAUSS);
 			terminal = nextStates.get(bestChildIndexGAUSS);
 			simDepth++;
 			levelPlayer = (simDepth % roleCount);
@@ -73,5 +72,6 @@ public class UCTNeuralStrategy extends UCTGamer {
 	public String getName() {
 		return "Neural Gamer";
 	}
+
 
 }

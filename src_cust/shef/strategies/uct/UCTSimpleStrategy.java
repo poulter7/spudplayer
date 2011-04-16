@@ -17,7 +17,11 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  */
 public final class UCTSimpleStrategy extends UCTGamer {
 
-	Random r = new Random();
+	/**
+	 * Nothing specific for this simple strategy
+	 */
+	@Override
+	public void strategyMetaSetup() {};
 	/**
 	 * Random rollout to a terminal state
 	 * @throws MoveDefinitionException 
@@ -38,4 +42,5 @@ public final class UCTSimpleStrategy extends UCTGamer {
 	public String getName() {
 		return "Basic UCT Gamer";
 	}
+
 }

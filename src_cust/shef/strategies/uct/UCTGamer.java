@@ -79,7 +79,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 */
 	@Override
 	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-		System.out.println("init " + this.getClass());
+		// setup essential items
 		final long finishBy = timeout - 1000;
 
 		theMachine = getStateMachine();
@@ -88,12 +88,18 @@ public abstract class UCTGamer extends StateMachineGamer {
 		myRoleID = roles.indexOf(myRole);
 		roleCount = roles.size();
 		moveCount = 0;
+		System.out.println("init " + this.getClass() + "\nas player... " + myRole +" (" + myRoleID + ")");
 		try {
 			tree = new Tree(getCurrentState(), this, roleCount);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// implementation specific setup
+		strategyMetaSetup();
+		
+		// begin rollouts with time left
 		final StateModel currentSM = tree.getStateLists().get(moveCount).states.get(getStateMachine().getInitialState());
 		
 		int rollCount = 0;
@@ -103,7 +109,10 @@ public abstract class UCTGamer extends StateMachineGamer {
 			rollCount++;
 		}
 		System.out.println(rollCount + " initial");
+		
 	}
+	
+	public abstract void strategyMetaSetup();
 
 	/**
 	 * As many times as possible in the time available perform rollouts from the
