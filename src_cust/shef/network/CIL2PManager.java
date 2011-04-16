@@ -115,7 +115,6 @@ public class CIL2PManager {
 	 */
 	public double getStateValueGaussian(final MachineState state, int playerID) {
 		propagateInput(state);
-		System.out.println(playerList + " -> " + playerList.get(playerID));
 		double sc = getPlayerScore(playerList.get(playerID)) / 100d;
 		double gaussR = gauss.randomize(0);
 		// System.out.println(sc);

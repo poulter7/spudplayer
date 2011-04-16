@@ -34,7 +34,7 @@ public class UCTNeuralStrategy extends UCTGamer {
 	protected List<Double> completeRollout(final MachineState from, final int fromLvl) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		int simDepth = fromLvl;
 		int levelPlayer = (simDepth % roleCount);
-		System.out.println(fromLvl);
+//		System.out.println(fromLvl);
 		
 		
 		MachineState terminal = from;
@@ -60,6 +60,7 @@ public class UCTNeuralStrategy extends UCTGamer {
 //					bestChildIndex= i;
 //				}
 //			}
+//			System.out.println(bestChildIndexGAUSS == bestChildIndex);
 			terminal = nextStates.get(bestChildIndexGAUSS);
 			simDepth++;
 			levelPlayer = (simDepth % roleCount);
