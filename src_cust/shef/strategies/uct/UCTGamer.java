@@ -261,7 +261,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * have a great effect on the states close to it and less to those further
 	 * away.
 	 */
-	private static final double discountFactor = 0.995;
+	private static final double discountFactor = 0.95;
 
 	/**
 	 * Update every state visited in this path and update its average. Applying
