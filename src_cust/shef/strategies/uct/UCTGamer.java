@@ -235,7 +235,6 @@ public abstract class UCTGamer extends StateMachineGamer {
 
 		List<Double> outcome;
 		if (!theMachine.isTerminal(traverser.state)) {
-//			backupStates.add(traverser);
 			outcome = completeRollout(traverser.state, traverser.depth+1);
 		} else {
 			outcome = theMachine.getDoubleGoals(traverser.state);
@@ -262,7 +261,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * have a great effect on the states close to it and less to those further
 	 * away.
 	 */
-	private static final double discountFactor = 0.5;
+	private static final double discountFactor = 0.995;
 
 	/**
 	 * Update every state visited in this path and update its average. Applying
@@ -278,10 +277,8 @@ public abstract class UCTGamer extends StateMachineGamer {
 			m.timesExplored++;
 		}
 		
-		System.out.println(backupStatesPairs.size());
-		for(int j=0; j < backupStatesPairs.size(); j++){
-			StateActionPair a = backupStatesPairs.pop();
-			a.updateAverage(outcome);
+		for(StateActionPair sap : backupStatesPairs){
+			sap.updateAverage(outcome);
 			for (int i = 0; i < roleCount; i++) {
 				outcome.set(i, outcome.get(i) * discountFactor);
 			}

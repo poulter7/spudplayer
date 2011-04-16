@@ -1,7 +1,6 @@
 package shef.strategies.uct;
 
 import java.util.List;
-import java.util.Random;
 
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
@@ -34,7 +33,6 @@ public class UCTNeuralStrategy extends UCTGamer {
 	protected List<Double> completeRollout(final MachineState from, final int fromLvl) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		int simDepth = fromLvl;
 		int levelPlayer = (simDepth % roleCount);
-//		System.out.println(fromLvl);
 		
 		
 		MachineState terminal = from;

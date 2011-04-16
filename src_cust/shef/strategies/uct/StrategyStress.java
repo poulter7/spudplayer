@@ -53,6 +53,6 @@ public class StrategyStress {
 		GdlProposition prop =  (GdlProposition) role.getBody().get(0).toSentence();
 		player.getGamer().setRoleName(prop);
 		player.getGamer().metaGame(System.currentTimeMillis() + 5*1000);
-		player.getGamer().selectMove(System.currentTimeMillis() + 5*1000);
+		player.getGamer().selectMove(System.currentTimeMillis() + 30*1000);
 	}
 }
