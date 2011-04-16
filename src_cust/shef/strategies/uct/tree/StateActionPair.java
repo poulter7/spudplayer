@@ -1,5 +1,6 @@
 package shef.strategies.uct.tree;
 
+import java.util.Arrays;
 import java.util.List;
 
 import util.statemachine.Move;
@@ -35,5 +36,10 @@ public class StateActionPair {
 			VALUE[i] = ((VALUE[i] * timesExplored) + outcome.get(i)) / (float) (timesExplored + 1);
 		}
 		timesExplored++;
+	}
+
+	public void print(StringBuilder sb) {
+		sb.append("\t"+ACTION + " " + timesExplored + " " +Arrays.toString(VALUE) +"\n");
+		
 	}
 }

@@ -7,6 +7,8 @@ import network.correctness.CIL2PTicTacToeTests;
 import org.junit.Before;
 import org.junit.Test;
 
+import cs227b.teamIago.resolver.Atom;
+
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
@@ -25,7 +27,7 @@ public class CIL2PJudgementTicTacToeTests extends AbstractCIL2PJudgementTests {
     
     protected void setUp() throws Exception {
         CIL2PNet cn = CIL2PFactory.modNetFromFile(gameLocation);
-        cil2p_manager = new CIL2PManager(cn);
+        cil2p_manager = new CIL2PManager(cn, Arrays.asList(new Atom("XPLAYER"), new Atom("OPLAYER")));
         
         super.setUp();
     }

@@ -15,7 +15,6 @@ import org.neuroph.nnet.comp.ThresholdNeuron;
 
 import shef.instantiator.andortree.Node;
 import shef.instantiator.andortree.Tuple;
-import util.gdl.grammar.Gdl;
 import util.gdl.grammar.GdlRelation;
 import util.gdl.grammar.GdlSentence;
 import util.statemachine.MachineState;
@@ -33,7 +32,7 @@ import cs227b.teamIago.resolver.Term;
 public class CIL2PManager {
 
 	/** List of player names */
-	public ArrayList<Term> playerList = new ArrayList<Term>();
+	public List<Atom> playerList = new ArrayList<Atom>();
 
 	/**
 	 * The number of times calculate is called when output is requested from
@@ -47,18 +46,26 @@ public class CIL2PManager {
 	 * Network being managed
 	 */
 	public CIL2PNet network;
-
-	/**
-	 * Create a manager for this shef.network
-	 */
-	public CIL2PManager(CIL2PNet network, List<Role> orderedRole) {
+	
+	public CIL2PManager (CIL2PNet network){
 		this.network = network;
-		// generate player list
-		for (Role r : orderedRole) {
-			Term player = (Atom) new Atom(r.toString().toUpperCase());
-			playerList.add(player);
+	}
+	
+	/**
+	 * Create a manager for this network
+	 * @param <E>
+	 * @param network
+	 */
+	public <E> CIL2PManager(CIL2PNet network, List<E> orderedRole){
+		this.network = network;
+		if(orderedRole.get(0) instanceof Role){
+			for (E r : orderedRole) {
+				Atom player = (Atom) new Atom(r.toString().toUpperCase());
+				playerList.add(player);
+			}
+		} else if (orderedRole.get(0) instanceof Atom) {
+			this.playerList = (List<Atom>) orderedRole;
 		}
-
 	}
 
 	/**
@@ -101,7 +108,7 @@ public class CIL2PManager {
 		return getPlayerScore(playerList.get(playerID));
 	}
 
-	private final double sigmaOverTwo = 0.000005;
+	private final double sigmaOverTwo = 0.005;
 	private final double sigmaOverTwoSq = sigmaOverTwo * sigmaOverTwo;
 	private final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwoSq);
 

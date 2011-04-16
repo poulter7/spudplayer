@@ -30,11 +30,9 @@ public class StateModel {
 	}
 
 	public void print(StringBuilder b) {
-		for (Iterator<Entry<List<Move>, StateActionPair>> iterator = actionsPairs.entrySet().iterator(); iterator.hasNext();) {
-			Entry<List<Move>, StateActionPair> type = iterator.next();
-			List<Move> moveDesc = type.getKey();
-			StateActionPair state = type.getValue();
-			b.append("\t"+moveDesc + " " + state.timesExplored + " " +state.VALUE +"\n");
+		b.append("\texp: " + timesExplored+"\n");
+		for (Entry<List<Move>, StateActionPair> type: actionsPairs.entrySet()) {
+			type.getValue().print(b);
 		}
 		
 	}

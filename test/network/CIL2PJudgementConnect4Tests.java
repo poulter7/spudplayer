@@ -1,5 +1,9 @@
 package network;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import network.correctness.CIL2PConnect4Tests;
 
 import org.junit.Test;
@@ -7,15 +11,17 @@ import org.junit.Test;
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
+import cs227b.teamIago.resolver.Atom;
 
 public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 	
 	private static final String gameLocation = "connect4";
+	private static final List<Atom> playerList = Arrays.asList(new Atom("WHITE"), new Atom("RED"));
 	
 	@Override
 	protected void setUp() throws Exception {
 	    CIL2PNet cn = CIL2PFactory.modNetFromFile(gameLocation);
-	    cil2p_manager = new CIL2PManager(cn);
+	    cil2p_manager = new CIL2PManager(cn, playerList);
 	    
 	    super.setUp();
 	}
@@ -51,7 +57,7 @@ public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 		double[] scoresB = cil2p_manager.getAllPlayerScores(output2);
 		cil2p_manager.printGoalOutputActivation();
 		System.out.println(cil2p_manager.playerList);
-		assertEquals(-1, highestGain(scoresA, scoresB, 1));
+		assertEquals(-1, bestState(scoresA, scoresB, 1));
 		
 	}
 	
@@ -85,8 +91,7 @@ public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 		);
 		double[] scoresB = cil2p_manager.getAllPlayerScores(output2);
 		cil2p_manager.printGoalOutputActivation();
-		System.out.println(cil2p_manager.playerList);
-		assertEquals(1, highestGain(scoresA, scoresB, 0));
+		assertEquals(1, bestState(scoresA, scoresB, 0));
 		
 	}
 	

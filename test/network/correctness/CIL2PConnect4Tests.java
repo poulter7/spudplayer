@@ -1,6 +1,9 @@
 package network.correctness;
 
 import java.util.Arrays;
+import java.util.List;
+
+import cs227b.teamIago.resolver.Atom;
 
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
@@ -12,18 +15,19 @@ import shef.network.CIL2PNet;
 public class CIL2PConnect4Tests extends AbstractCIL2PCorrectnessTests {
 
 	private static final String gameLocation = "connect4";
+	private static final List<Atom> playerList = Arrays.asList(new Atom("RED"), new Atom("WHITE"));
 	
 	@Override
 	protected void setUp() throws Exception {
 
         CIL2PNet cn = CIL2PFactory.fromFileLocation(gameLocation);
-        cil2p_manager = new CIL2PManager(cn);
+        cil2p_manager = new CIL2PManager(cn, playerList);
 	    super.setUp();
 	}
 	
 	@Override
 	public void testTopology() {
-		assertEquals(202, cil2p_manager.getPlayInfo()[0]);
+		assertEquals(194, cil2p_manager.getPlayInfo()[0]);
 		assertEquals(8, cil2p_manager.getPlayInfo()[1]);
 		
 		cil2p_manager.printInfo();
@@ -79,7 +83,7 @@ public class CIL2PConnect4Tests extends AbstractCIL2PCorrectnessTests {
 	public void testHorizNoiseWin(){
 
         CIL2PNet cn = CIL2PFactory.fromFileLocation(gameLocation);
-        cil2p_manager = new CIL2PManager(cn);
+        cil2p_manager = new CIL2PManager(cn, playerList);
 		
 		double[] output = translateConnect4(
 				"D D D D D D D D " + 

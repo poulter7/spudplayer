@@ -19,21 +19,6 @@ import shef.network.CIL2PNet;
 public class CIL2PTest extends TestCase {
     CIL2PManager cil2p_manager;
 
-    public void testVarDouble() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/varDouble");
-        cil2p_manager = new CIL2PManager(cn);
-        double maxError = 1 - cil2p_manager.getMaxError();
-        fail();
-    }
-
-    public void testTripleInst() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/testInst");
-        cil2p_manager = new CIL2PManager(cn);
-        double maxError = 1 - cil2p_manager.getMaxError();
-        fail();
-
-    }
-
     public void testStacked() {
         CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/stack");
         cil2p_manager = new CIL2PManager(cn);

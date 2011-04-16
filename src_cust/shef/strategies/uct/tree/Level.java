@@ -16,12 +16,8 @@ public class Level {
 	public final HashMap<MachineState, StateModel> states = new HashMap<MachineState, StateModel>();
 
 	public void print(StringBuilder b) {
-		for (Iterator<Entry<MachineState, StateModel>> iterator = states.entrySet().iterator(); iterator.hasNext();) {
-			Entry<MachineState, StateModel> type = (Entry<MachineState, StateModel>) iterator.next();
-			MachineState stateDesc = type.getKey();
-			StateModel state = type.getValue();
-			b.append("\texp: " + state.timesExplored+"\n");
-			state.print(b);
+		for (Entry<MachineState, StateModel> ent : states.entrySet()) {
+			ent.getValue().print(b);
 		}		
 	}
 	

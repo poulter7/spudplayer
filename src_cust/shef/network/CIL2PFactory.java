@@ -3,15 +3,18 @@ package shef.network;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import shef.instantiator.Instantiator;
 import shef.instantiator.andortree.Node;
 import util.game.Game;
-
 import cs227b.teamIago.parser.Parser;
+import cs227b.teamIago.resolver.Atom;
 import cs227b.teamIago.resolver.ExpList;
+import cs227b.teamIago.resolver.Predicate;
+import cs227b.teamIago.resolver.Term;
 import cs227b.teamIago.resolver.Theory;
 
 /**
@@ -108,6 +111,21 @@ public final class CIL2PFactory {
     public static CIL2PNet fromFileLocationViewTree(String gameLocation,
             boolean printTrees) {
         return fromFileLocationOptions(gameLocation, printTrees, false, false);
+    }
+    
+    /**
+     * Return the list of roles to a game from the file
+     * @param gameLocation
+     * @return
+     */
+    public static List<Term> rolesFromFile(String gameLocation){
+    	Theory t = getTheoryFromFile(DEFAULT_DIR + gameLocation);
+    	ExpList e = t.getCandidates(new Atom("role"));
+    	ArrayList<Term> terms = new ArrayList<Term>();
+    	for(Object p : e.toArrayList()){
+    		terms.add(new Atom(((Predicate)p).getOperands().get(0).toString()));
+    	}
+    	return terms;
     }
 
     /**

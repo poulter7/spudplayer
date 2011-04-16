@@ -36,6 +36,17 @@ public class AbstractCIL2PJudgementTests extends TestCase {
 		}
 	}
 	
+	/**
+	 * returns of which player has the highest gain
+	 * 
+	 * @param outcomeA
+	 *            the scores for each player for state A
+	 * @param outcomeB
+	 *            the scores for each player for state B
+	 * @param player
+	 *            the player index to compare
+	 * @return 1 if A[player] > B[player], -1 if A[player] < B[player] else 0
+	 */
 	public int highestGain(double[] outcomeA, double[] outcomeB, int player) {
 		System.out.println(outcomeA[player%2] - outcomeB[player%2]);
 		System.out.println(player);
