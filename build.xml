@@ -235,25 +235,25 @@
         </java>
     </target>
     <target name="NeuralPlayer">
-        <java classname="player.GamePlayer" failonerror="true" fork="yes">
+        <java classname="shef.strategies.StrategyLauncher" failonerror="true" fork="yes">
             <arg line="4001 2"/>
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
     <target name="UCTPlayer">
-        <java classname="player.GamePlayer" failonerror="true" fork="yes">
+        <java classname="shef.strategies.StrategyLauncher" failonerror="true" fork="yes">
             <arg line="4002 1"/>
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
     <target name="MonteCarloPlayer">
-        <java classname="player.GamePlayer" failonerror="true" fork="yes">
+        <java classname="shef.strategies.StrategyLauncher" failonerror="true" fork="yes">
             <arg line="4003 3"/>
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
     <target name="AlphaBetaPlayer">
-        <java classname="player.GamePlayer" failonerror="true" fork="yes">
+        <java classname="shef.strategies.StrategyLauncher" failonerror="true" fork="yes">
             <arg line="4004 4"/>
             <classpath refid="GGP_Base.classpath"/>
         </java>
