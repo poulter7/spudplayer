@@ -14,8 +14,8 @@ import player.event.PlayerReceivedMessageEvent;
 import player.event.PlayerSentMessageEvent;
 import player.request.factory.RequestFactory;
 import player.request.grammar.Request;
-import shef.strategies.uct.UCTNeuralStrategy;
-import shef.strategies.uct.UCTSimpleStrategy;
+import shef.strategies.uct.StrategyUCTNeural;
+import shef.strategies.uct.StrategyUCTSimple;
 import util.http.HttpReader;
 import util.http.HttpWriter;
 import util.logging.GamerLogger;
@@ -104,8 +104,8 @@ public final class GamePlayer extends Thread implements Subject {
 			Gamer strat = null;
 			int playerIndex = Integer.parseInt(args[1]);
 			switch(playerIndex){
-			case 1: strat = new UCTSimpleStrategy(); 		break;
-			case 2: strat = new UCTNeuralStrategy(); 		break;
+			case 1: strat = new StrategyUCTSimple(); 		break;
+			case 2: strat = new StrategyUCTNeural(); 		break;
 			case 3: strat = new SimpleMonteCarloGamer(); 	break;
 			default: throw new RuntimeException("Invalid player chosen cannot continue");
 			}

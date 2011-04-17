@@ -10,7 +10,6 @@ import player.gamer.exception.MetaGamingException;
 import player.gamer.exception.MoveSelectionException;
 import player.request.factory.RequestFactory;
 import player.request.factory.exceptions.RequestFormatException;
-import shef.strategies.uct.tree.StateActionPair;
 import util.game.Game;
 import util.gdl.factory.GdlFactory;
 import util.gdl.factory.exceptions.GdlFormatException;
@@ -25,14 +24,14 @@ import util.symbol.factory.exceptions.SymbolFormatException;
 import util.symbol.grammar.SymbolList;
 
 
-public class StrategyStress {
+public final class StressStrategy {
 
 	
 	
 	public static void main(String[] args) throws IOException, RequestFormatException, SymbolFormatException, GdlFormatException, MetaGamingException, MoveSelectionException, TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 
-		Gamer st = new UCTNeuralStrategy();
-//		Gamer st = new UCTSimpleStrategy();
+		Gamer st = new StrategyUCTNeural();
+//		Gamer st = new StrategyUCTSimple();
 		
 		GamePlayer player = new GamePlayer(9000, st);
 		

@@ -6,7 +6,7 @@ import java.util.List;
 import util.statemachine.Move;
 
 /**
- * Represents an arc on the UCT Tree
+ * Represents an arc on the UCT UCTTree
  * @author jonathan
  *
  */

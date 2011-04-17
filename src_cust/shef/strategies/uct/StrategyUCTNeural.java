@@ -16,7 +16,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * 
  * @author jonathan poulter
  */
-public class UCTNeuralStrategy extends UCTBaseGamer {
+public final class StrategyUCTNeural extends GamerBaseUCT {
 
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
@@ -24,8 +24,7 @@ public class UCTNeuralStrategy extends UCTBaseGamer {
 	/**
 	 * Create the network which will be guiding the out of tree play
 	 */
-	@Override
-	public void strategyMetaSetup() {
+	public void strategyMetaSetup(final long timeout) {
 		// create network
 		CIL2PNet net = CIL2PFactory.modeNetFromGame(getMatch().getGame());
 		cil2pManager = new CIL2PManager(net, roles);
@@ -42,7 +41,7 @@ public class UCTNeuralStrategy extends UCTBaseGamer {
 	 * @throws TransitionDefinitionException 
 	 * @throws GoalDefinitionException 
 	 */
-	protected List<Double> completeRollout(final MachineState from, final int fromLvl) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
+	public MachineState outOfTreeRollout(final MachineState from, final int fromLvl) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		int simDepth = fromLvl;
 		int levelPlayer = (simDepth % roleCount);
 		
@@ -76,7 +75,7 @@ public class UCTNeuralStrategy extends UCTBaseGamer {
 			levelPlayer = (simDepth % roleCount);
 		} while (!theMachine.isTerminal(terminal));
 		// the node was terminal
-		return theMachine.getDoubleGoals(terminal);
+		return terminal;
 	}
 
 	@Override

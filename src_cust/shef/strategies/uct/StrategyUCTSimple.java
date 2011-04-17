@@ -3,7 +3,7 @@ package shef.strategies.uct;
 import java.util.List;
 import java.util.Random;
 
-import shef.strategies.uct.UCTBaseGamer;
+import shef.strategies.BaseGamer;
 import util.statemachine.MachineState;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
@@ -15,13 +15,12 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * @author jonathan
  * 
  */
-public final class UCTSimpleStrategy extends UCTBaseGamer {
+public final class StrategyUCTSimple extends GamerBaseUCT {
 
 	/**
 	 * Nothing specific for this simple strategy
 	 */
-	@Override
-	public void strategyMetaSetup() {};
+	public void strategyMetaSetup(final long timeout) {};
 	
 	/**
 	 * Random rollout to a terminal state
@@ -33,13 +32,13 @@ public final class UCTSimpleStrategy extends UCTBaseGamer {
 	 * @throws TransitionDefinitionException 
 	 * @throws GoalDefinitionException 
 	 */
-	protected List<Double> completeRollout(MachineState from, int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
+	public MachineState outOfTreeRollout(MachineState from, int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 		MachineState terminal = from;
 		do{
             terminal = theMachine.getNextState(terminal, theMachine.getRandomJointMove(terminal));
         }
 		while(!theMachine.isTerminal(terminal));
-		return theMachine.getDoubleGoals(terminal);
+		return terminal;
 
 	}
 

@@ -7,97 +7,44 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import player.gamer.statemachine.StateMachineGamer;
 import player.gamer.statemachine.reflex.event.ReflexMoveSelectionEvent;
-import player.gamer.statemachine.reflex.gui.ReflexDetailPanel;
-import shef.network.Bipolar;
+
+import shef.strategies.BaseGamer;
 import shef.strategies.uct.tree.StateActionPair;
 import shef.strategies.uct.tree.StateModel;
-import shef.strategies.uct.tree.Tree;
+import shef.strategies.uct.tree.UCTTree;
 import util.statemachine.MachineState;
 import util.statemachine.Move;
-import util.statemachine.Role;
-import util.statemachine.StateMachine;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
-import util.statemachine.implementation.prover.cache.CachedProverStateMachine;
-import apps.player.detail.DetailPanel;
 
 /**
- * A base class for any player based on the UCT and changing the out of tree
- * exploration.
- * 
- * Creates an UCT tree and performs expansion on nodes based on the UCT
- * algorithm. <cite>
  * 
  * @author jonathan
- * 
+ *
  */
-public abstract class UCTBaseGamer extends StateMachineGamer {
-
-	/**
-	 * C in the UCT equation, this alters the balance between exploration and
-	 * exploitation
-	 */
-	protected static final float C = 50;
-
-	/** Role of the player */
-	private Role myRole;
-
-	/** Index of the player's role in the player list */
-	private int myRoleID;
-
-	/** Total number of players */
-	protected int roleCount;
-
+public abstract class GamerBaseUCT extends BaseGamer implements IUCTStrategy{
+	
 	/** UCT tree */
-	private Tree tree;
-
-	/** Number of moves played */
-	private int moveCount;
-
-	/** Handle to the StateMachine governing this player */
-	protected StateMachine theMachine;
-
-	/** The named player roles of this game */
-	protected List<Role> roles;
-
-	/**
-	 * Uses a CachedProverStateMachine
-	 */
-	@Override
-	public StateMachine getInitialStateMachine() {
-		return new CachedProverStateMachine();
-	}
-
-	/**
-	 * Setup the UCT game tree and perform rollouts for as long as possible.
-	 * 
-	 * @param timeout
-	 *            time in ms this meta game stage should be finished by
-	 */
-	@Override
-	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-		// setup essential items
+	private UCTTree tree;
+	
+	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException{
 		final long finishBy = timeout - 1000;
-
-		theMachine = getStateMachine();
-		myRole = getRole();
-		roles = theMachine.getRoles();
-		myRoleID = roles.indexOf(myRole);
-		roleCount = roles.size();
-		moveCount = 0;
-		System.out.println("init " + this.getClass() + "\nas player... " + myRole +" (" + myRoleID + ")");
+		
+		// initial setup of player names etc.
+		super.stateMachineMetaGame(timeout);
+		
+		// create an initial UCT tree
 		try {
-			tree = new Tree(getCurrentState(), this, roleCount);
+			tree = new UCTTree(getCurrentState(), this, roleCount);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		// implementation specific setup
-		strategyMetaSetup();
+		strategyMetaSetup(finishBy);
 		
 		// begin rollouts with time left
 		final StateModel currentSM = tree.getStateLists().get(moveCount).states.get(getStateMachine().getInitialState());
@@ -105,14 +52,15 @@ public abstract class UCTBaseGamer extends StateMachineGamer {
 		int rollCount = 0;
 		System.out.println("beginning rollouts");
 		while (System.currentTimeMillis() < finishBy) {
-			rollout(currentSM);
+			inTreeRollout(currentSM);
 			rollCount++;
 		}
+
 		System.out.println(rollCount + " initial");
 	}
 	
-	public abstract void strategyMetaSetup();
-
+	public abstract void strategyMetaSetup(final long timeout);
+	
 	/**
 	 * As many times as possible in the time available perform rollouts from the
 	 * current state
@@ -150,7 +98,7 @@ public abstract class UCTBaseGamer extends StateMachineGamer {
 				break;
 			}
 
-			rollout(currentSM);
+			inTreeRollout(currentSM);
 			rollCount++;
 
 		}
@@ -163,19 +111,9 @@ public abstract class UCTBaseGamer extends StateMachineGamer {
 		System.out.println(rollCount + " " + selection);
 		return selection;
 	}
-
 	
-
-	/**
-	 * Perform a single UCT rollout
-	 * 
-	 * @param rolloutRootSM
-	 *            state to begin rollout from
-	 * @throws MoveDefinitionException
-	 * @throws TransitionDefinitionException
-	 * @throws GoalDefinitionException
-	 */
-	private void rollout(final StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
+	
+	public void inTreeRollout(final StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		StateModel traverser = rolloutRootSM;
 		
 		// get all of the actions which can be performed from this move 
@@ -199,7 +137,7 @@ public abstract class UCTBaseGamer extends StateMachineGamer {
 						expandLeaf = false;
 					} else {
 						float uctBonus = (float) Math.sqrt(Math.log(traverser.timesExplored) / (float) sap.timesExplored);
-						v[i] = (float) (sap.VALUE[p] + C * uctBonus);
+						v[i] = (float) (sap.VALUE[p] + UCT_NOVELTY_C * uctBonus);
 					}
 					i++;
 				}
@@ -235,30 +173,20 @@ public abstract class UCTBaseGamer extends StateMachineGamer {
 			backupSAPs.add(nextAction);
 		}
 		
-		List<Double> outcome;
+		MachineState terminal;
 		if (!theMachine.isTerminal(traverser.state)) {
 			// complete the rollouts past this UCT horizon
-			outcome = completeRollout(traverser.state, traverser.depth+1);
+			terminal = outOfTreeRollout(traverser.state, traverser.depth+1);
 		} else {
-			outcome = theMachine.getDoubleGoals(traverser.state);
+			terminal = traverser.state;
 		}
-
+		
+		List<Double> outcome =  theMachine.getDoubleGoals(terminal);
+		
 		// distribute goal to each player
 		backpropogate(backupSAPs, backupStates, outcome);
 	}
-
-	/**
-	 * Complete the rest of this UCT rollout past the UCT horizon
-	 * 
-	 * @param from
-	 *            the state to complete rollout from
-	 * @return the terminal state reached
-	 * @throws MoveDefinitionException 
-	 * @throws TransitionDefinitionException 
-	 * @throws GoalDefinitionException 
-	 */
-	protected abstract List<Double> completeRollout(final MachineState from, final int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException;
-
+	
 	/**
 	 * Discount factor applied to each backup of the reward. The reward should
 	 * have a great effect on the states close to it and less to those further
@@ -274,7 +202,7 @@ public abstract class UCTBaseGamer extends StateMachineGamer {
 	 * @param backupStates the states visited
 	 * @param outcome the resulting reqard from the terminal state reach on rollout
 	 */
-	private void backpropogate(final List<StateActionPair> backupStatesPairs, final List<StateModel> backupStates, List<Double> outcome) {
+	public void backpropogate(final List<StateActionPair> backupStatesPairs, final List<StateModel> backupStates, List<Double> outcome) {
 		for (StateModel m : backupStates) {
 			m.timesExplored++;
 		}
@@ -290,10 +218,4 @@ public abstract class UCTBaseGamer extends StateMachineGamer {
 			}
 		}
 	}
-
-	@Override
-	public DetailPanel getDetailPanel() {
-		return new ReflexDetailPanel();
-	}
-
 }

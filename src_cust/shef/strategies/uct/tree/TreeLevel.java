@@ -12,7 +12,7 @@ import util.statemachine.MachineState;
  * @author jonathan
  *
  */
-public class Level {
+public class TreeLevel {
 	public final HashMap<MachineState, StateModel> states = new HashMap<MachineState, StateModel>(50);
 
 	public void print(StringBuilder b) {

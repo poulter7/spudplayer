@@ -19,8 +19,8 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * @author jonathan
  * 
  */
-public final class Tree {
-	private final ArrayList<Level> stateLists = new ArrayList<Level>(100);
+public final class UCTTree {
+	private final ArrayList<TreeLevel> stateLists = new ArrayList<TreeLevel>(100);
 	private final StateMachine sm;
 	private final int num_players;
 
@@ -35,10 +35,10 @@ public final class Tree {
 	 * @throws TransitionDefinitionException
 	 * @throws MoveDefinitionException
 	 */
-	public Tree(MachineState initMatch, StateMachineGamer smg, int num_players) throws InterruptedException, MoveDefinitionException, TransitionDefinitionException {
+	public UCTTree(MachineState initMatch, StateMachineGamer smg, int num_players) throws InterruptedException, MoveDefinitionException, TransitionDefinitionException {
 		this.sm = smg.getStateMachine();
 		this.num_players = num_players;
-		Level rootLevel = new Level();
+		TreeLevel rootLevel = new TreeLevel();
 		StateModel rootNodeModel = new StateModel(initMatch, 0);
 		stateLists.add(rootLevel);
 		
@@ -63,9 +63,9 @@ public final class Tree {
 			List<Move> m = legalMoves.get(i);
 			MachineState nextState = sm.getNextState(nodeModel.state, m);
 			StateModel nextStateModel = new StateModel( nextState, nodeModel.depth+1);
-			Level childLevel = null;
+			TreeLevel childLevel = null;
 			if(stateLists.size() <= nodeModel.depth+1){
-				childLevel = new Level();
+				childLevel = new TreeLevel();
 				stateLists.add(childLevel);
 			} else {
 				childLevel = stateLists.get(nodeModel.depth+1);
@@ -84,7 +84,7 @@ public final class Tree {
 	}
 
 	public void print(StringBuilder b) {
-		b.append("Tree\n");
+		b.append("UCTTree\n");
 		for (int i = 0; i < stateLists.size(); i++) { // for
 			b.append("level " + i + " \n");
 			stateLists.get(i).print(b);
@@ -93,7 +93,7 @@ public final class Tree {
 		}
 	}
 
-	public ArrayList<Level> getStateLists() {
+	public ArrayList<TreeLevel> getStateLists() {
 		return stateLists;
 	}
 }

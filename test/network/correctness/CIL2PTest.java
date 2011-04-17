@@ -49,13 +49,13 @@ public class CIL2PTest extends TestCase {
      * <pre>
      * (<= (goal W 100)
      * 	(B ?x ?y)
-     * 	(C ?x ?y))
+     * 	(UCT_NOVELT_C ?x ?y))
      * 
      * (<= (B ?c ?d )
      * 	(true (cell ?c))
      * 	(true (door ?d)))
      * 	
-     * (<= (C ?c ?d)
+     * (<= (UCT_NOVELT_C ?c ?d)
      * 	(true (cell ?c))
      * 	(true (door ?d)))
      * </pre>
@@ -134,12 +134,12 @@ public class CIL2PTest extends TestCase {
         cil2p_manager = new CIL2PManager(cn);
         double maxError = 1 - cil2p_manager.network.Amin;
         assertArrayEquals(new int[] { 2, 1, 1 }, cil2p_manager.getInfo());
-        assertEquals(1, cil2p_manager.getOutput(1, 1)[0], maxError); // B C : 1
-        assertEquals(-1, cil2p_manager.getOutput(1, -1)[0], maxError); // B¬C :
+        assertEquals(1, cil2p_manager.getOutput(1, 1)[0], maxError); // B UCT_NOVELT_C : 1
+        assertEquals(-1, cil2p_manager.getOutput(1, -1)[0], maxError); // B¬UCT_NOVELT_C :
                                                                        // -1
-        assertEquals(-1, cil2p_manager.getOutput(-1, 1)[0], maxError); // ¬B C :
+        assertEquals(-1, cil2p_manager.getOutput(-1, 1)[0], maxError); // ¬B UCT_NOVELT_C :
                                                                        // -1
-        assertEquals(-1, cil2p_manager.getOutput(-1, -1)[0], maxError); // ¬B¬C
+        assertEquals(-1, cil2p_manager.getOutput(-1, -1)[0], maxError); // ¬B¬UCT_NOVELT_C
                                                                         // : -1
     }
 
@@ -157,11 +157,11 @@ public class CIL2PTest extends TestCase {
         cil2p_manager = new CIL2PManager(cn);
         double maxError = 1 - cil2p_manager.getMaxError();
         assertArrayEquals(new int[] { 2, 2, 1 }, cil2p_manager.getInfo());
-        assertEquals(1, cil2p_manager.getOutput(1, 1)[0], maxError); // B C : 1
-        assertEquals(1, cil2p_manager.getOutput(1, -1)[0], maxError); // B¬C : 1
-        assertEquals(1, cil2p_manager.getOutput(-1, 1)[0], maxError); // ¬B C :
+        assertEquals(1, cil2p_manager.getOutput(1, 1)[0], maxError); // B UCT_NOVELT_C : 1
+        assertEquals(1, cil2p_manager.getOutput(1, -1)[0], maxError); // B¬UCT_NOVELT_C : 1
+        assertEquals(1, cil2p_manager.getOutput(-1, 1)[0], maxError); // ¬B UCT_NOVELT_C :
                                                                       // 1
-        assertEquals(-1, cil2p_manager.getOutput(-1, -1)[0], maxError); // ¬B¬C
+        assertEquals(-1, cil2p_manager.getOutput(-1, -1)[0], maxError); // ¬B¬UCT_NOVELT_C
                                                                         // : -1
     }
 
@@ -202,20 +202,20 @@ public class CIL2PTest extends TestCase {
 
         assertArrayEquals(new int[] { 6, 3, 2 }, cil2p_manager.getInfo());
         assertEquals(-1, cil2p_manager.getOutput(-1, -1, -1, -1, -1)[0],
-                maxError); // ¬B¬C¬D ¬E¬F
+                maxError); // ¬B¬UCT_NOVELT_C¬D ¬E¬F
         assertEquals(-1, cil2p_manager.getOutput(1, -1, -1, -1, -1)[0],
-                maxError); // B¬C¬D ¬E¬F
+                maxError); // B¬UCT_NOVELT_C¬D ¬E¬F
         assertEquals(1, cil2p_manager.getOutput(1, 1, -1, -1, -1)[0], maxError); // B
-                                                                                 // C¬D
+                                                                                 // UCT_NOVELT_C¬D
                                                                                  // ¬E¬F
         assertEquals(-1, cil2p_manager.getOutput(1, 1, 1, -1, -1)[0], maxError); // B
-                                                                                 // C
+                                                                                 // UCT_NOVELT_C
                                                                                  // D
                                                                                  // ¬E¬F
         assertEquals(-1, cil2p_manager.getOutput(-1, 1, -1, -1, -1)[0],
-                maxError); // ¬B C¬D ¬E¬F
+                maxError); // ¬B UCT_NOVELT_C¬D ¬E¬F
         assertEquals(-1, cil2p_manager.getOutput(-1, 1, -1, -1, -1)[0],
-                maxError); // ¬B¬C D ¬E¬F
+                maxError); // ¬B¬UCT_NOVELT_C D ¬E¬F
     }
 
     /**
@@ -234,22 +234,22 @@ public class CIL2PTest extends TestCase {
         double maxError = 1 - cil2p_manager.getMaxError();
 
         assertArrayEquals(new int[] { 4, 3, 2 }, cil2p_manager.getInfo());
-        assertEquals(1, cil2p_manager.getOutput(1, 1, 1)[0], maxError); // A B C
+        assertEquals(1, cil2p_manager.getOutput(1, 1, 1)[0], maxError); // A B UCT_NOVELT_C
                                                                         // -> 1
         assertEquals(-1, cil2p_manager.getOutput(-1, 1, 1)[0], maxError); // ¬A
-                                                                          // B C
+                                                                          // B UCT_NOVELT_C
                                                                           // ->
                                                                           // -1
-        assertEquals(-1, cil2p_manager.getOutput(-1, -1, -1)[0], maxError); // ¬A¬B¬C
+        assertEquals(-1, cil2p_manager.getOutput(-1, -1, -1)[0], maxError); // ¬A¬B¬UCT_NOVELT_C
                                                                             // ->
                                                                             // -1
         assertEquals(1, cil2p_manager.getOutput(1, 1, -1)[0], maxError); // A
-                                                                         // B¬C
+                                                                         // B¬UCT_NOVELT_C
                                                                          // -> 1
         assertEquals(1, cil2p_manager.getOutput(1, -1, 1)[0], maxError); // A¬B
-                                                                         // C ->
+                                                                         // UCT_NOVELT_C ->
                                                                          // 1
-        assertEquals(-1, cil2p_manager.getOutput(1, -1, -1)[0], maxError); // A¬B¬C
+        assertEquals(-1, cil2p_manager.getOutput(1, -1, -1)[0], maxError); // A¬B¬UCT_NOVELT_C
                                                                            // ->
                                                                            // -1
     }
