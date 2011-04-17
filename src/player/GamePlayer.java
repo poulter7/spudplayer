@@ -6,12 +6,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import player.gamer.Gamer;
-import player.gamer.statemachine.reflex.random.RandomGamer;
-import player.gamer.statemachine.simple.SimpleMonteCarloGamer;
 import player.event.PlayerDroppedPacketEvent;
 import player.event.PlayerReceivedMessageEvent;
 import player.event.PlayerSentMessageEvent;
+import player.gamer.Gamer;
+import player.gamer.statemachine.simple.SimpleMonteCarloGamer;
 import player.request.factory.RequestFactory;
 import player.request.grammar.Request;
 import shef.strategies.ann.StrategyAlphaBeta;
