@@ -144,9 +144,7 @@
                 <exclude name="**/*.ecore"/>
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
-                <exclude name="strategies/uct/UCTBaseStrategy.java"/>
                 <exclude name="strategies/uct/tree/package-info.java"/>
-                <exclude name="strategies/uct/NEWCIL2PNet.java"/>
                 <exclude name="network/package-info.java"/>
                 <exclude name="strategies/uct/package-info.java"/>
                 <exclude name="shef/strategies/uct/package-info.java"/>
@@ -195,8 +193,6 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src"/>
-            <exclude name="strategies/uct/UCTNeuralStrategy.java"/>
-            <exclude name="strategies/uct/UCTSimpleStrategy.java"/>
             <classpath refid="GGP_Base.classpath"/>
         </javac>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
@@ -209,9 +205,7 @@
         </javac>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src_cust"/>
-            <exclude name="strategies/uct/UCTBaseStrategy.java"/>
             <exclude name="strategies/uct/tree/package-info.java"/>
-            <exclude name="strategies/uct/NEWCIL2PNet.java"/>
             <exclude name="network/package-info.java"/>
             <exclude name="strategies/uct/package-info.java"/>
             <exclude name="shef/strategies/uct/package-info.java"/>
