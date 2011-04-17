@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import player.gamer.statemachine.StateMachineGamer;
 import player.gamer.statemachine.reflex.event.ReflexMoveSelectionEvent;
 import player.gamer.statemachine.reflex.gui.ReflexDetailPanel;
+import shef.network.Bipolar;
 import shef.strategies.uct.tree.StateActionPair;
 import shef.strategies.uct.tree.StateModel;
 import shef.strategies.uct.tree.Tree;
@@ -108,7 +109,6 @@ public abstract class UCTBaseGamer extends StateMachineGamer {
 			rollCount++;
 		}
 		System.out.println(rollCount + " initial");
-		
 	}
 	
 	public abstract void strategyMetaSetup();

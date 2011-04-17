@@ -32,46 +32,47 @@ public class CIL2PNet {
 
 	private static final int RECURRENT_WEIGHT = 1;
 
-	
 	final NeuralNetwork n = new NeuralNetwork();
-	Layer inputLayer = new Layer();
-	Layer outputLayer = new Layer();
-	Layer hiddenLayer = new Layer();
+	final Layer inputLayer = new Layer();
+	final Layer outputLayer = new Layer();
+	final Layer hiddenLayer = new Layer();
 
-	HashMap<Expression, Neuron> inputHash = new HashMap<Expression, Neuron>();
-	HashMap<Expression, ThresholdNeuron> outputHash = new HashMap<Expression, ThresholdNeuron>();
+	private final HashMap<Expression, Neuron> inputHash = new HashMap<Expression, Neuron>();
+	private final HashMap<Expression, ThresholdNeuron> outputHash = new HashMap<Expression, ThresholdNeuron>();
 	
-	HashMap<Predicate, Neuron> queryHash = new HashMap<Predicate, Neuron>();
-	HashMap<GdlRelation, Neuron> queryHashGGPBase = new HashMap<GdlRelation, Neuron>();
+	private final HashMap<Predicate, Neuron> queryHash = new HashMap<Predicate, Neuron>();
 	
-	HashMap<Goal, ThresholdNeuron> goalHash = new HashMap<Goal, ThresholdNeuron>();
-	int inputNeuronCount;
-	int goalNeuronCount;
-	int queryNeuronCount;
-	List<Tuple<Expression, Integer>> queryNeuronDetails = new ArrayList<Tuple<Expression,Integer>>();
-	List<Tuple<Expression, Integer>> goalNeuronDetails = new ArrayList<Tuple<Expression,Integer>>();
-	private HashMap<Expression, Integer> sameConsequent = new HashMap<Expression, Integer>();
-	HashMap<Expression, Set<ExpList>> clauseUniq= new HashMap<Expression, Set<ExpList>>();
+
+	private final List<Tuple<Expression, Integer>> queryNeuronDetails = new ArrayList<Tuple<Expression,Integer>>();
+	private final HashMap<Expression, Integer> sameConsequent = new HashMap<Expression, Integer>();
+	private final HashMap<Expression, Set<ExpList>> clauseUniq= new HashMap<Expression, Set<ExpList>>();
+
+	final List<Tuple<Expression, Integer>> goalNeuronDetails = new ArrayList<Tuple<Expression,Integer>>();
+	final HashMap<GdlRelation, Neuron> queryHashGGPBase = new HashMap<GdlRelation, Neuron>();
+	final HashMap<Goal, ThresholdNeuron> goalHash = new HashMap<Goal, ThresholdNeuron>();
 
 
-    int[] queryNeuronIndices = null;
 	
 
 	private static final double BETA = 1;
 	private static final double ALPHA_SHIFT = 0.2;
 	private static final double AMIN_SHIFT = 0.0003;
+	private static final TransferFunction g = new Linear();
+	private static final TransferFunction h = new Bipolar(BETA);
+	private static final InputFunction inputNeuronIn = new InputFunction();
+	private static final InputFunction outputNeuronIn = new InputFunction();
 
 
-	private TransferFunction h = new Bipolar(BETA);
-	private TransferFunction g = new Linear();
+	private final List<Node> clause = new ArrayList<Node>();
 	
-	private InputFunction inputNeuronIn = new InputFunction();
-	private InputFunction outputNeuronIn = new InputFunction();
 	
+	private final boolean weightOne;
+
 	public double Amin;
-
-	private boolean weightOne;
-	private List<Node> clause = new ArrayList<Node>();
+	int inputNeuronCount;
+	int goalNeuronCount;
+	int queryNeuronCount;
+	int[] queryNeuronIndices = null;
 
 	/**
 	 * This produces a neural shef.network which represents a set 
@@ -203,9 +204,9 @@ public class CIL2PNet {
 			ThresholdNeuron hiddenNeuron = new ThresholdNeuron(new InputFunction(), h);
 			for (Node chNode : n.getChildren()) {
 				double conW = chNode.negated ? -W : W;
-				hiddenNeuron.addInputConnection(inputHash.get(chNode.getHead()), conW);
+				hiddenNeuron.addInputConnection(getInputHash().get(chNode.getHead()), conW);
 			}
-			ThresholdNeuron out = outputHash.get(n.getHead());
+			ThresholdNeuron out = getOutputHash().get(n.getHead());
 			out.addInputConnection(hiddenNeuron, W);
 			double thresh = ((1 + Amin) * (n.getChildCount() - 1)) * (W / 2.0);
 			hiddenNeuron.setThresh(thresh);
@@ -217,12 +218,12 @@ public class CIL2PNet {
 		 * input neuron. This gives the partially recurrent nature to the CIL2P
 		 * algorithm
 		 */
-		for (Entry<Expression, ThresholdNeuron> e : outputHash.entrySet()) {
+		for (Entry<Expression, ThresholdNeuron> e : getOutputHash().entrySet()) {
 			Expression key = e.getKey();
 			ThresholdNeuron outNeuron = e.getValue();
-			if (inputHash.containsKey(key)) {
+			if (getInputHash().containsKey(key)) {
 				// a match exists for key, add a recurrent input
-				Neuron inNeuron = inputHash.get(e.getKey());
+				Neuron inNeuron = getInputHash().get(e.getKey());
 				inNeuron.addInputConnection(outNeuron, RECURRENT_WEIGHT);
 			}
 
@@ -232,20 +233,20 @@ public class CIL2PNet {
 			outNeuron.setThresh(thresh);
 		}
 		// save the query neuron indices so it is easy to query
-		queryNeuronCount = queryNeuronDetails.size();
+		queryNeuronCount = getQueryNeuronDetails().size();
 		queryNeuronIndices = new int[queryNeuronCount];
 		for (int i = 0; i < queryNeuronCount; i++) {
-			queryNeuronIndices[i] = queryNeuronDetails.get(i).getSecond();
+			queryNeuronIndices[i] = getQueryNeuronDetails().get(i).getSecond();
 		}
 
-		inputNeuronCount = inputHash.size();
-		goalNeuronCount = goalNeuronDetails.size();
+		inputNeuronCount = getInputHash().size();
+		goalNeuronCount = getGoalNeuronDetails().size();
 		// save the shef.network externally to view in EasyNeuron
 		n.save("test6.nnet");
 		
 		// query neurons should have their expression rebuilt to (true (p))
 		// also make a copy which is accessible using GGP bases's syntax
-		for(Tuple<Expression, Integer> t: queryNeuronDetails){
+		for(Tuple<Expression, Integer> t: getQueryNeuronDetails()){
 		    try {
 		    	Predicate truePred = new Predicate("true", new Expression[]{t.getFirst()});
 		    	GdlRelation gdlTruePred = (GdlRelation) GdlFactory.create(truePred.toString().toLowerCase());		    	
@@ -272,17 +273,17 @@ public class CIL2PNet {
 	 * @return
 	 */
 	private void addInputNeuron(Expression key, boolean asQueryNode) {
-		Neuron inNeuron = inputHash.get(key);
+		Neuron inNeuron = getInputHash().get(key);
 
 		// add a reference 
 		// add a new neuron to the hash if necessary
 		if (inNeuron == null) {
 			inNeuron = new Neuron(inputNeuronIn, g);
 			inputLayer.addNeuron(inNeuron);
-			inputHash.put(key, inNeuron);
+			getInputHash().put(key, inNeuron);
 			
 			if(asQueryNode){
-				queryNeuronDetails.add(	new Tuple<Expression, Integer>(key, inputLayer.getNeuronsCount() - 1));
+				getQueryNeuronDetails().add(	new Tuple<Expression, Integer>(key, inputLayer.getNeuronsCount() - 1));
 			}
 		}
 	}
@@ -294,16 +295,16 @@ public class CIL2PNet {
 	 * @param key
 	 */
 	private void addOutputNeuron(Expression key) {
-		ThresholdNeuron outNeuron = outputHash.get(key);
+		ThresholdNeuron outNeuron = getOutputHash().get(key);
 		if (outNeuron == null) {
 			outNeuron = new ThresholdNeuron(outputNeuronIn, h);
 			outputLayer.addNeuron(outNeuron);
-			outputHash.put(key, outNeuron);
+			getOutputHash().put(key, outNeuron);
 			sameConsequent.put(key, 1);
 			
 			if (key instanceof Predicate 
 					&& ((Predicate) key).firstOp().toString().equalsIgnoreCase("GOAL")) {
-				goalNeuronDetails.add(
+				getGoalNeuronDetails().add(
 						new Tuple<Expression, Integer>( key, outputLayer.getNeuronsCount() - 1)
 						);
 				Predicate goalPredicate = (Predicate) key;
@@ -315,5 +316,25 @@ public class CIL2PNet {
 			Integer i = sameConsequent.get(key);
 			sameConsequent.put(key, i + 1);
 		}
+	}
+
+
+	public List<Tuple<Expression, Integer>> getGoalNeuronDetails() {
+		return goalNeuronDetails;
+	}
+
+
+	public HashMap<Expression, Neuron> getInputHash() {
+		return inputHash;
+	}
+
+
+	public List<Tuple<Expression, Integer>> getQueryNeuronDetails() {
+		return queryNeuronDetails;
+	}
+
+
+	public HashMap<Expression, ThresholdNeuron> getOutputHash() {
+		return outputHash;
 	}
 }

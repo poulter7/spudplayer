@@ -19,7 +19,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
 public class UCTNeuralStrategy extends UCTBaseGamer {
 
 	/** Method of interacting with the network */
-	private CIL2PManager cil2pManager;
+	protected CIL2PManager cil2pManager;
 
 	/**
 	 * Create the network which will be guiding the out of tree play

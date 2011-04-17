@@ -46,19 +46,20 @@ public class CIL2PManager {
 	 * Network being managed
 	 */
 	public CIL2PNet network;
-	
-	public CIL2PManager (CIL2PNet network){
+
+	public CIL2PManager(CIL2PNet network) {
 		this.network = network;
 	}
-	
+
 	/**
 	 * Create a manager for this network
+	 * 
 	 * @param <E>
 	 * @param network
 	 */
-	public <E> CIL2PManager(CIL2PNet network, List<E> orderedRole){
+	public <E> CIL2PManager(CIL2PNet network, List<E> orderedRole) {
 		this.network = network;
-		if(orderedRole.get(0) instanceof Role){
+		if (orderedRole.get(0) instanceof Role) {
 			for (E r : orderedRole) {
 				Atom player = (Atom) new Atom(r.toString().toUpperCase());
 				playerList.add(player);
@@ -183,8 +184,7 @@ public class CIL2PManager {
 	 * Find the output of the shef.network given an input vector of the state
 	 * This requires an ordered set of input
 	 * 
-	 * <b>This should be FAST</b> as this will be the function called by the UCT
-	 * functions to complete UCT rollouts
+	 * <b>This should only be used in testing</b> not optimized
 	 * 
 	 * @param queryValues
 	 *            an ordered array of input values to each neuron
@@ -280,10 +280,10 @@ public class CIL2PManager {
 	public void printInfo() {
 
 		System.out.println("# input  units:" + network.inputLayer.getNeurons().size() + "(total predicates)");
-		System.out.println(network.inputHash.keySet());
+		System.out.println(network.getInputHash().keySet());
 		System.out.println("# hidden units:" + network.hiddenLayer.getNeurons().size() + "(total clauses)");
 		System.out.println("# output units:" + network.outputLayer.getNeurons().size() + "(total unique heads)");
-		System.out.println(network.outputHash.keySet());
+		System.out.println(network.getOutputHash().keySet());
 
 	}
 
@@ -295,7 +295,7 @@ public class CIL2PManager {
 	 */
 	public int[] getPlayInfo() {
 
-		return new int[] { network.queryNeuronDetails.size(), network.goalNeuronDetails.size() };
+		return new int[] { network.getQueryNeuronDetails().size(), network.getGoalNeuronDetails().size() };
 
 	}
 
@@ -305,10 +305,10 @@ public class CIL2PManager {
 	 */
 	public void printPlayInfo() {
 
-		System.out.println("# query units " + network.queryNeuronDetails.size());
-		System.out.println(network.queryNeuronDetails);
-		System.out.println("# goal units " + network.goalNeuronDetails.size());
-		System.out.println(network.goalNeuronDetails);
+		System.out.println("# query units " + network.getQueryNeuronDetails().size());
+		System.out.println(network.getQueryNeuronDetails());
+		System.out.println("# goal units " + network.getGoalNeuronDetails().size());
+		System.out.println(network.getGoalNeuronDetails());
 
 	}
 
@@ -329,8 +329,8 @@ public class CIL2PManager {
 	 */
 	public void printQueryInputActivation() {
 
-		for (Tuple<Expression, Integer> tup : network.queryNeuronDetails) {
-			System.out.println(tup.getFirst() + "\t-> " + network.inputHash.get(tup.getFirst()).getOutput());
+		for (Tuple<Expression, Integer> tup : network.getQueryNeuronDetails()) {
+			System.out.println(tup.getFirst() + "\t-> " + network.getInputHash().get(tup.getFirst()).getOutput());
 		}
 
 	}
@@ -341,7 +341,7 @@ public class CIL2PManager {
 	 */
 	public void printInputActivation() {
 
-		for (Entry<Expression, Neuron> tup : network.inputHash.entrySet()) {
+		for (Entry<Expression, Neuron> tup : network.getInputHash().entrySet()) {
 			System.out.println(tup.getKey() + "\tin[" + tup.getValue().getInputConnections().size() + "]: " + tup.getValue().getNetInput() + "out:[" + tup.getValue().getOutConnections().size() + "]: " + tup.getValue().getOutput());
 		}
 
@@ -353,8 +353,8 @@ public class CIL2PManager {
 	 */
 	public void printGoalOutputActivation() {
 
-		for (Tuple<Expression, Integer> tup : network.goalNeuronDetails) {
-			System.out.println(tup.getFirst() + "\t-> " + network.outputHash.get(tup.getFirst()).getOutput());
+		for (Tuple<Expression, Integer> tup : network.getGoalNeuronDetails()) {
+			System.out.println(tup.getFirst() + "\t-> " + network.getOutputHash().get(tup.getFirst()).getOutput());
 		}
 
 	}
@@ -365,7 +365,7 @@ public class CIL2PManager {
 	 */
 	public void printOutputActivation() {
 
-		for (Entry<Expression, ThresholdNeuron> tup : network.outputHash.entrySet()) {
+		for (Entry<Expression, ThresholdNeuron> tup : network.getOutputHash().entrySet()) {
 			String inps = "";
 			for (Connection in : tup.getValue().getInputConnections()) {
 				inps = inps + (in.getWeight().getValue() < 0 ? "N" : "") + in.getFromNeuron().getOutput() + " ";
@@ -394,7 +394,7 @@ public class CIL2PManager {
 	public List<Expression> getQueryPredicates() {
 
 		List<Expression> returnQs = new ArrayList<Expression>();
-		for (Tuple<Expression, Integer> tup : network.queryNeuronDetails) {
+		for (Tuple<Expression, Integer> tup : network.getQueryNeuronDetails()) {
 			returnQs.add(tup.getFirst());
 		}
 
