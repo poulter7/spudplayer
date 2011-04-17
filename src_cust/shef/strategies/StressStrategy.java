@@ -1,4 +1,4 @@
-package shef.strategies.uct;
+package shef.strategies;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,6 +10,8 @@ import player.gamer.exception.MetaGamingException;
 import player.gamer.exception.MoveSelectionException;
 import player.request.factory.RequestFactory;
 import player.request.factory.exceptions.RequestFormatException;
+import shef.strategies.ann.StrategyAlphaBeta;
+import shef.strategies.uct.StrategyUCTNeural;
 import util.game.Game;
 import util.gdl.factory.GdlFactory;
 import util.gdl.factory.exceptions.GdlFormatException;
@@ -30,7 +32,8 @@ public final class StressStrategy {
 	
 	public static void main(String[] args) throws IOException, RequestFormatException, SymbolFormatException, GdlFormatException, MetaGamingException, MoveSelectionException, TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 
-		Gamer st = new StrategyUCTNeural();
+		Gamer st = new StrategyAlphaBeta();
+//		Gamer st = new StrategyUCTNeural();
 //		Gamer st = new StrategyUCTSimple();
 		
 		GamePlayer player = new GamePlayer(9000, st);

@@ -14,6 +14,7 @@ import player.event.PlayerReceivedMessageEvent;
 import player.event.PlayerSentMessageEvent;
 import player.request.factory.RequestFactory;
 import player.request.grammar.Request;
+import shef.strategies.ann.StrategyAlphaBeta;
 import shef.strategies.uct.StrategyUCTNeural;
 import shef.strategies.uct.StrategyUCTSimple;
 import util.http.HttpReader;
@@ -107,6 +108,7 @@ public final class GamePlayer extends Thread implements Subject {
 			case 1: strat = new StrategyUCTSimple(); 		break;
 			case 2: strat = new StrategyUCTNeural(); 		break;
 			case 3: strat = new SimpleMonteCarloGamer(); 	break;
+			case 4: strat = new StrategyAlphaBeta();		break;
 			default: throw new RuntimeException("Invalid player chosen cannot continue");
 			}
 			GamePlayer player = new GamePlayer(Integer.valueOf(args[0]), strat);

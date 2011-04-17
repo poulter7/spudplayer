@@ -21,65 +21,61 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * @author jonathan
  * 
  */
-public class StrategyAlphaBeta extends BaseGamer {
+public final class StrategyAlphaBeta extends BaseGamer implements ICIL2PUser {
 
+	/** Depth of the Alpha-Beta search */
 	private static final int AB_DEPTH = 5;
-	
+
+	/** Handle to the network manager */
 	private CIL2PManager cil2pManager;
-	private List<TreeNodeAlphaBeta> rootMoves = new ArrayList<TreeNodeAlphaBeta>();
+	private List<TreeNodeAlphaBeta> rootMoves;
 	private long currentTimeout;
 
-
+	/**
+	 * Create the network which will guide the AlphaBetaStrategy
+	 * 
+	 * @param timeout
+	 *            the time this must be completed by
+	 */
 	@Override
 	public void stateMachineMetaGame(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 		// setup essential items
 		super.stateMachineMetaGame(timeout);
-	
+
 		// create network
 		final CIL2PNet net = CIL2PFactory.modeNetFromGame(getMatch().getGame());
 		cil2pManager = new CIL2PManager(net, roles);
-	
 	}
 
-
+	/**
+	 * Runs the alpha beta search strategy guided by the generated Neural
+	 * Network
+	 * 
+	 * @param timeout
+	 *            the time this must be completed by
+	 * @return the selected move
+	 */
 	@Override
-	public Move stateMachineSelectMove(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-
-		System.out.println("--");
-
+	public Move stateMachineSelectMove(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
+		currentTimeout = timeout - 1000;
 		Move chosenMove = null;
-		try {
-			chosenMove = runAlphaBeta(getCurrentState());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		rootMoves = new ArrayList<TreeNodeAlphaBeta>();
+		
+		final TreeNodeAlphaBeta mmRoot = new TreeNodeAlphaBeta(getCurrentState());
+		alphaBeta(mmRoot, AB_DEPTH, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, myRoleID);
+		for (TreeNodeAlphaBeta m : rootMoves) {
+			System.out.println(m);
 		}
+		
+		// return the highest value node
+		TreeNodeAlphaBeta m = Collections.max(rootMoves);
+		System.out.println("-> " + m);
+		chosenMove = m.getMove();
 		return chosenMove;
 
 	}
 
-
-	Move runAlphaBeta(MachineState root) throws InterruptedException, MoveDefinitionException, TransitionDefinitionException {
-		rootMoves = new ArrayList<TreeNodeAlphaBeta>();
-		TreeNodeAlphaBeta mmRoot = new TreeNodeAlphaBeta(root);
-		alphaBeta(mmRoot, AB_DEPTH, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, myRoleID);
-		// return the highest value node
-		for (TreeNodeAlphaBeta m : rootMoves) {
-			System.out.println(m);
-		}
-		TreeNodeAlphaBeta m = Collections.max(rootMoves);
-//		if (rootMoves.isEmpty()) {
-////			List<IMove[]> moves = root.getState().getCombinedLegalMoves();
-////			System.out.println(moves);
-//			return moves.get(0);
-//		}
-//		m.g
-		// XXX return a move
-		return null;
-//		return m.getGameNode().getMoves();
-
-	}
-	
 	/**
 	 * Performs alpha-beta search
 	 * 
@@ -98,33 +94,32 @@ public class StrategyAlphaBeta extends BaseGamer {
 	 *            whether playing as MAX (1) or MIN (-1)
 	 * @return
 	 * @throws InterruptedException
-	 * @throws MoveDefinitionException 
-	 * @throws TransitionDefinitionException 
+	 * @throws MoveDefinitionException
+	 * @throws TransitionDefinitionException
 	 */
-	double alphaBeta(TreeNodeAlphaBeta node, int depth, double alpha, double beta, int player) throws InterruptedException, MoveDefinitionException, TransitionDefinitionException {
+	double alphaBeta(final TreeNodeAlphaBeta node, final int depth, double alpha, double beta, final int player) throws MoveDefinitionException, TransitionDefinitionException {
 
-		int nextPlayer = (player + 1) % roleCount;
-		MachineState curGS = node.getState();
+		final int nextPlayer = (player + 1) % roleCount;
+		final MachineState curGS = node.getState();
 		// if the lookahead limit is reached, the node is terminal or
 		// it is necessary to return a value as time is up
 		if (depth == 0 || theMachine.isTerminal(curGS) || System.currentTimeMillis() > currentTimeout) {
 			// heuristic value of node
-			double val = cil2pManager.getStateValue(node.getState(), player);
+			final double val = cil2pManager.getStateValue(node.getState(), player);
 			if (depth == AB_DEPTH - 1) {
 				rootMoves.add(node);
 			}
 			node.setGameValue(val);
 			return val;
 		}
-		
-		List<List<Move>> moves = theMachine.getLegalJointMoves(node.getState());
-		
+
+		final List<List<Move>> moves = theMachine.getLegalJointMoves(node.getState());
 		if (player == roleCount) { // MAX
 			for (List<Move> childMove : moves) { // ALPHA cut
-				
-				MachineState childState = theMachine.getNextState(curGS, childMove);
-				TreeNodeAlphaBeta child = new TreeNodeAlphaBeta(childState);
-				double abResult = alphaBeta(child, depth - 1, alpha, beta, nextPlayer);
+
+				final MachineState childState = theMachine.getNextState(curGS, childMove);
+				final TreeNodeAlphaBeta child = new TreeNodeAlphaBeta(childState, childMove.get(myRoleID));
+				final double abResult = alphaBeta(child, depth - 1, alpha, beta, nextPlayer);
 				alpha = Math.max(alpha, abResult);
 				if (beta <= alpha)
 					break;
@@ -136,7 +131,7 @@ public class StrategyAlphaBeta extends BaseGamer {
 		} else {
 			for (List<Move> childMove : moves) {
 				MachineState childState = theMachine.getNextState(node.getState(), childMove);
-				TreeNodeAlphaBeta child = new TreeNodeAlphaBeta(childState);
+				TreeNodeAlphaBeta child = new TreeNodeAlphaBeta(childState, childMove.get(myRoleID));
 				double abResult = alphaBeta(child, depth - 1, alpha, beta, nextPlayer);
 				beta = Math.min(beta, abResult);
 				if (beta <= alpha) {

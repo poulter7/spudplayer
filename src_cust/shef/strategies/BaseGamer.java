@@ -33,8 +33,6 @@ import apps.player.detail.DetailPanel;
  */
 public abstract class BaseGamer extends StateMachineGamer {
 
-	
-
 	/** Role of the player */
 	protected Role myRole;
 
@@ -61,6 +59,9 @@ public abstract class BaseGamer extends StateMachineGamer {
 		return new CachedProverStateMachine();
 	}
 	
+	/**
+	 * Returns the standard ReflexDetailPanel
+	 */
 	@Override
 	public DetailPanel getDetailPanel() {
 		return new ReflexDetailPanel();
@@ -84,5 +85,4 @@ public abstract class BaseGamer extends StateMachineGamer {
 		System.out.println("init " + this.getClass() + "\nas player... " + myRole +" (" + myRoleID + ")");
 		
 	}
-	
 }
