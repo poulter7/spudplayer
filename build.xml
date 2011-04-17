@@ -6,7 +6,7 @@
               as the first entry and export the buildfile again. -->
 <project basedir="." default="build" name="GGP_Base">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../../usr/lib/eclipse"/>
+    <property name="ECLIPSE_HOME" value="/usr/lib/eclipse"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
@@ -58,8 +58,6 @@
                 <exclude name="**/*.ecore"/>
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
-                <exclude name="strategies/uct/UCTNeuralStrategy.java"/>
-                <exclude name="strategies/uct/UCTSimpleStrategy.java"/>
             </fileset>
         </copy>
         <copy includeemptydirs="false" todir="bin">
