@@ -1,0 +1,5 @@
+(<= (goal white 100)
+	terminal)
+
+(<= terminal
+      (line x))

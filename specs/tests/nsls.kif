@@ -1,0 +1,9 @@
+(<= (goal white 100)
+	doom
+	(true C)
+	(not (true D)))
+(<= (goal white 100)
+	(true E)
+	(true F))
+(<= doom
+	(true B))

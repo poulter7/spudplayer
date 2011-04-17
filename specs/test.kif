@@ -1,0 +1,16 @@
+(role player)
+
+(<= (goal player 100)
+    (predicate))
+    
+(<= (predicate)
+	(move ?x ))
+
+(<= (predicate)
+	(move ?x) (move ?x))
+	
+(<= (prem)
+	(step ?x)
+(move 1)
+(move 2)
+(step 1)

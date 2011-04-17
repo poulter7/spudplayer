@@ -8,6 +8,7 @@ import java.util.List;
 
 import player.gamer.Gamer;
 import player.gamer.statemachine.reflex.random.RandomGamer;
+import player.gamer.statemachine.simple.SimpleMonteCarloGamer;
 import player.event.PlayerDroppedPacketEvent;
 import player.event.PlayerReceivedMessageEvent;
 import player.event.PlayerSentMessageEvent;
@@ -101,10 +102,12 @@ public final class GamePlayer extends Thread implements Subject {
 
 		try {
 			Gamer strat = null;
-			if (Integer.parseInt(args[1]) == 1) {
-				strat = new UCTSimpleStrategy();
-			} else if (Integer.parseInt(args[1]) == 2){
-				strat = new UCTNeuralStrategy();
+			int playerIndex = Integer.parseInt(args[1]);
+			switch(playerIndex){
+			case 1: strat = new UCTSimpleStrategy(); 		break;
+			case 2: strat = new UCTNeuralStrategy(); 		break;
+			case 3: strat = new SimpleMonteCarloGamer(); 	break;
+			default: throw new RuntimeException("Invalid player chosen cannot continue");
 			}
 			GamePlayer player = new GamePlayer(Integer.valueOf(args[0]), strat);
 			player.run();

@@ -20,7 +20,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * 
  */
 public final class Tree {
-	private final ArrayList<Level> stateLists = new ArrayList<Level>();
+	private final ArrayList<Level> stateLists = new ArrayList<Level>(100);
 	private final StateMachine sm;
 	private final int num_players;
 

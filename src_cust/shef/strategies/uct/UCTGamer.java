@@ -1,10 +1,8 @@
 package shef.strategies.uct;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -158,9 +156,9 @@ public abstract class UCTGamer extends StateMachineGamer {
 		}
 		final long stop = System.currentTimeMillis();
 		moveCount++;
-		 StringBuilder sb = new StringBuilder();
-		 tree.print(sb);
-		 System.out.println(sb.toString());
+//		 StringBuilder sb = new StringBuilder();
+//		 tree.print(sb);
+//		 System.out.println(sb.toString());
 		notifyObservers(new ReflexMoveSelectionEvent(moves, selection, stop - start));
 		System.out.println(rollCount + " " + selection);
 		return selection;

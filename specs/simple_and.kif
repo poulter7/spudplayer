@@ -1,0 +1,37 @@
+;(<= (goal black 100)
+;      (true A)
+;      (true B)
+;      (not (true D)))
+;      
+;(<= (goal black 100)
+;      (true E)
+;      (true F))
+;(<= (goal white 100)
+;	  (true G))
+;
+;(<= (goal white 100)
+;	(true A)
+;	(true C))
+(<= (goal white 100)
+	(true B))
+;	(true C))
+;(<= (goal white 100)
+;	(true D))
+;
+;(<= (goal black 100)
+;      (true v1)
+;      (true v3)
+;      (true v4))
+;      
+;(<= (goal black 66)
+;      (true v1)
+;      (true v3))
+;
+;      
+;(<= pred1
+;	(true v1)
+;	(true v2))
+;	
+;(<= pred2
+;	(true v2))
+;

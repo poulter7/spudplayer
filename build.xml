@@ -254,4 +254,10 @@
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
+    <target name="MonteCarloPlayer">
+        <java classname="player.GamePlayer" failonerror="true" fork="yes">
+            <arg line="4003 3"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </java>
+    </target>
 </project>
