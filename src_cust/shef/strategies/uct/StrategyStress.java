@@ -31,8 +31,8 @@ public class StrategyStress {
 	
 	public static void main(String[] args) throws IOException, RequestFormatException, SymbolFormatException, GdlFormatException, MetaGamingException, MoveSelectionException, TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 
-//		Gamer st = new UCTNeuralStrategy();
-		Gamer st = new UCTSimpleStrategy();
+		Gamer st = new UCTNeuralStrategy();
+//		Gamer st = new UCTSimpleStrategy();
 		
 		GamePlayer player = new GamePlayer(9000, st);
 		

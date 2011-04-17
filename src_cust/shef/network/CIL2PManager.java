@@ -40,7 +40,7 @@ public class CIL2PManager {
 	 * 
 	 * This MAY not be necessary, but all sample code thus far suggests
 	 */
-	public final int CALCULATE_MULTIPLE_TIMES = 10;
+	public final int CALCULATE_MULTIPLE_TIMES = 8;
 
 	/**
 	 * Network being managed

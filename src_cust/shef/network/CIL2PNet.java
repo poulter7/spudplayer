@@ -33,7 +33,7 @@ public class CIL2PNet {
 	private static final int RECURRENT_WEIGHT = 1;
 
 	
-	NeuralNetwork n = new NeuralNetwork();
+	final NeuralNetwork n = new NeuralNetwork();
 	Layer inputLayer = new Layer();
 	Layer outputLayer = new Layer();
 	Layer hiddenLayer = new Layer();
@@ -57,7 +57,7 @@ public class CIL2PNet {
     int[] queryNeuronIndices = null;
 	
 
-	private static final double BETA = 5;
+	private static final double BETA = 1;
 	private static final double ALPHA_SHIFT = 0.2;
 	private static final double AMIN_SHIFT = 0.0003;
 
