@@ -11,12 +11,14 @@ import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
 
 /**
- * 
+ * UCT Gamer which creates a neural network
+ * and completes its rollouts using that
  * 
  * @author jonathan poulter
  */
-public class UCTNeuralStrategy extends UCTGamer {
+public class UCTNeuralStrategy extends UCTBaseGamer {
 
+	/** Method of interacting with the network */
 	private CIL2PManager cil2pManager;
 
 	/**
@@ -30,6 +32,16 @@ public class UCTNeuralStrategy extends UCTGamer {
 		
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param from the state to rollout from
+	 * @param the level this rollout takes place from
+	 * 
+	 * @throws MoveDefinitionException 
+	 * @throws TransitionDefinitionException 
+	 * @throws GoalDefinitionException 
+	 */
 	protected List<Double> completeRollout(final MachineState from, final int fromLvl) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		int simDepth = fromLvl;
 		int levelPlayer = (simDepth % roleCount);

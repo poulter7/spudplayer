@@ -33,7 +33,7 @@ import apps.player.detail.DetailPanel;
  * @author jonathan
  * 
  */
-public abstract class UCTGamer extends StateMachineGamer {
+public abstract class UCTBaseGamer extends StateMachineGamer {
 
 	/**
 	 * C in the UCT equation, this alters the balance between exploration and
@@ -59,7 +59,7 @@ public abstract class UCTGamer extends StateMachineGamer {
 	/** Handle to the StateMachine governing this player */
 	protected StateMachine theMachine;
 
-	/** */
+	/** The named player roles of this game */
 	protected List<Role> roles;
 
 	/**
@@ -165,8 +165,6 @@ public abstract class UCTGamer extends StateMachineGamer {
 	}
 
 	
-	private List<StateActionPair> backupSAPs;
-	private List<StateModel> backupStates;
 
 	/**
 	 * Perform a single UCT rollout
@@ -179,15 +177,18 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 */
 	private void rollout(final StateModel rolloutRootSM) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
 		StateModel traverser = rolloutRootSM;
-		List<StateActionPair> actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
-		backupSAPs = new ArrayList<StateActionPair>();
-		backupStates = new ArrayList<StateModel>();
+		
+		// get all of the actions which can be performed from this move 
+		ArrayList<StateActionPair> actions = new ArrayList<StateActionPair>(traverser.actionsPairs.values());
+		ArrayList<StateActionPair> backupSAPs = new ArrayList<StateActionPair>();
+		ArrayList<StateModel> backupStates = new ArrayList<StateModel>();
 
 		boolean expandLeaf = true;
 
 		while (!actions.isEmpty()) {
 			List<Move> toPlay = new ArrayList<Move>();
-			// for each player
+			
+			// for each player discover the best move
 			for (int p = 0; p < roleCount; p++) {
 				expandLeaf = true;
 				int i = 0;
@@ -223,7 +224,9 @@ public abstract class UCTGamer extends StateMachineGamer {
 
 		}
 		
+		// include the last state visited
 		backupStates.add(traverser);
+		
 		if (expandLeaf && !theMachine.isTerminal(traverser.state)) {
 			StateActionPair nextAction = tree.expandNodeAndReturnRandom(traverser);
 			// add the randomly chosen action
@@ -231,9 +234,10 @@ public abstract class UCTGamer extends StateMachineGamer {
 			backupStates.add(traverser);
 			backupSAPs.add(nextAction);
 		}
-
+		
 		List<Double> outcome;
 		if (!theMachine.isTerminal(traverser.state)) {
+			// complete the rollouts past this UCT horizon
 			outcome = completeRollout(traverser.state, traverser.depth+1);
 		} else {
 			outcome = theMachine.getDoubleGoals(traverser.state);
@@ -266,17 +270,21 @@ public abstract class UCTGamer extends StateMachineGamer {
 	 * Update every state visited in this path and update its average. Applying
 	 * a discount factor to the result at every stage.
 	 * 
-	 * @param backupStatesPairs
-	 * @param outcome
+	 * @param backupStatesPairs the state pairs visited
+	 * @param backupStates the states visited
+	 * @param outcome the resulting reqard from the terminal state reach on rollout
 	 */
 	private void backpropogate(final List<StateActionPair> backupStatesPairs, final List<StateModel> backupStates, List<Double> outcome) {
-		// degrade reward to prefer earlier wins
 		for (StateModel m : backupStates) {
 			m.timesExplored++;
 		}
+		
+		// the last entry recieves highest weight of credit
 		Collections.reverse(backupStatesPairs);
 		for(StateActionPair sap : backupStatesPairs){
 			sap.updateAverage(outcome);
+			
+			// degrade reward to prefer earlier wins
 			for (int i = 0; i < roleCount; i++) {
 				outcome.set(i, outcome.get(i) * discountFactor);
 			}

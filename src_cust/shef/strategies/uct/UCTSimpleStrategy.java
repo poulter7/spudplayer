@@ -3,7 +3,7 @@ package shef.strategies.uct;
 import java.util.List;
 import java.util.Random;
 
-import shef.strategies.uct.UCTGamer;
+import shef.strategies.uct.UCTBaseGamer;
 import util.statemachine.MachineState;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
@@ -15,15 +15,20 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * @author jonathan
  * 
  */
-public final class UCTSimpleStrategy extends UCTGamer {
+public final class UCTSimpleStrategy extends UCTBaseGamer {
 
 	/**
 	 * Nothing specific for this simple strategy
 	 */
 	@Override
 	public void strategyMetaSetup() {};
+	
 	/**
 	 * Random rollout to a terminal state
+	 * 
+	 * @param from the state to rollout from
+	 * @param the level this rollout takes place from
+	 * 
 	 * @throws MoveDefinitionException 
 	 * @throws TransitionDefinitionException 
 	 * @throws GoalDefinitionException 
