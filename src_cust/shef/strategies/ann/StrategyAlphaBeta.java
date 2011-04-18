@@ -21,7 +21,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * @author jonathan
  * 
  */
-public final class StrategyAlphaBeta extends BaseGamer implements ICIL2PUser {
+public final class StrategyAlphaBeta extends BaseGamer  {
 
 	/** Depth of the Alpha-Beta search */
 	private static final int AB_DEPTH = 5;

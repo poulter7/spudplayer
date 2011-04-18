@@ -44,10 +44,8 @@ public class CIL2PManager {
 	 */
 	public final int CALCULATE_MULTIPLE_TIMES = 8;
 
-	/**
-	 * Network being managed
-	 */
-	public CIL2PNet network;
+	/** Network being managed */
+	public final CIL2PNet network;
 
 	private final double sigmaOverTwo = 0.005;
 	private final double sigmaOverTwoSq = sigmaOverTwo * sigmaOverTwo;
@@ -62,16 +60,14 @@ public class CIL2PManager {
 	 * @param network
 	 */
 	@SuppressWarnings("unchecked")
-	public <E> CIL2PManager(CIL2PNet network, List<E> orderedRole) {
+	public <E> CIL2PManager(final CIL2PNet network, final List<E> orderedRole) {
 		this.network = network;
 		if (orderedRole.get(0) instanceof Atom) {
 			try {
 				for (E r : orderedRole) {
 					GdlProposition playerProp = (GdlProposition) GdlFactory.create(r.toString().toUpperCase());
 					playerList.add(new Role(playerProp));
-					System.out.println(playerProp);
 				}
-				System.out.println(playerList);
 			} catch (GdlFormatException e) {
 				e.printStackTrace();
 			} catch (SymbolFormatException e) {
@@ -317,9 +313,7 @@ public class CIL2PManager {
 	 *         to consider its output true
 	 */
 	double getMaxError() {
-
-		return network.Amin;
-
+		return network.getAMIN();
 	}
 
 	/**

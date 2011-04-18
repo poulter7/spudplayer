@@ -111,7 +111,7 @@ public class CorrectnessTestsGeneral extends TestCase {
     public void testSimpleX() {
         CIL2PNet net = CIL2PFactory.createNetworkFromFileLocation("tests/x");
         cil2p_manager = new CIL2PManager(net);
-        double maxError = 1 - net.Amin;
+        double maxError = 1 - net.getAMIN();
         // correct layout
         assertArrayEquals(new int[] { 1, 1, 1 }, cil2p_manager.getInfo());
         // correct processing of in/out
@@ -132,7 +132,7 @@ public class CorrectnessTestsGeneral extends TestCase {
     public void testSimpleAnd() {
         CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/and");
         cil2p_manager = new CIL2PManager(cn);
-        double maxError = 1 - cil2p_manager.network.Amin;
+        double maxError = 1 - cil2p_manager.network.getAMIN();
         assertArrayEquals(new int[] { 2, 1, 1 }, cil2p_manager.getInfo());
         assertEquals(1, cil2p_manager.getOutput(1, 1)[0], maxError); // B UCT_NOVELT_C : 1
         assertEquals(-1, cil2p_manager.getOutput(1, -1)[0], maxError); // B¬UCT_NOVELT_C :

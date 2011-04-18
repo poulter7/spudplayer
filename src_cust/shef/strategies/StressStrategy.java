@@ -12,6 +12,7 @@ import player.request.factory.RequestFactory;
 import player.request.factory.exceptions.RequestFormatException;
 import shef.strategies.ann.StrategyAlphaBeta;
 import shef.strategies.uct.StrategyUCTNeural;
+import shef.strategies.uct.StrategyUCTSimple;
 import util.game.Game;
 import util.gdl.factory.GdlFactory;
 import util.gdl.factory.exceptions.GdlFormatException;
@@ -26,6 +27,11 @@ import util.symbol.factory.exceptions.SymbolFormatException;
 import util.symbol.grammar.SymbolList;
 
 
+/**
+ * Simple test class for stressing a strategy
+ * @author jonathan
+ *
+ */
 public final class StressStrategy {
 
 	

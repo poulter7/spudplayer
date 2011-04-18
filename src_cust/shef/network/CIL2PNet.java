@@ -80,7 +80,7 @@ public class CIL2PNet {
 	private final boolean GAME_NETWORK;
 
 	/** Minimum activation of a neuron for it to be TRUE */
-	double Amin;
+	private double Amin;
 
 
 	/**
@@ -397,5 +397,9 @@ public class CIL2PNet {
 
 	Layer getOutputLayer() {
 		return outputLayer;
+	}
+
+	double getAMIN() {
+		return Amin;
 	}
 }

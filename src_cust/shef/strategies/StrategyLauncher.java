@@ -9,6 +9,11 @@ import shef.strategies.ann.StrategyAlphaBeta;
 import shef.strategies.uct.StrategyUCTNeural;
 import shef.strategies.uct.StrategyUCTSimple;
 
+/**
+ * Main entrance class for launching a strategy 
+ * @author jonathan
+ *
+ */
 public class StrategyLauncher {
 	// Simple main function that starts a RandomGamer on a specified port.
 	// It might make sense to factor this out into a separate app sometime,
