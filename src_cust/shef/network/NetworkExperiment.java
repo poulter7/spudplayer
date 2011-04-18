@@ -10,6 +10,11 @@ import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.Neuron;
 import org.neuroph.util.NeuronProperties;
 
+/**
+ * A test class to demonstrate some Network timings
+ * @author jonathan
+ *
+ */
 public class NetworkExperiment {
 	public static boolean stop = false;
 
@@ -25,7 +30,6 @@ public class NetworkExperiment {
 
 		int eval = 0;
 		double[] a = new double[] { 2, 2 };
-		double[] b = new double[1];
 		NeuralData d = new BasicNeuralData(a);
 		d.setData(a);
 		NeuralOutputHolder o = new NeuralOutputHolder();

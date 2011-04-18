@@ -7,7 +7,7 @@ import java.util.Random;
  * @author jonathan
  *
  */
-public class BipolarStress extends StressTest {
+public class BipolarStress {
 
 	/** times to repeat test */
 	private final int testNum = 50000;

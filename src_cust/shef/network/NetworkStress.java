@@ -13,10 +13,16 @@ import util.symbol.factory.SymbolFactory;
 import util.symbol.grammar.SymbolList;
 import cs227b.teamIago.resolver.Atom;
 
-public class NetworkStress extends StressTest{
+/**
+ * A test class to stress some networks
+ * @author jonathan
+ *
+ */
+public class NetworkStress{
 
 	
 	private final long stressTime = 5000;
+	private boolean cont = true;
 
 	public static void main(String[] args) {
 		new NetworkStress();
@@ -53,7 +59,7 @@ public class NetworkStress extends StressTest{
 			new Thread(new StopTimer(this, stressTime)).start();
 			int eval = 0;
 			
-			while (cont) {
+			while (cont ) {
 				cil2pManager.getStateValue(init, 0);
 				eval++;
 			}
@@ -62,5 +68,40 @@ public class NetworkStress extends StressTest{
 		System.out.println("done");
 	}
 	
+
+	public void halt() {
+		this.cont = false;
+		
+	}
+
+
+	/**
+	 * Will interrupt NetworkStres after a certain time.
+	 * @author jonathan
+	 *
+	 */
+	class StopTimer implements Runnable {
+		
+		NetworkStress stopThis;
+		long timeToLeave; 
+		
+		public StopTimer(NetworkStress s, long time) {
+			stopThis = s;
+			timeToLeave = time;
+		}
+
+		@Override
+		public void run() {
+			System.out.println("starting");
+			try {
+				Thread.sleep(timeToLeave);
+				stopThis.halt();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
 	
 }

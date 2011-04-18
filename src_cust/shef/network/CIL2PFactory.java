@@ -9,7 +9,6 @@ import java.util.Properties;
 
 import shef.instantiator.Instantiator;
 import shef.instantiator.andortree.Node;
-import sun.font.CreatedFontTracker;
 import util.game.Game;
 import cs227b.teamIago.parser.Parser;
 import cs227b.teamIago.resolver.Atom;
@@ -66,19 +65,15 @@ public final class CIL2PFactory {
      */
     public static CIL2PNet createGameNetworkFromGame(Game game) {
     	Theory t = getTheoryFromGame(game);
-    	return createCIL2PNetwork(t, true);
+    	return createCIL2PNetwork(t, true, true);
     }
-
-    /*
-     * TESTING METHODS
-     */
     
     /**
      * Builds the same shef.network as <code>modNetFromFile(Game)</code>
      * @param game the game to be translated
      * @return the created shef.network
      */
-    public static CIL2PNet createGameNetworkFromFile(String gameLocation) {
+    static CIL2PNet createGameNetworkFromFile(String gameLocation) {
         return createNetworkfromFileLocationOptions(gameLocation, false, false, true);
     }
 
@@ -91,7 +86,7 @@ public final class CIL2PFactory {
      *            the location of the game description
      * @return the generated shef.network
      */
-    public static CIL2PNet createNetworkFromFileLocation(String gameLocation) {
+    static CIL2PNet createNetworkFromFileLocation(String gameLocation) {
         return createNetworkfromFileLocationOptions(gameLocation, false, false, false);
     }
     
@@ -104,7 +99,7 @@ public final class CIL2PFactory {
 	 * @param asStateEval if true the use Michulke's optimization
 	 * @return the generated network
 	 */
-	private static CIL2PNet createNetworkfromFileLocationOptions(String gameLocation,
+	static CIL2PNet createNetworkfromFileLocationOptions(String gameLocation,
 	        boolean printTrees, boolean printStats, boolean asStateEval) {
 	    Properties prop = new Properties();
 	    prop.setProperty(GAME_LOCATION_STRING, gameLocation);
@@ -133,17 +128,17 @@ public final class CIL2PFactory {
 	    // create new theory and load the game file
 	    Theory theoryObj = getTheoryFromFile(DEFAULT_DIR + GAME_LOCATION);
 	
-	    return createCIL2PNetwork(theoryObj, asStateEval);
+	    return createCIL2PNetwork(theoryObj, asStateEval, false);
 	
 	}
 
 	/**
 	 * As {@link createCIL2PNetwork(Properties, boolean)}, but with the given theory
 	 * @param theory
-	 * @param asStateEval
+	 * @param gameNet
 	 * @return
 	 */
-	private static CIL2PNet createCIL2PNetwork(Theory theory, boolean asStateEval) {
+	private static CIL2PNet createCIL2PNetwork(Theory theory, boolean weight_one, boolean gameNet) {
 	
 	    // instantiate goal trees
 	    Instantiator inst = new Instantiator(theory);
@@ -151,12 +146,8 @@ public final class CIL2PFactory {
 	
 	    // initialise input and output part of shef.network structure
 	    System.out.println("creating network");
-	    CIL2PNet network = new CIL2PNet(asStateEval);
-	    for (int i = 0; i < goalProofs.size(); i++) {
-	        network.addTree(goalProofs.get(i));
-	    }
-	    // setup hidden nodes and activation functions
-	    network.finaliseNetwork();
+	    CIL2PNet network = new CIL2PNet(goalProofs, weight_one, gameNet);
+	    
 	    return network;
 	
 	}
@@ -166,7 +157,7 @@ public final class CIL2PFactory {
      * @param gameLocation
      * @return
      */
-    public static List<Term> getRolesFromFile(String gameLocation){
+    static List<Term> getRolesFromFile(String gameLocation){
     	Theory t = getTheoryFromFile(DEFAULT_DIR + gameLocation);
     	ExpList e = t.getCandidates(new Atom("role"));
     	ArrayList<Term> terms = new ArrayList<Term>();
@@ -182,7 +173,7 @@ public final class CIL2PFactory {
      * @param gameLocation
      * @return a theory file representing the game
      */
-    public static Theory getTheoryFromFile(String gameLocation) {
+    static Theory getTheoryFromFile(String gameLocation) {
         Theory t = new Theory(false, false);
 
         // add each expression in the game file
@@ -197,7 +188,7 @@ public final class CIL2PFactory {
      * @param gameLocation
      * @return a theory file representing the game
      */
-    public static Theory getTheoryFromGame(Game game) {
+    static Theory getTheoryFromGame(Game game) {
         Theory t = new Theory(false, false);
 
         // add each expression in the game file

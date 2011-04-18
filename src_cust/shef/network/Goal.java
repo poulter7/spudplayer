@@ -1,18 +1,35 @@
 package shef.network;
 
-import cs227b.teamIago.resolver.Atom;
-import cs227b.teamIago.resolver.Expression;
-import cs227b.teamIago.resolver.Predicate;
+import util.gdl.factory.GdlFactory;
+import util.gdl.factory.exceptions.GdlFormatException;
+import util.gdl.grammar.GdlProposition;
+import util.statemachine.Role;
+import util.symbol.factory.exceptions.SymbolFormatException;
 
-public class Goal extends Predicate {
+/**
+ * A GOAL mapping of player -> score
+ * @author jonathan
+ *
+ */
+public class Goal {
 
-    Atom player;
-    int score;
+	private static final long serialVersionUID = 1L;
+	final Role player;
+    final int score;
 
-    public Goal(Atom player, Atom score) {
-        super("GOAL", new Expression[] { player, score });
-        this.player = player;
-        this.score = Integer.parseInt(score.toString());
+    public Goal(String player, String score) {
+    	GdlProposition playerProp = null;
+		try {
+			playerProp = (GdlProposition) GdlFactory.create(player.toUpperCase());
+		} catch (GdlFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SymbolFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.player = new Role(playerProp);
+		this.score = Integer.parseInt(score.toString());
     }
 
     @Override
