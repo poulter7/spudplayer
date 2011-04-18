@@ -16,41 +16,7 @@ import cs227b.teamIago.resolver.Substitution;
  * @author jonathan
  * 
  */
-public class Node {
-	/**
-	 * Prune a node remove all the non-completed children
-	 * 
-	 * XXX this should be rendered obsolete by the introduction of actual ground
-	 * instantiation
-	 * 
-	 * @param node
-	 * @return true if the node is or contains 
-	 */
-	public static boolean prune(Node node) {
-		if(node.nodetype == NodeType.DISTINCT){
-//		    System.out.println(node);
-			throw new RuntimeException("not sure how to prune a DISTINCT node");
-		}
-		
-	    // this is a truth node can wipe its children
-		if(node.nodetype == NodeType.TRUTH){
-			node.children = new ArrayList<Node>();
-			return true;
-		}
-		boolean hasTruthInChildren = false;
-		Iterator<Node> it = node.children.iterator();
-		while(it.hasNext()){
-			Node n = it.next();
-			if(!prune(n)){
-				it.remove();
-			} else {
-				hasTruthInChildren = true;
-			}
-		}
-		return hasTruthInChildren;
-
-	}
-
+public class Node implements Cloneable {
 	/** The implication this node represents */
 	private Implication implication;
 
@@ -108,12 +74,12 @@ public class Node {
 	 * Creates a clone of the node, not including children which fail to map to
 	 * the substitution
 	 * 
-	 * @param s
+	 * @param subs
 	 * @return the node with sub applied
 	 */
-	public Node clone(Substitution s) {
+	public Node clone(Substitution subs) {
 		// first apply the substitution
-		Implication newImp = (Implication) this.getImplication().apply(s);
+		Implication newImp = (Implication) this.getImplication().apply(subs);
 
 		// create the new node which is going to be the container
 		Node n = new Node(newImp, this.getNodeType());
@@ -238,6 +204,39 @@ public class Node {
 	}
 
 	/**
+	 * Prune a node remove all the non-completed children
+	 * 
+	 * XXX this should be rendered obsolete by the introduction of actual ground
+	 * instantiation
+	 * 
+	 * @param node
+	 * @return true if the node is or contains 
+	 */
+	public static boolean prune(Node node) {
+		if(node.nodetype == NodeType.DISTINCT){
+			throw new RuntimeException("not sure how to prune a DISTINCT node");
+		}
+		
+	    // this is a truth node can wipe its children
+		if(node.nodetype == NodeType.TRUTH){
+			node.children = new ArrayList<Node>();
+			return true;
+		}
+		boolean hasTruthInChildren = false;
+		Iterator<Node> it = node.children.iterator();
+		while(it.hasNext()){
+			Node n = it.next();
+			if(!prune(n)){
+				it.remove();
+			} else {
+				hasTruthInChildren = true;
+			}
+		}
+		return hasTruthInChildren;
+	
+	}
+
+	/**
 	 * Output util - prints a node and calls chidren to be printed
 	 * 
 	 * @param lvl
@@ -309,7 +308,11 @@ public class Node {
 	public String toString() {
 		return this.nodetype + (negated ? " not" : "") + " " + getHead();
 	}
-
+	
+	
+	/**
+	 * Convert the implication of this node to the form <code>( TRUE (oldHead) )</code>
+	 */
 	public void becomeTruth() {
 		// could be an atomic OR a predicate truth
 		Expression truth = ((Predicate) this.getHead()).getOperands().get(0);
@@ -319,8 +322,12 @@ public class Node {
 
 	}
 
-	public void addAll(Collection<Node> ns) {
-		for (Node n : ns) {
+	/**
+	 * Add multiple child nodes to this
+	 * @param children
+	 */
+	public void addChildren(Collection<Node> children) {
+		for (Node n : children) {
 			this.addChild(n);
 		}
 

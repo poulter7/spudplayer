@@ -172,11 +172,11 @@ public final class CIL2PFactory {
     public static CIL2PNet createCIL2P(Theory theory, boolean asStateEval) {
 
         // instantiate goal trees
-        Instantiator inst = new Instantiator(theory, null);
+        Instantiator inst = new Instantiator(theory);
         List<Node> goalProofs = inst.getProofTrees(-1);
 
         // initialise input and output part of shef.network structure
-        System.out.println("creating shef.network");
+        System.out.println("creating network");
         CIL2PNet network = new CIL2PNet(asStateEval);
         for (int i = 0; i < goalProofs.size(); i++) {
             network.addTree(goalProofs.get(i));

@@ -7,14 +7,12 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Properties;
 import java.util.Queue;
 import java.util.Set;
 
 import shef.instantiator.andortree.Node;
 import shef.instantiator.andortree.NodeDepthComparator;
 import shef.instantiator.andortree.NodeType;
-
 import cs227b.teamIago.resolver.Atom;
 import cs227b.teamIago.resolver.ExpList;
 import cs227b.teamIago.resolver.Expression;
@@ -32,7 +30,7 @@ import cs227b.teamIago.resolver.Variable;
  *
  */
 /**
- * Manages building an AND/OR tree which represents a GDL file
+ * Manages building an AND/OR tree which represents a GDL file.
  * 
  * @author jonathan
  * 
@@ -40,49 +38,60 @@ import cs227b.teamIago.resolver.Variable;
 public class Instantiator {
     
     // debug constants
-    /** Will print refinement steps  */
+    /** Will print refinement steps.  */
     private static final boolean VIEW_TREE_STEPS = false;
-	// atom constants
-	private static final Atom TRUTH = new Atom("true");
-	private static final Atom goal = new Atom("goal");
-	private static final Atom next = new Atom("next");
-	private static final Atom init = new Atom("init");
-	private static final Substitution s = new Substitution();
+    
+	// GDL atom constants
+    /** GDL true atom. */
+	public static final Atom GDL_TRUE = new Atom("true");
+	/** GDL goal atom. */
+	public static final Atom GDL_GOAL = new Atom("goal");
+	/** GDL next atom. */
+	public static final Atom GDL_NEXT = new Atom("next");
+	/** GDL init atom. */
+	public static final Atom GDL_INIT = new Atom("init");
+	
+	/** Blank substitution. */
+	public static final Substitution BLANK_SUBSTITUTION = new Substitution();
 
-	/** For hashes for {@link Node} memoization */ 
-	protected Hashtable<Expression, Node> orMemory = new Hashtable<Expression, Node>();
-	/** For hashes for {@link Node} memoization */
-	protected Hashtable<Expression, Node> andMemory = new Hashtable<Expression, Node>();
-	protected Theory theory;
+	/** The theory object the generated trees use. */
+	protected final Theory theory;
 
-	private Queue<Node> varCausingNodes = new PriorityQueue<Node>(1, new NodeDepthComparator());
-	private Hashtable<Expression, Node> goalHash = new Hashtable<Expression, Node>();
+	/** Every node which created a new variable. */
+	private final Queue<Node> varCausingNodes = new PriorityQueue<Node>(200, new NodeDepthComparator());
+	/** The goal values of these trees. */
+	private final Hashtable<Expression, Node> goalHash = new Hashtable<Expression, Node>();
 
 	@SuppressWarnings("unchecked")
-	public Instantiator(Theory t, Properties p) {
+	/**
+	 * Build an Instantiator representing this theory. 
+	 * @param theory that the trees created will represent
+	 */
+	public Instantiator(final Theory theory) {
 
-		this.theory = t;
-		// init facts
-		List<Expression> initFacts = theory.getCandidates(init).toArrayList();
+		this.theory = theory;
+		// find the 'init' facts of this theory and add them as general facts
+		List<Expression> initFacts = this.theory.getCandidates(GDL_INIT).toArrayList();
 		for (Expression fact : initFacts) {
 			if (fact instanceof Implication) {
 				Implication initFact = (Implication) fact;
 				Predicate conseqFact = (Predicate) initFact.getConsequence();
 				Implication iFact = new Implication(conseqFact.getOperands().get(0), initFact.getPremises());
-				theory.add(iFact);
+				this.theory.add(iFact);
 			} else if (fact instanceof Predicate) {
 				Predicate pFact = (Predicate) fact;
-				theory.add(pFact.getOperands());
+				this.theory.add(pFact.getOperands());
 			}
 		}
-		theory.buildVolatile();
+		this.theory.buildVolatile();
 
 	}
 
-	public Instantiator(Theory theory2) {
-		this(theory2, new Properties());
-	}
-
+	/**
+	 * Create trees for each goal condition
+	 * @param depth to what depth to build each tree to
+	 * @return a list of root nodes representing goals
+	 */
 	public List<Node> getProofTrees(int depth) {
 		// fill state space
 		System.out.println("adding extra info");
@@ -112,30 +121,32 @@ public class Instantiator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * Discover the full domain of each predicate by repeatedly applying relations.
+	 */
+	@SuppressWarnings("unchecked")		// List casts
 	private void addExtraInfo() {
-		List<NextClause> toConsiderClauses = getNextClauses(theory);
-
-		Set<Expression> expsToAdd = new HashSet<Expression>();
+		final List<NextClause> toConsiderClauses = getNextClauses(theory);
+		final Set<Expression> expsToAdd = new HashSet<Expression>();
 
 		int last_c = 0;
 		int newC = 0;
 		do {
 			last_c = newC;
 			for (NextClause cl : toConsiderClauses) {
+				final Predicate next = cl.getNext();
 				List<Predicate> insts = new ArrayList<Predicate>();
-				Predicate next = cl.getNext();
 				insts.add(next);
 
 				for (Expression premise : cl.getPremises()) {
-					if (premise.firstOp().equals(TRUTH))
+					if (premise.firstOp().equals(GDL_TRUE))
 						premise = ((Predicate) premise).getOperands().get(0);
 
-					List<Expression> results = (List<Expression>) theory.getCandidates(premise).toArrayList();
-					List<Predicate> newPs = new ArrayList<Predicate>();
+					final List<Expression> results = (List<Expression>) theory.getCandidates(premise).toArrayList();
+					final List<Predicate> newPs = new ArrayList<Predicate>();
 					boolean replaceList = false;
 					for (Expression e : results) {
-						Substitution nS = premise.mapTo(s, e);
+						Substitution nS = premise.mapTo(BLANK_SUBSTITUTION, e);
 
 						if (nS != null) {
 							boolean varInstantiate = false;
@@ -172,10 +183,11 @@ public class Instantiator {
 		} while (last_c != newC);
 	}
 
-	@SuppressWarnings("unchecked")
 	/**
-	 * Returns a list clauses representing (NEXT (X)) statements
+	 * Returns a list clauses representing <code>(NEXT (X))</code> statements
+	 * @return next list 
 	 */
+	@SuppressWarnings("unchecked")	// list casts
 	private List<NextClause> getNextClauses(Theory theory) {
 		List<Expression> facts = (ArrayList<Expression>) theory.getCandidates(theory.generateVar()).toArrayList();
 		List<NextClause> nextClauses = new ArrayList<NextClause>();
@@ -184,7 +196,7 @@ public class Instantiator {
 			if (fact instanceof Implication) {
 				Implication impFact = (Implication) fact;
 				Expression con = impFact.getConsequence();
-				if (con instanceof Predicate && con.firstOp().equals(next)) {
+				if (con instanceof Predicate && con.firstOp().equals(GDL_NEXT)) {
 					List<Expression> prems = impFact.getPremises().toArrayList();
 					NextClause cl = new NextClause((Predicate) ((Predicate) con).getOperands().get(0), prems);
 					nextClauses.add(cl);
@@ -197,18 +209,17 @@ public class Instantiator {
 
 	/**
 	 * Create the AND/OR trees which represent the game these will be and or
-	 * structures created by fulfilling goal states
-	 * 
+	 * structures created by fulfilling goal states.
 	 * @param depth
 	 *            how deep the tree will go
+	 * @return map of (GOAL) -> Root node of tree
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")		// ArrayList casts
 	private Hashtable<Expression, Node> createGoalTrees(int depth) {
-		goalHash = new Hashtable<Expression, Node>();
 		// goal predicate
 		Variable vRole = theory.generateVar();
 		Variable vScore = theory.generateVar();
-		Predicate goalPred = new Predicate(goal, new ExpList(new Expression[] { vRole, vScore }));
+		Predicate goalPred = new Predicate(GDL_GOAL, new ExpList(new Expression[] { vRole, vScore }));
 		ExpList goalImps = theory.getCandidates(goalPred);
 		ExpList roles = theory.getCandidates(new Predicate("role", new Expression[] { theory.generateVar() }));
 
@@ -226,7 +237,7 @@ public class Instantiator {
 					Substitution s = new Substitution();
 					s.addAssoc((Variable) goalOps.get(0), goalPred.secondOp());
 					s.addAssoc((Variable) goalPred.secondOp(), role.secondOp());
-					// apply twice
+					// XXX apply twice
 					goalInstImp = (Implication) goalInstImp.apply(s);
 					goalInstImp = (Implication) goalInstImp.apply(s);
 
@@ -236,13 +247,17 @@ public class Instantiator {
 				addGoalTree(goalImp, toProcess);
 			}
 
-			ProcessTree p = new ProcessTree(toProcess, this);
-			p.run();
-			varCausingNodes.addAll(p.varCausingNodes);
+			List<Node> causingNodes = TreeProcessor.generateVarCausingNodes(toProcess, theory);
+			varCausingNodes.addAll(causingNodes);
 		}
 		return goalHash;
 	}
 
+	/**
+	 * Add the goal to the store of goals and note that it should be expanded.
+	 * @param goalInstImp implication representing a goal
+	 * @param toProcess the active list of nodes to expand	
+	 */
 	private void addGoalTree(Implication goalInstImp, List<Node> toProcess) {
 		Node goalNode = goalHash.get(goalInstImp.getConsequence());
 		if (goalNode == null) {
@@ -253,9 +268,7 @@ public class Instantiator {
 	}
 
 	/**
-	 * Should be a list of OR or VAR_OR nodes
-	 * 
-	 * @param varCausingNodes
+	 * Perform EXPANTION and COLLAPSING part of the tree tranform algorithm
 	 */
 	private void fillVariables() {
 		while (!varCausingNodes.isEmpty()) {
@@ -302,7 +315,6 @@ public class Instantiator {
 				}
 				node.addChild(varAnd);
 				List<Node> completedChildren = completed.getChildren();
-				// TODO check there isn't anything in the facts which fulfils
 				for (Node compChild : completedChildren) {
 					Node varOr = new Node(varImp, NodeType.VAR_OR);
 					varAnd.addChild(varOr);
@@ -314,12 +326,6 @@ public class Instantiator {
 							varOr.addChild(newAnd);
 						}
 					}
-//					else {
-//					    throw new RuntimeErrorException(null, "Fail mapping");
-//					}
-//					if (varOr.getChildCount() == 0) {
-//						varAnd.removeChild(varOr);
-//					}
 					// replace these new VAR_OR nodes with fully instantiated
 					// nodes by mapping to the consequent
 					// shouldn't remove any children here as there may be truths
@@ -365,9 +371,10 @@ public class Instantiator {
 					}
 				}
 			}
-
-			// System.out.println("nfr:" + varCausingNodes);
-			// System.out.println("-------");
+			if(VIEW_TREE_STEPS){
+				System.out.println("nfr:" + varCausingNodes);
+				System.out.println("-------");
+			}
 		}
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map.Entry;
 
 import org.encog.mathutil.randomize.GaussianRandomizer;
@@ -14,7 +15,6 @@ import org.neuroph.core.Neuron;
 import org.neuroph.nnet.comp.ThresholdNeuron;
 
 import shef.instantiator.andortree.Node;
-import shef.instantiator.andortree.Tuple;
 import util.gdl.grammar.GdlRelation;
 import util.gdl.grammar.GdlSentence;
 import util.statemachine.MachineState;
@@ -210,7 +210,7 @@ public class CIL2PManager {
 
 		// return only goal neurons output
 		for (int i = 0; i < network.goalNeuronCount; i++) {
-			outputNeuronValues[i] = networkOut[network.goalNeuronDetails.get(i).getSecond()];
+			outputNeuronValues[i] = networkOut[network.goalNeuronDetails.get(i).getValue()];
 		}
 
 		return outputNeuronValues;
@@ -329,8 +329,8 @@ public class CIL2PManager {
 	 */
 	public void printQueryInputActivation() {
 
-		for (Tuple<Expression, Integer> tup : network.getQueryNeuronDetails()) {
-			System.out.println(tup.getFirst() + "\t-> " + network.getInputHash().get(tup.getFirst()).getOutput());
+		for (Entry<Expression, Integer> tup : network.getQueryNeuronDetails()) {
+			System.out.println(tup.getValue() + "\t-> " + network.getInputHash().get(tup.getValue()).getOutput());
 		}
 
 	}
@@ -353,8 +353,8 @@ public class CIL2PManager {
 	 */
 	public void printGoalOutputActivation() {
 
-		for (Tuple<Expression, Integer> tup : network.getGoalNeuronDetails()) {
-			System.out.println(tup.getFirst() + "\t-> " + network.getOutputHash().get(tup.getFirst()).getOutput());
+		for (Entry<Expression, Integer> tup : network.getGoalNeuronDetails()) {
+			System.out.println(tup.getValue() + "\t-> " + network.getOutputHash().get(tup.getKey()).getOutput());
 		}
 
 	}
@@ -394,8 +394,8 @@ public class CIL2PManager {
 	public List<Expression> getQueryPredicates() {
 
 		List<Expression> returnQs = new ArrayList<Expression>();
-		for (Tuple<Expression, Integer> tup : network.getQueryNeuronDetails()) {
-			returnQs.add(tup.getFirst());
+		for (Entry<Expression, Integer> tup : network.getQueryNeuronDetails()) {
+			returnQs.add(tup.getKey());
 		}
 
 		return returnQs;

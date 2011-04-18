@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map.Entry;
 
 import org.neuroph.core.Layer;
@@ -18,7 +20,6 @@ import org.neuroph.core.transfer.TransferFunction;
 import org.neuroph.nnet.comp.ThresholdNeuron;
 
 import shef.instantiator.andortree.Node;
-import shef.instantiator.andortree.Tuple;
 import util.gdl.factory.GdlFactory;
 import util.gdl.factory.exceptions.GdlFormatException;
 import util.gdl.grammar.GdlRelation;
@@ -43,11 +44,11 @@ public class CIL2PNet {
 	private final HashMap<Predicate, Neuron> queryHash = new HashMap<Predicate, Neuron>();
 	
 
-	private final List<Tuple<Expression, Integer>> queryNeuronDetails = new ArrayList<Tuple<Expression,Integer>>();
+	private final List<SimpleImmutableEntry<Expression, Integer>> queryNeuronDetails = new ArrayList<SimpleImmutableEntry<Expression,Integer>>();
 	private final HashMap<Expression, Integer> sameConsequent = new HashMap<Expression, Integer>();
 	private final HashMap<Expression, Set<ExpList>> clauseUniq= new HashMap<Expression, Set<ExpList>>();
 
-	final List<Tuple<Expression, Integer>> goalNeuronDetails = new ArrayList<Tuple<Expression,Integer>>();
+	final List<SimpleImmutableEntry<Expression, Integer>> goalNeuronDetails = new ArrayList<SimpleImmutableEntry<Expression,Integer>>();
 	final HashMap<GdlRelation, Neuron> queryHashGGPBase = new HashMap<GdlRelation, Neuron>();
 	final HashMap<Goal, ThresholdNeuron> goalHash = new HashMap<Goal, ThresholdNeuron>();
 
@@ -236,7 +237,7 @@ public class CIL2PNet {
 		queryNeuronCount = getQueryNeuronDetails().size();
 		queryNeuronIndices = new int[queryNeuronCount];
 		for (int i = 0; i < queryNeuronCount; i++) {
-			queryNeuronIndices[i] = getQueryNeuronDetails().get(i).getSecond();
+			queryNeuronIndices[i] = getQueryNeuronDetails().get(i).getValue();
 		}
 
 		inputNeuronCount = getInputHash().size();
@@ -246,11 +247,11 @@ public class CIL2PNet {
 		
 		// query neurons should have their expression rebuilt to (true (p))
 		// also make a copy which is accessible using GGP bases's syntax
-		for(Tuple<Expression, Integer> t: getQueryNeuronDetails()){
+		for(SimpleImmutableEntry<Expression, Integer> t: getQueryNeuronDetails()){
 		    try {
-		    	Predicate truePred = new Predicate("true", new Expression[]{t.getFirst()});
+		    	Predicate truePred = new Predicate("true", new Expression[]{t.getKey()});
 		    	GdlRelation gdlTruePred = (GdlRelation) GdlFactory.create(truePred.toString().toLowerCase());		    	
-		    	Neuron trueNeuron = inputLayer.getNeuronAt(t.getSecond());
+		    	Neuron trueNeuron = inputLayer.getNeuronAt(t.getValue());
 		    	
 		    	queryHash.put(truePred, trueNeuron);
 				queryHashGGPBase.put(gdlTruePred, trueNeuron);
@@ -283,7 +284,7 @@ public class CIL2PNet {
 			getInputHash().put(key, inNeuron);
 			
 			if(asQueryNode){
-				getQueryNeuronDetails().add(	new Tuple<Expression, Integer>(key, inputLayer.getNeuronsCount() - 1));
+				getQueryNeuronDetails().add(	new SimpleImmutableEntry<Expression, Integer>(key, inputLayer.getNeuronsCount() - 1));
 			}
 		}
 	}
@@ -305,7 +306,7 @@ public class CIL2PNet {
 			if (key instanceof Predicate 
 					&& ((Predicate) key).firstOp().toString().equalsIgnoreCase("GOAL")) {
 				getGoalNeuronDetails().add(
-						new Tuple<Expression, Integer>( key, outputLayer.getNeuronsCount() - 1)
+						new SimpleImmutableEntry<Expression, Integer>( key, outputLayer.getNeuronsCount() - 1)
 						);
 				Predicate goalPredicate = (Predicate) key;
 				Goal goal = new Goal((Atom)goalPredicate.getOperands().get(0), 
@@ -319,7 +320,7 @@ public class CIL2PNet {
 	}
 
 
-	public List<Tuple<Expression, Integer>> getGoalNeuronDetails() {
+	public List<SimpleImmutableEntry<Expression, Integer>> getGoalNeuronDetails() {
 		return goalNeuronDetails;
 	}
 
@@ -329,7 +330,7 @@ public class CIL2PNet {
 	}
 
 
-	public List<Tuple<Expression, Integer>> getQueryNeuronDetails() {
+	public List<SimpleImmutableEntry<Expression, Integer>> getQueryNeuronDetails() {
 		return queryNeuronDetails;
 	}
 
