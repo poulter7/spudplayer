@@ -1,12 +1,12 @@
 package tests;
 
+import shef.instantiator.andortree.NodeDepthTests;
+import shef.network.BipolarTest;
+import shef.network.JudgementTestsTTT;
+import shef.network.TestSuiteCorrectness;
+import shef.network.TestSuiteJudgement;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import network.BipolarTest;
-import network.CIL2PJudgementTicTacToeTests;
-import network.TestSuiteJudgement;
-import network.correctness.TestSuiteCorrectness;
-import dataStructures.NodeDepthTests;
 
 /**
  * main test class.

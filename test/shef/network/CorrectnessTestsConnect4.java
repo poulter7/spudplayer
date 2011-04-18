@@ -1,4 +1,4 @@
-package network.correctness;
+package shef.network;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +12,7 @@ import shef.network.CIL2PNet;
 
 
 
-public class CIL2PConnect4Tests extends AbstractCIL2PCorrectnessTests {
+public class CorrectnessTestsConnect4 extends AbstractCorrectnessTests {
 
 	private static final String gameLocation = "connect4";
 	private static final List<Atom> playerList = Arrays.asList(new Atom("RED"), new Atom("WHITE"));
@@ -20,7 +20,7 @@ public class CIL2PConnect4Tests extends AbstractCIL2PCorrectnessTests {
 	@Override
 	protected void setUp() throws Exception {
 
-        CIL2PNet cn = CIL2PFactory.fromFileLocation(gameLocation);
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation(gameLocation);
         cil2p_manager = new CIL2PManager(cn, playerList);
 	    super.setUp();
 	}
@@ -82,7 +82,7 @@ public class CIL2PConnect4Tests extends AbstractCIL2PCorrectnessTests {
 	 */
 	public void testHorizNoiseWin(){
 
-        CIL2PNet cn = CIL2PFactory.fromFileLocation(gameLocation);
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation(gameLocation);
         cil2p_manager = new CIL2PManager(cn, playerList);
 		
 		double[] output = translateConnect4(

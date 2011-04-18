@@ -1,12 +1,10 @@
 package shef.network;
 
-import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.neural.data.NeuralData;
 import org.encog.neural.data.basic.BasicNeuralData;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.NeuralOutputHolder;
 import org.encog.neural.networks.layers.BasicLayer;
-import org.encog.neural.networks.logic.FeedforwardLogic;
 import org.neuroph.core.Layer;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.Neuron;

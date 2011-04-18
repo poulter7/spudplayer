@@ -3,6 +3,7 @@ package shef.network;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,30 +32,30 @@ import cs227b.teamIago.resolver.Predicate;
 
 public class CIL2PNet {
 
-	private static final int RECURRENT_WEIGHT = 1;
-
+	
 	final NeuralNetwork n = new NeuralNetwork();
 	final Layer inputLayer = new Layer();
 	final Layer outputLayer = new Layer();
 	final Layer hiddenLayer = new Layer();
 
+	private final HashMap<Predicate, Neuron> queryHash = new HashMap<Predicate, Neuron>();
 	private final HashMap<Expression, Neuron> inputHash = new HashMap<Expression, Neuron>();
 	private final HashMap<Expression, ThresholdNeuron> outputHash = new HashMap<Expression, ThresholdNeuron>();
-	
-	private final HashMap<Predicate, Neuron> queryHash = new HashMap<Predicate, Neuron>();
-	
-
-	private final List<SimpleImmutableEntry<Expression, Integer>> queryNeuronDetails = new ArrayList<SimpleImmutableEntry<Expression,Integer>>();
 	private final HashMap<Expression, Integer> sameConsequent = new HashMap<Expression, Integer>();
 	private final HashMap<Expression, Set<ExpList>> clauseUniq= new HashMap<Expression, Set<ExpList>>();
+	
+	private final List<Node> clauses = new ArrayList<Node>();
+
 
 	final List<SimpleImmutableEntry<Expression, Integer>> goalNeuronDetails = new ArrayList<SimpleImmutableEntry<Expression,Integer>>();
+	private final List<SimpleImmutableEntry<Expression, Integer>> queryNeuronDetails = new ArrayList<SimpleImmutableEntry<Expression,Integer>>();
+	
 	final HashMap<GdlRelation, Neuron> queryHashGGPBase = new HashMap<GdlRelation, Neuron>();
 	final HashMap<Goal, ThresholdNeuron> goalHash = new HashMap<Goal, ThresholdNeuron>();
 
-
 	
 
+	private static final int RECURRENT_WEIGHT = 1;
 	private static final double BETA = 1;
 	private static final double ALPHA_SHIFT = 0.2;
 	private static final double AMIN_SHIFT = 0.0003;
@@ -64,7 +65,6 @@ public class CIL2PNet {
 	private static final InputFunction outputNeuronIn = new InputFunction();
 
 
-	private final List<Node> clause = new ArrayList<Node>();
 	
 	
 	private final boolean weightOne;
@@ -140,7 +140,7 @@ public class CIL2PNet {
 		}
 		if(!fulfils.contains(premises)){
 			fulfils.add(premises);
-			clause.add(node);
+			clauses.add(node);
 			addOutputNeuron(node.getHead());
 		}
 		
@@ -154,7 +154,7 @@ public class CIL2PNet {
 
 		// find a value for MAXP of this shef.network
 		int MAXP = 0;
-		for (Node n : clause) {
+		for (Node n : clauses) {
 			int p = n.getChildCount();
 			if (p > MAXP) {
 				MAXP = p;
@@ -200,7 +200,7 @@ public class CIL2PNet {
 		 * necessary input unit - connect to the necessary output neuron -
 		 * assign threshold theta_L
 		 */
-		for (Node n : clause) {
+		for (Node n : clauses) {
 
 			ThresholdNeuron hiddenNeuron = new ThresholdNeuron(new InputFunction(), h);
 			for (Node chNode : n.getChildren()) {
@@ -252,7 +252,6 @@ public class CIL2PNet {
 		    	Predicate truePred = new Predicate("true", new Expression[]{t.getKey()});
 		    	GdlRelation gdlTruePred = (GdlRelation) GdlFactory.create(truePred.toString().toLowerCase());		    	
 		    	Neuron trueNeuron = inputLayer.getNeuronAt(t.getValue());
-		    	
 		    	queryHash.put(truePred, trueNeuron);
 				queryHashGGPBase.put(gdlTruePred, trueNeuron);
 			} catch (GdlFormatException e1) {
@@ -320,22 +319,22 @@ public class CIL2PNet {
 	}
 
 
-	public List<SimpleImmutableEntry<Expression, Integer>> getGoalNeuronDetails() {
+	List<SimpleImmutableEntry<Expression, Integer>> getGoalNeuronDetails() {
 		return goalNeuronDetails;
 	}
 
 
-	public HashMap<Expression, Neuron> getInputHash() {
+	HashMap<Expression, Neuron> getInputHash() {
 		return inputHash;
 	}
 
 
-	public List<SimpleImmutableEntry<Expression, Integer>> getQueryNeuronDetails() {
+	List<SimpleImmutableEntry<Expression, Integer>> getQueryNeuronDetails() {
 		return queryNeuronDetails;
 	}
 
 
-	public HashMap<Expression, ThresholdNeuron> getOutputHash() {
+	HashMap<Expression, ThresholdNeuron> getOutputHash() {
 		return outputHash;
 	}
 }

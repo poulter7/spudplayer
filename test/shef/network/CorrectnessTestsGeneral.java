@@ -1,4 +1,4 @@
-package network.correctness;
+package shef.network;
 
 import static org.junit.Assert.assertArrayEquals;
 import junit.framework.TestCase;
@@ -16,11 +16,11 @@ import shef.network.CIL2PNet;
  * @author jonathan
  * 
  */
-public class CIL2PTest extends TestCase {
+public class CorrectnessTestsGeneral extends TestCase {
     CIL2PManager cil2p_manager;
 
     public void testStacked() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/stack");
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/stack");
         cil2p_manager = new CIL2PManager(cn);
         double maxError = 1 - cil2p_manager.getMaxError();
         // TODO expand this test
@@ -30,7 +30,7 @@ public class CIL2PTest extends TestCase {
     }
 
     public void testStackedAnd() {
-        CIL2PNet network = CIL2PFactory.fromFileLocation("tests/stackand");
+        CIL2PNet network = CIL2PFactory.createNetworkFromFileLocation("tests/stackand");
         cil2p_manager = new CIL2PManager(network);
         double maxError = 1 - cil2p_manager.getMaxError();
         // TODO expand this test
@@ -38,9 +38,9 @@ public class CIL2PTest extends TestCase {
         double[] scores = cil2p_manager.getOutput(1, 1, -1, -1);
         assertEquals(1d, scores[0], maxError);
         scores = cil2p_manager.getOutput(-1, -1, -1, -1);
-        cil2p_manager.printInputActivation();
+        cil2p_manager.printActivationAllInput();
         System.out.println();
-        cil2p_manager.printOutputActivation();
+        cil2p_manager.printActivationAllOutput();
         assertEquals(-1d, scores[0], maxError);
 
     }
@@ -61,9 +61,9 @@ public class CIL2PTest extends TestCase {
      * </pre>
      */
     public void testStackedOr() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/stack_or");
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/stack_or");
         cil2p_manager = new CIL2PManager(cn);
-        cil2p_manager.printOutputActivation();
+        cil2p_manager.printActivationAllOutput();
         double maxError = 1 - cil2p_manager.getMaxError();
         // TODO expand this test
         assertEquals(1d, cil2p_manager.getOutput(1, -1, 1, -1)[0], maxError);
@@ -75,7 +75,7 @@ public class CIL2PTest extends TestCase {
      * Test that variable instantiation is correct accross multiple clauses
      */
     public void testVarNet() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/vars");
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/vars");
         cil2p_manager = new CIL2PManager(cn);
         assertEquals(6, cil2p_manager.getPlayInfo()[0]);
         assertEquals(1, cil2p_manager.getPlayInfo()[1]);
@@ -85,14 +85,14 @@ public class CIL2PTest extends TestCase {
      * This should make sure the
      */
     public void testVarNet2() {
-       CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/vars2");
+       CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/vars2");
        cil2p_manager = new CIL2PManager(cn);
         assertEquals(10, cil2p_manager.getPlayInfo()[0]);
         assertEquals(1, cil2p_manager.getPlayInfo()[1]);
     }
 
     public void testSingleTruth() {
-        CIL2PNet net = CIL2PFactory.fromFileLocation("tests/singletruth");
+        CIL2PNet net = CIL2PFactory.createNetworkFromFileLocation("tests/singletruth");
         cil2p_manager = new CIL2PManager(net);
         double maxError = 1 - cil2p_manager.getMaxError();
         assertEquals(-1d, cil2p_manager.getOutput(-1, -1, -1, -1)[0], maxError);
@@ -109,7 +109,7 @@ public class CIL2PTest extends TestCase {
      */
     @Test
     public void testSimpleX() {
-        CIL2PNet net = CIL2PFactory.fromFileLocation("tests/x");
+        CIL2PNet net = CIL2PFactory.createNetworkFromFileLocation("tests/x");
         cil2p_manager = new CIL2PManager(net);
         double maxError = 1 - net.Amin;
         // correct layout
@@ -130,7 +130,7 @@ public class CIL2PTest extends TestCase {
      */
     @Test
     public void testSimpleAnd() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/and");
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/and");
         cil2p_manager = new CIL2PManager(cn);
         double maxError = 1 - cil2p_manager.network.Amin;
         assertArrayEquals(new int[] { 2, 1, 1 }, cil2p_manager.getInfo());
@@ -153,7 +153,7 @@ public class CIL2PTest extends TestCase {
      */
     @Test
     public void testOr() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/or");
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/or");
         cil2p_manager = new CIL2PManager(cn);
         double maxError = 1 - cil2p_manager.getMaxError();
         assertArrayEquals(new int[] { 2, 2, 1 }, cil2p_manager.getInfo());
@@ -174,7 +174,7 @@ public class CIL2PTest extends TestCase {
      */
     @Test
     public void testSimpleNot() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/not");
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/not");
         cil2p_manager = new CIL2PManager(cn);
         double maxError = 1 - cil2p_manager.getMaxError();
         // correct layout
@@ -196,7 +196,7 @@ public class CIL2PTest extends TestCase {
      */
     @Test
     public void testNSLS() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/nsls");
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/nsls");
         cil2p_manager = new CIL2PManager(cn);
         double maxError = 1 - cil2p_manager.getMaxError();
 
@@ -229,7 +229,7 @@ public class CIL2PTest extends TestCase {
      */
     @Test
     public void testDeepInstance() {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation("tests/deepTest");
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation("tests/deepTest");
         cil2p_manager = new CIL2PManager(cn);
         double maxError = 1 - cil2p_manager.getMaxError();
 

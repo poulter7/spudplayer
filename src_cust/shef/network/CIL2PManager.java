@@ -32,7 +32,7 @@ import cs227b.teamIago.resolver.Term;
 public class CIL2PManager {
 
 	/** List of player names */
-	public List<Atom> playerList = new ArrayList<Atom>();
+	public final List<Atom> playerList = new ArrayList();
 
 	/**
 	 * The number of times calculate is called when output is requested from
@@ -47,16 +47,18 @@ public class CIL2PManager {
 	 */
 	public CIL2PNet network;
 
-	public CIL2PManager(CIL2PNet network) {
-		this.network = network;
-	}
+	
+	private final double sigmaOverTwo = 0.005;
+	private final double sigmaOverTwoSq = sigmaOverTwo * sigmaOverTwo;
+	private final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwoSq);
 
 	/**
 	 * Create a manager for this network
 	 * 
-	 * @param <E>
+	 * @param <E> either  Role or Atom
 	 * @param network
 	 */
+	@SuppressWarnings("unchecked")
 	public <E> CIL2PManager(CIL2PNet network, List<E> orderedRole) {
 		this.network = network;
 		if (orderedRole.get(0) instanceof Role) {
@@ -65,10 +67,23 @@ public class CIL2PManager {
 				playerList.add(player);
 			}
 		} else if (orderedRole.get(0) instanceof Atom) {
-			this.playerList = (List<Atom>) orderedRole;
+			this.playerList.addAll((List<Atom>) orderedRole);
+		} else {
+			throw new RuntimeException("List of player roles not given as an excepted Class," +
+					" use either cs227b.teamIago.resolver.Atom or util.statemachine.Role");
 		}
 	}
 
+	/**
+	 * Create a manager for this network, this provided inspectability for output
+	 * but checking all player scores will be meaningless
+	 * 
+	 * @param network
+	 */
+	CIL2PManager(CIL2PNet network) {
+		this.network = network;
+	}
+	
 	/**
 	 * Prints a set of goal nodes as multiple CIL2P trees
 	 * 
@@ -89,7 +104,7 @@ public class CIL2PManager {
 	 * @param player
 	 */
 	public List<Double> getStateValues(final MachineState state) {
-		propagateInput(state);
+		inputMachineState(state);
 
 		ArrayList<Double> scores = new ArrayList<Double>();
 		for (Term playerName : playerList) {
@@ -105,13 +120,9 @@ public class CIL2PManager {
 	 * @param player
 	 */
 	public double getStateValue(final MachineState state, int playerID) {
-		propagateInput(state);
+		inputMachineState(state);
 		return getPlayerScore(playerList.get(playerID));
 	}
-
-	private final double sigmaOverTwo = 0.005;
-	private final double sigmaOverTwoSq = sigmaOverTwo * sigmaOverTwo;
-	private final GaussianRandomizer gauss = new GaussianRandomizer(0, sigmaOverTwoSq);
 
 	/**
 	 * Get a state Gaussian
@@ -122,15 +133,17 @@ public class CIL2PManager {
 	 *         factor
 	 */
 	public double getStateValueGaussian(final MachineState state, int playerID) {
-		propagateInput(state);
+		inputMachineState(state);
 		double sc = getPlayerScore(playerList.get(playerID)) / 100d;
 		double gaussR = gauss.randomize(0);
-		// System.out.println(sc);
-		// System.out.println(gaussR);
 		return sc + gaussR;
 	}
 
-	public void propagateInput(final MachineState state) {
+	/**
+	 * Input the current MachineState into the network a turn the crank
+	 * @param state the machine state to evaluate
+	 */
+	private void inputMachineState(final MachineState state) {
 		Set<GdlSentence> stateElements = state.getContents();
 
 		// reset the state
@@ -150,6 +163,11 @@ public class CIL2PManager {
 		}
 	}
 
+	/**
+	 * Get the scores for a single player
+	 * @param playerName
+	 * @return their score
+	 */
 	private double getPlayerScore(final Term playerName) {
 		// get outputs
 		double playerSum = 0f;
@@ -190,7 +208,7 @@ public class CIL2PManager {
 	 *            an ordered array of input values to each neuron
 	 * @return the output of the shef.network for the goal neurons
 	 */
-	public double[] getOutput(double... queryValues) {
+	double[] getOutput(double... queryValues) {
 
 		double[] inputNeuronValues = new double[network.inputNeuronCount];
 		double[] outputNeuronValues = new double[network.goalNeuronCount];
@@ -223,7 +241,7 @@ public class CIL2PManager {
 	 * @param queryValues
 	 *            the input values passed into <code>getOutput</code>
 	 */
-	public void printOutput(double... queryValues) {
+	void printOutput(double... queryValues) {
 
 		System.out.println(Arrays.toString(getOutput(queryValues)));
 
@@ -236,7 +254,7 @@ public class CIL2PManager {
 	 * @param queryValues
 	 * @return the summed score for each player
 	 */
-	public double[] getAllPlayerScores(double... queryValues) {
+	double[] getAllPlayerScores(double... queryValues) {
 		getOutput(queryValues);
 
 		double[] player_V = new double[playerList.size()];
@@ -247,43 +265,16 @@ public class CIL2PManager {
 		return player_V;
 
 	}
-
-	/**
-	 * print the scores returned by <code>getScores</code> given the
-	 * <code>queryValues</code> provided
-	 * 
-	 * @param queryValues
-	 *            input to shef.network
-	 */
-	public void printScores(double... queryValues) {
-
-		System.out.println(Arrays.toString(getAllPlayerScores(queryValues)));
-
-	}
+	
 
 	/**
 	 * get overall neural layout
 	 * 
 	 * @return #input (preds), #hidden (clauses), #output (heads)
 	 */
-	public int[] getInfo() {
+	int[] getInfo() {
 
 		return new int[] { network.inputLayer.getNeurons().size(), network.hiddenLayer.getNeurons().size(), network.outputLayer.getNeurons().size() };
-
-	}
-
-	/**
-	 * print information about the overall neural layout<br/>
-	 * <code>#input units, [input unit expressions], #hidden units,
-	 * #output units, [output unit expressions]</code>
-	 */
-	public void printInfo() {
-
-		System.out.println("# input  units:" + network.inputLayer.getNeurons().size() + "(total predicates)");
-		System.out.println(network.getInputHash().keySet());
-		System.out.println("# hidden units:" + network.hiddenLayer.getNeurons().size() + "(total clauses)");
-		System.out.println("# output units:" + network.outputLayer.getNeurons().size() + "(total unique heads)");
-		System.out.println(network.getOutputHash().keySet());
 
 	}
 
@@ -293,22 +284,9 @@ public class CIL2PManager {
 	 * 
 	 * @return [#input (truths), #output (goals)]
 	 */
-	public int[] getPlayInfo() {
+	int[] getPlayInfo() {
 
 		return new int[] { network.getQueryNeuronDetails().size(), network.getGoalNeuronDetails().size() };
-
-	}
-
-	/**
-	 * print information about the most important neurons in the current
-	 * shef.network <b>query neurons</b> and <b>goal neurons</b>
-	 */
-	public void printPlayInfo() {
-
-		System.out.println("# query units " + network.getQueryNeuronDetails().size());
-		System.out.println(network.getQueryNeuronDetails());
-		System.out.println("# goal units " + network.getGoalNeuronDetails().size());
-		System.out.println(network.getGoalNeuronDetails());
 
 	}
 
@@ -316,30 +294,59 @@ public class CIL2PManager {
 	 * @return the value amin which is the minimum activation a node must have
 	 *         to consider its output true
 	 */
-	public double getMaxError() {
+	double getMaxError() {
 
 		return network.Amin;
 
 	}
 
 	/**
-	 * for each node matching <code>(true ?term)</code> is an input node in the
-	 * graph, print: <br/>
-	 * <code>(expression, output)</code>
+	 * Get query predicates in order they appear in the input layer.
 	 */
-	public void printQueryInputActivation() {
-
+	List<Expression> getQueryPredicates() {
+	
+		List<Expression> returnQs = new ArrayList<Expression>();
 		for (Entry<Expression, Integer> tup : network.getQueryNeuronDetails()) {
-			System.out.println(tup.getValue() + "\t-> " + network.getInputHash().get(tup.getValue()).getOutput());
+			returnQs.add(tup.getKey());
 		}
+	
+		return returnQs;
+	
+	}
 
+	/**
+	 * print information about the overall neural layout<br/>
+	 * <code>#input units, [input unit expressions], #hidden units,
+	 * #output units, [output unit expressions]</code>
+	 */
+	void printInfo() {
+	
+		System.out.println("# input  units:" + network.inputLayer.getNeurons().size() + "(total predicates)");
+		System.out.println(network.getInputHash().keySet());
+		System.out.println("# hidden units:" + network.hiddenLayer.getNeurons().size() + "(total clauses)");
+		System.out.println("# output units:" + network.outputLayer.getNeurons().size() + "(total unique heads)");
+		System.out.println(network.getOutputHash().keySet());
+	
+	}
+
+	/**
+	 * print information about the most important neurons in the current
+	 * shef.network <b>query neurons</b> and <b>goal neurons</b>
+	 */
+	void printPlayInfo() {
+	
+		System.out.println("# query units " + network.getQueryNeuronDetails().size());
+		System.out.println(network.getQueryNeuronDetails());
+		System.out.println("# goal units " + network.getGoalNeuronDetails().size());
+		System.out.println(network.getGoalNeuronDetails());
+	
 	}
 
 	/**
 	 * for each node on the input layer print <br/>
 	 * <code>(expression, #inputs, input, #outputs, output)</code>
 	 */
-	public void printInputActivation() {
+	void printActivationAllInput() {
 
 		for (Entry<Expression, Neuron> tup : network.getInputHash().entrySet()) {
 			System.out.println(tup.getKey() + "\tin[" + tup.getValue().getInputConnections().size() + "]: " + tup.getValue().getNetInput() + "out:[" + tup.getValue().getOutConnections().size() + "]: " + tup.getValue().getOutput());
@@ -348,23 +355,11 @@ public class CIL2PManager {
 	}
 
 	/**
-	 * For each node matching <code>(GOAL ?player ?score)</code> print. <br/>
-	 * <code>(expression, output)</code>
-	 */
-	public void printGoalOutputActivation() {
-
-		for (Entry<Expression, Integer> tup : network.getGoalNeuronDetails()) {
-			System.out.println(tup.getValue() + "\t-> " + network.getOutputHash().get(tup.getKey()).getOutput());
-		}
-
-	}
-
-	/**
 	 * Print details about the output layer of the shef.network. <br/>
 	 * <code>(predicate, output, input, #inputs, [input activations])</code>
 	 */
-	public void printOutputActivation() {
-
+	void printActivationAllOutput() {
+	
 		for (Entry<Expression, ThresholdNeuron> tup : network.getOutputHash().entrySet()) {
 			String inps = "";
 			for (Connection in : tup.getValue().getInputConnections()) {
@@ -373,6 +368,31 @@ public class CIL2PManager {
 			String out = tup.getKey() + "\t-> " + " " + " in[" + tup.getValue().getInputConnections().size() + "]: " + tup.getValue().getNetInput() + " out:" + tup.getValue().getOutput() + " ~ " + inps;
 			System.out.println(out);
 		}
+	
+	}
+
+	/**
+	 * for each node matching <code>(true ?term)</code> is an input node in the
+	 * graph, print: <br/>
+	 * <code>(expression, output)</code>
+	 */
+	void printActivationQueryInput() {
+	
+		for (Entry<Expression, Integer> tup : network.getQueryNeuronDetails()) {
+			System.out.println(tup.getValue() + "\t-> " + network.getInputHash().get(tup.getValue()).getOutput());
+		}
+	
+	}
+
+	/**
+	 * For each node matching <code>(GOAL ?player ?score)</code> print. <br/>
+	 * <code>(expression, output)</code>
+	 */
+	void printActivationGoalOutput() {
+
+		for (Entry<Expression, Integer> tup : network.getGoalNeuronDetails()) {
+			System.out.println(tup.getValue() + "\t-> " + network.getOutputHash().get(tup.getKey()).getOutput());
+		}
 
 	}
 
@@ -380,7 +400,7 @@ public class CIL2PManager {
 	 * Print details about the hidden layer of the shef.network. <br/>
 	 * <code>(input, output)</code>
 	 */
-	public void printHiddenActivation() {
+	void printActivationHidden() {
 
 		for (Neuron hidden : network.hiddenLayer.getNeurons()) {
 			System.out.println("in:" + hidden.getNetInput() + "out:" + hidden.getOutput());
@@ -389,17 +409,16 @@ public class CIL2PManager {
 	}
 
 	/**
-	 * Get query predicates in order they appear in the input layer.
+	 * print the scores returned by <code>getScores</code> given the
+	 * <code>queryValues</code> provided
+	 * 
+	 * @param queryValues
+	 *            input to shef.network
 	 */
-	public List<Expression> getQueryPredicates() {
-
-		List<Expression> returnQs = new ArrayList<Expression>();
-		for (Entry<Expression, Integer> tup : network.getQueryNeuronDetails()) {
-			returnQs.add(tup.getKey());
-		}
-
-		return returnQs;
-
+	void printScores(double... queryValues) {
+	
+		System.out.println(Arrays.toString(getAllPlayerScores(queryValues)));
+	
 	}
 
 }

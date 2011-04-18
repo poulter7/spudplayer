@@ -1,4 +1,4 @@
-package network;
+package shef.network;
 
 import junit.framework.TestCase;
 

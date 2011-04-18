@@ -1,23 +1,25 @@
 package shef.network;
 
-import java.util.Collections;
 import java.util.Random;
 
+/**
+ * Class to duration of {@link Bipolar} activation function class query
+ * @author jonathan
+ *
+ */
 public class BipolarStress extends StressTest {
 
-	private final long stressTime = 1000;
+	/** times to repeat test */
+	private final int testNum = 50000;
 
 	public static void main(String[] args) {
 		new BipolarStress();
 	}
 
 	public BipolarStress() {
-		int eval = 0;
-		Bipolar b = new Bipolar(1);
-
-		new Thread(new StopTimer(this, stressTime)).start();
-		Random r = new Random(0);
-		int testNum = 50000;
+		final Bipolar b = new Bipolar(1);
+		final Random r = new Random(0);
+		
 		long nanos = 0;
 		for (int i = 0; i < testNum; i++) {
 			long startTime = System.nanoTime();

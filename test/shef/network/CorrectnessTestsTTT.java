@@ -1,4 +1,4 @@
-package network.correctness;
+package shef.network;
 
 import java.util.Arrays;
 
@@ -15,7 +15,7 @@ import cs227b.teamIago.resolver.Atom;
  * @author jonathan
  *
  */
-public class CIL2PTicTacToeTests extends AbstractCIL2PCorrectnessTests{
+public class CorrectnessTestsTTT extends AbstractCorrectnessTests{
 
 
 	static final String gameLocation = "tictactoe";
@@ -24,7 +24,7 @@ public class CIL2PTicTacToeTests extends AbstractCIL2PCorrectnessTests{
 	 */
 	@Test
 	public void testTopology(){
-	    CIL2PNet network = CIL2PFactory.fromFileLocation(gameLocation);
+	    CIL2PNet network = CIL2PFactory.createNetworkFromFileLocation(gameLocation);
         cil2p_manager =  new CIL2PManager(network);
 		/*
 		 * INPUTS
@@ -40,7 +40,7 @@ public class CIL2PTicTacToeTests extends AbstractCIL2PCorrectnessTests{
 		 */
 		assertEquals(6, cil2p_manager.getPlayInfo()[1]);
 		cil2p_manager.printInfo();
-		cil2p_manager.printOutputActivation();
+		cil2p_manager.printActivationAllOutput();
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class CIL2PTicTacToeTests extends AbstractCIL2PCorrectnessTests{
 	 */
 	@Test
 	public void testInitialisation1(){
-		CIL2PNet network = CIL2PFactory.fromFileLocation("tictactoe-init1");
+		CIL2PNet network = CIL2PFactory.createNetworkFromFileLocation("tictactoe-init1");
         cil2p_manager =  new CIL2PManager(network);
 		/*
 		 * INPUTS
@@ -93,7 +93,7 @@ public class CIL2PTicTacToeTests extends AbstractCIL2PCorrectnessTests{
 	 *  </pre>
 	 */
 	public void testTicTacToeWinning(String ttt){
-		CIL2PNet network = CIL2PFactory.fromFileLocation(ttt);
+		CIL2PNet network = CIL2PFactory.createNetworkFromFileLocation(ttt);
 		cil2p_manager =  new CIL2PManager(network, Arrays.asList(new Atom("XPLAYER"), new Atom("OPLAYER")));
 		double[] scores = cil2p_manager.getAllPlayerScores(translateTicTacToe( "b b b b b b b b b", cil2p_manager));
 		
@@ -118,7 +118,7 @@ public class CIL2PTicTacToeTests extends AbstractCIL2PCorrectnessTests{
 		
 		
 		scores = cil2p_manager.getAllPlayerScores(translateTicTacToe("x x x o o x b b b", cil2p_manager));
-		cil2p_manager.printGoalOutputActivation();
+		cil2p_manager.printActivationGoalOutput();
 		assertTrue(scores[0] > scores[1]);				// win for X
 	
 		scores = cil2p_manager.getAllPlayerScores(translateTicTacToe("x x x x o o x o o", cil2p_manager));

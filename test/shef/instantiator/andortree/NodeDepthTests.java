@@ -1,4 +1,4 @@
-package dataStructures;
+package shef.instantiator.andortree;
 
 import junit.framework.TestCase;
 

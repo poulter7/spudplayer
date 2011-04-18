@@ -1,26 +1,20 @@
-package network;
+package shef.network;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
-import network.correctness.CIL2PConnect4Tests;
 
 import org.junit.Test;
 
-import shef.network.CIL2PFactory;
-import shef.network.CIL2PManager;
-import shef.network.CIL2PNet;
 import cs227b.teamIago.resolver.Atom;
 
-public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
+public class JudgementTestsConnect4 extends AbstractJudgementTests {
 	
 	private static final String gameLocation = "connect4";
 	private static final List<Atom> playerList = Arrays.asList(new Atom("WHITE"), new Atom("RED"));
 	
 	@Override
 	protected void setUp() throws Exception {
-	    CIL2PNet cn = CIL2PFactory.modNetFromFile(gameLocation);
+	    CIL2PNet cn = CIL2PFactory.createGameNetworkFromFile(gameLocation);
 	    cil2p_manager = new CIL2PManager(cn, playerList);
 	    
 	    super.setUp();
@@ -29,7 +23,7 @@ public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 	@Test
 	public void testNextMoveWinOne() {
 		
-		double[] output1 = CIL2PConnect4Tests.translateConnect4(
+		double[] output1 = CorrectnessTestsConnect4.translateConnect4(
 				"D D D D D D D D " + 
 				"B B B B B B B D " + 
 				"B B B B B B B D " + 
@@ -41,9 +35,9 @@ public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 				"D D D D D D D D", cil2p_manager
 		);
 		double[] scoresA = cil2p_manager.getAllPlayerScores(output1);
-		cil2p_manager.printGoalOutputActivation();
+		cil2p_manager.printActivationGoalOutput();
 		System.out.println();
-		double[] output2 = CIL2PConnect4Tests.translateConnect4(
+		double[] output2 = CorrectnessTestsConnect4.translateConnect4(
 				"D D D D D D D D " + 
 				"B B B B B B B D " + 
 				"B B B B B B B D " + 
@@ -55,7 +49,7 @@ public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 				"D D D D D D D D", cil2p_manager
 		);
 		double[] scoresB = cil2p_manager.getAllPlayerScores(output2);
-		cil2p_manager.printGoalOutputActivation();
+		cil2p_manager.printActivationGoalOutput();
 		System.out.println(cil2p_manager.playerList);
 		assertEquals(-1, bestState(scoresA, scoresB, 1));
 		
@@ -64,7 +58,7 @@ public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 	@Test
 	public void testNextMoveWinTwo() {
 		
-		double[] output1 = CIL2PConnect4Tests.translateConnect4(
+		double[] output1 = CorrectnessTestsConnect4.translateConnect4(
 				"D D D D D D D D " + 
 				"B B B B B B B D " + 
 				"B B B B B B B D " + 
@@ -76,9 +70,9 @@ public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 				"D D D D D D D D", cil2p_manager
 		);
 		double[] scoresA = cil2p_manager.getAllPlayerScores(output1);
-		cil2p_manager.printGoalOutputActivation();
+		cil2p_manager.printActivationGoalOutput();
 		System.out.println();
-		double[] output2 = CIL2PConnect4Tests.translateConnect4(
+		double[] output2 = CorrectnessTestsConnect4.translateConnect4(
 				"D D D D D D D D " + 
 				"B B B B B B B D " + 
 				"B B B B B B B D " + 
@@ -90,7 +84,7 @@ public class CIL2PJudgementConnect4Tests extends AbstractCIL2PJudgementTests {
 				"D D D D D D D D", cil2p_manager
 		);
 		double[] scoresB = cil2p_manager.getAllPlayerScores(output2);
-		cil2p_manager.printGoalOutputActivation();
+		cil2p_manager.printActivationGoalOutput();
 		assertEquals(1, bestState(scoresA, scoresB, 0));
 		
 	}

@@ -1,4 +1,4 @@
-package network;
+package shef.network;
 
 import java.util.Arrays;
 
@@ -6,7 +6,7 @@ import shef.network.CIL2PManager;
 
 import junit.framework.TestCase;
 
-public class AbstractCIL2PJudgementTests extends TestCase {
+public class AbstractJudgementTests extends TestCase {
 	CIL2PManager cil2p_manager;
     
 

@@ -1,7 +1,5 @@
 package shef.network;
 
-import java.util.HashMap;
-
 import org.neuroph.core.transfer.TransferFunction;
 
 /**
@@ -16,8 +14,14 @@ import org.neuroph.core.transfer.TransferFunction;
 public class Bipolar extends TransferFunction {
 
 	private transient static final long serialVersionUID = 1L;
+	
+	/** gradient of the sigmoid */
 	private final double slope;
 	
+	/**
+	 * Create a sigmoid with a certain slope
+	 * @param slope the slope the sigmoid should have
+	 */
 	public Bipolar(double slope){
 		this.slope = slope;
 	}

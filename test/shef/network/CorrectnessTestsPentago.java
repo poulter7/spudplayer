@@ -1,4 +1,4 @@
-package network.correctness;
+package shef.network;
 
 import java.util.Arrays;
 
@@ -15,13 +15,13 @@ import shef.network.CIL2PNet;
  * @author jonathan
  *
  */
-public class CIL2PPentagoTests extends AbstractCIL2PCorrectnessTests{
+public class CorrectnessTestsPentago extends AbstractCorrectnessTests{
     
     private static final String gameLocation = "pentago";
     
     @Override
     protected void setUp() throws Exception {
-        CIL2PNet cn = CIL2PFactory.fromFileLocation(gameLocation);
+        CIL2PNet cn = CIL2PFactory.createNetworkFromFileLocation(gameLocation);
         cil2p_manager = new CIL2PManager(cn);
         
         super.setUp();
@@ -62,9 +62,9 @@ public class CIL2PPentagoTests extends AbstractCIL2PCorrectnessTests{
 				"R R R R R R "));
 		System.out.println(maxError);
 //		assertTrue(scores[0] == scores[1] );
-		cil2p_manager.printInputActivation();
+		cil2p_manager.printActivationAllInput();
 		System.out.println();
-		cil2p_manager.printOutputActivation();
+		cil2p_manager.printActivationAllOutput();
 		System.out.println(Arrays.toString(scores));
 	}
 	

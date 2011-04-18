@@ -26,7 +26,7 @@ public final class StrategyUCTNeural extends GamerBaseUCT {
 	 */
 	public void strategyMetaSetup(final long timeout) {
 		// create network
-		CIL2PNet net = CIL2PFactory.modeNetFromGame(getMatch().getGame());
+		CIL2PNet net = CIL2PFactory.createGameNetworkFromGame(getMatch().getGame());
 		cil2pManager = new CIL2PManager(net, roles);
 		
 	}

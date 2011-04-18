@@ -5,11 +5,6 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
 
-import org.encog.engine.EncogEngine;
-import org.encog.engine.StatusReportable;
-import org.encog.util.benchmark.EncogBenchmark;
-import org.neuroph.nnet.Neuroph;
-
 import player.request.factory.RequestFactory;
 import util.game.Game;
 import util.statemachine.MachineState;
@@ -47,7 +42,7 @@ public class NetworkStress extends StressTest{
 			p = new ProverStateMachine();
 			p.initialize(rf.parseDescription(list));
 
-			CIL2PNet net = CIL2PFactory.modeNetFromGame(g);
+			CIL2PNet net = CIL2PFactory.createGameNetworkFromGame(g);
 			cil2pManager = new CIL2PManager(net, players);
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to launch");

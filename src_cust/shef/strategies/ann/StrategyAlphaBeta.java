@@ -43,7 +43,7 @@ public final class StrategyAlphaBeta extends BaseGamer implements ICIL2PUser {
 		super.stateMachineMetaGame(timeout);
 
 		// create network
-		final CIL2PNet net = CIL2PFactory.modeNetFromGame(getMatch().getGame());
+		final CIL2PNet net = CIL2PFactory.createGameNetworkFromGame(getMatch().getGame());
 		cil2pManager = new CIL2PManager(net, roles);
 	}
 
