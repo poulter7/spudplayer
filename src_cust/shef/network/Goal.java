@@ -20,7 +20,7 @@ public class Goal {
     public Goal(String player, String score) {
     	GdlProposition playerProp = null;
 		try {
-			playerProp = (GdlProposition) GdlFactory.create(player.toUpperCase());
+			playerProp = (GdlProposition) GdlFactory.create(player.toLowerCase());
 		} catch (GdlFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

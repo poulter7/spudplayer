@@ -27,9 +27,10 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 	private static final int AB_DEPTH = 5;
 
 	/** Handle to the network manager */
-	private CIL2PManager cil2pManager;
-	private List<TreeNodeAlphaBeta> rootMoves;
+	CIL2PManager cil2pManager;
+	private ArrayList<IABNode<MachineState, Move>> rootMoves;
 	private long currentTimeout;
+	public int abCount;
 
 	/**
 	 * Create the network which will guide the AlphaBetaStrategy
@@ -60,18 +61,19 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 		currentTimeout = timeout - 1000;
 		Move chosenMove = null;
 		
-		rootMoves = new ArrayList<TreeNodeAlphaBeta>();
-		
-		final TreeNodeAlphaBeta mmRoot = new TreeNodeAlphaBeta(getCurrentState());
-		alphaBeta(mmRoot, AB_DEPTH, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, myRoleID);
-		for (TreeNodeAlphaBeta m : rootMoves) {
+		rootMoves = new ArrayList<IABNode<MachineState, Move>>();
+		NeuralNetworkABNode.cil2pManager = cil2pManager;
+		NeuralNetworkABNode.machine = theMachine;
+		final IABNode<MachineState, Move> mmRoot = new NeuralNetworkABNode(getCurrentState());
+		alphaBeta((NeuralNetworkABNode) mmRoot, AB_DEPTH, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, myRoleID);
+		for (IABNode<MachineState, Move> m : rootMoves) {
 			System.out.println(m);
 		}
 		
 		// return the highest value node
-		TreeNodeAlphaBeta m = Collections.max(rootMoves);
-		System.out.println("-> " + m);
-		chosenMove = m.getMove();
+		IABNode<MachineState, Move> best = Collections.max(rootMoves);
+		System.out.println("-> " + best);
+		chosenMove = best.getTraversal();
 		return chosenMove;
 
 	}
@@ -97,28 +99,28 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 	 * @throws MoveDefinitionException
 	 * @throws TransitionDefinitionException
 	 */
-	double alphaBeta(final TreeNodeAlphaBeta node, final int depth, double alpha, double beta, final int player) throws MoveDefinitionException, TransitionDefinitionException {
-
+	double alphaBeta(final IABNode<MachineState, Move> node, final int depth, double alpha, double beta, final int player) throws MoveDefinitionException, TransitionDefinitionException {
+		abCount++;
 		final int nextPlayer = (player + 1) % roleCount;
-		final MachineState curGS = node.getState();
+		final MachineState curGS = node.getContents();
 		// if the lookahead limit is reached, the node is terminal or
 		// it is necessary to return a value as time is up
-		if (depth == 0 || theMachine.isTerminal(curGS) || System.currentTimeMillis() > currentTimeout) {
+		if (depth == 0 || node.isTerminal() || System.currentTimeMillis() > currentTimeout) {
 			// heuristic value of node
-			final double val = cil2pManager.getStateValue(node.getState(), player);
+			final double val = node.getHeuristicValue(player);
 			if (depth == AB_DEPTH - 1) {
 				rootMoves.add(node);
 			}
-			node.setGameValue(val);
+			node.setValue(val);
 			return val;
 		}
-
-		final List<List<Move>> moves = theMachine.getLegalJointMoves(node.getState());
+		
+		final List<List<Move>> moves = theMachine.getLegalJointMoves(node.getContents());
 		if (player == roleCount) { // MAX
 			for (List<Move> childMove : moves) { // ALPHA cut
 
 				final MachineState childState = theMachine.getNextState(curGS, childMove);
-				final TreeNodeAlphaBeta child = new TreeNodeAlphaBeta(childState, childMove.get(myRoleID));
+				final NeuralNetworkABNode child = new NeuralNetworkABNode(childState, childMove.get(myRoleID));
 				final double abResult = alphaBeta(child, depth - 1, alpha, beta, nextPlayer);
 				alpha = Math.max(alpha, abResult);
 				if (beta <= alpha)
@@ -126,12 +128,12 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 			}
 			if (depth == AB_DEPTH - 1)
 				rootMoves.add(node);
-			node.setGameValue(alpha);
+			node.setValue(alpha);
 			return alpha;
 		} else {
 			for (List<Move> childMove : moves) {
-				MachineState childState = theMachine.getNextState(node.getState(), childMove);
-				TreeNodeAlphaBeta child = new TreeNodeAlphaBeta(childState, childMove.get(myRoleID));
+				MachineState childState = theMachine.getNextState(node.getContents(), childMove);
+				NeuralNetworkABNode child = new NeuralNetworkABNode(childState, childMove.get(myRoleID));
 				double abResult = alphaBeta(child, depth - 1, alpha, beta, nextPlayer);
 				beta = Math.min(beta, abResult);
 				if (beta <= alpha) {
@@ -140,7 +142,7 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 			}
 			if (depth == AB_DEPTH - 1)
 				rootMoves.add(node);
-			node.setGameValue(beta);
+			node.setValue(beta);
 			return beta;
 		}
 

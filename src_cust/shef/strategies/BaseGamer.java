@@ -1,21 +1,9 @@
 package shef.strategies;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import player.gamer.statemachine.StateMachineGamer;
-import player.gamer.statemachine.reflex.event.ReflexMoveSelectionEvent;
 import player.gamer.statemachine.reflex.gui.ReflexDetailPanel;
-import shef.network.Bipolar;
-import shef.strategies.uct.tree.StateActionPair;
-import shef.strategies.uct.tree.StateModel;
-import shef.strategies.uct.tree.UCTTree;
-import util.statemachine.MachineState;
-import util.statemachine.Move;
 import util.statemachine.Role;
 import util.statemachine.StateMachine;
 import util.statemachine.exceptions.GoalDefinitionException;

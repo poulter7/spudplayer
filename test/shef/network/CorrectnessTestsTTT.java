@@ -94,7 +94,7 @@ public class CorrectnessTestsTTT extends AbstractCorrectnessTests{
 	 */
 	public void testTicTacToeWinning(String ttt){
 		CIL2PNet network = CIL2PFactory.createNetworkFromFileLocation(ttt);
-		cil2p_manager =  new CIL2PManager(network, Arrays.asList(new Atom("XPLAYER"), new Atom("OPLAYER")));
+		cil2p_manager =  new CIL2PManager(network, Arrays.asList(new Atom("xplayer"), new Atom("oplayer")));
 		double[] scores = cil2p_manager.getAllPlayerScores(translateTicTacToe( "b b b b b b b b b", cil2p_manager));
 		
 //		assertEquals(2, scores.length, 0);

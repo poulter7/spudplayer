@@ -16,7 +16,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * 
  * @author jonathan poulter
  */
-public final class StrategyUCTNeural extends GamerBaseUCT {
+public final class StrategyUCTNeural extends BaseGamerUCT {
 
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;

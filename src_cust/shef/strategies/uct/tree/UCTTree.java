@@ -1,14 +1,12 @@
 package shef.strategies.uct.tree;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 import player.gamer.statemachine.StateMachineGamer;
 import util.statemachine.MachineState;
 import util.statemachine.Move;
-import util.statemachine.Role;
 import util.statemachine.StateMachine;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
@@ -20,8 +18,11 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * 
  */
 public final class UCTTree {
+	/** Every level within the game tree */
 	private final ArrayList<TreeLevel> stateLists = new ArrayList<TreeLevel>(100);
+	/** The state machine which guides game progression */
 	private final StateMachine sm;
+	/** Number of palyers in this game */
 	private final int num_players;
 
 	/**

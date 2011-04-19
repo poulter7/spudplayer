@@ -1,7 +1,5 @@
 package shef.strategies.uct;
 
-import java.util.List;
-
 import shef.strategies.uct.tree.StateModel;
 import util.statemachine.MachineState;
 import util.statemachine.exceptions.GoalDefinitionException;

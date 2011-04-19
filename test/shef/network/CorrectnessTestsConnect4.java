@@ -15,7 +15,7 @@ import shef.network.CIL2PNet;
 public class CorrectnessTestsConnect4 extends AbstractCorrectnessTests {
 
 	private static final String gameLocation = "connect4";
-	private static final List<Atom> playerList = Arrays.asList(new Atom("RED"), new Atom("WHITE"));
+	private static final List<Atom> playerList = Arrays.asList(new Atom("white"), new Atom("red"));
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -73,7 +73,7 @@ public class CorrectnessTestsConnect4 extends AbstractCorrectnessTests {
 				"D D D D D D D D", cil2p_manager
 		);
 		double[] scores = cil2p_manager.getAllPlayerScores(output);
-		assertTrue(scores[0]>scores[1]);
+		assertTrue(scores[1]>scores[0]);
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public class CorrectnessTestsConnect4 extends AbstractCorrectnessTests {
 		);
 		double[] scores = cil2p_manager.getAllPlayerScores(output);
 		
-		assertTrue(scores[0]>scores[1]);
+		assertTrue(scores[1]>scores[0]);
 	}
 	
 	/**
@@ -119,7 +119,7 @@ public class CorrectnessTestsConnect4 extends AbstractCorrectnessTests {
 				"D D D D D D D D", cil2p_manager
 		);
 		double[] scores = cil2p_manager.getAllPlayerScores(output);
-		assertTrue(scores[0]>scores[1]);
+		assertTrue(scores[1]>scores[0]);
 	}
 	
 	/**
@@ -140,7 +140,7 @@ public class CorrectnessTestsConnect4 extends AbstractCorrectnessTests {
 				"D D D D D D D D", cil2p_manager
 		);
 		double[] scores = cil2p_manager.getAllPlayerScores(output);
-		assertTrue(scores[0]<scores[1]);
+		assertTrue(scores[0]>scores[1]);
 	}
 	
 	/**

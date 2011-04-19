@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+
 import util.gdl.grammar.Gdl;
 import util.gdl.grammar.GdlProposition;
 import util.gdl.grammar.GdlSentence;
@@ -124,7 +126,7 @@ public abstract class StateMachine
 
         return nextStates;
     }
-
+    
     public Map<Move, List<MachineState>> getNextStates(MachineState state, Role role) throws MoveDefinitionException, TransitionDefinitionException
     {
         Map<Move, List<MachineState>> nextStates = new HashMap<Move, List<MachineState>>();

@@ -20,15 +20,15 @@ import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
 
 /**
- * 
+ * Specific Base Gamer which uses a UCT search
  * @author jonathan
- *
  */
-public abstract class GamerBaseUCT extends BaseGamer implements IUCTStrategy{
+public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 	
 	/** UCT tree */
 	private UCTTree tree;
 	
+	@Override
 	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException{
 		final long finishBy = timeout - 1000;
 		
@@ -59,6 +59,10 @@ public abstract class GamerBaseUCT extends BaseGamer implements IUCTStrategy{
 		System.out.println(rollCount + " initial");
 	}
 	
+	/**
+	 * Perform any extra setup needed in the time remaining
+	 * @param timeout
+	 */
 	public abstract void strategyMetaSetup(final long timeout);
 	
 	/**

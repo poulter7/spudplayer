@@ -38,9 +38,9 @@ public final class StressStrategy {
 	
 	public static void main(String[] args) throws IOException, RequestFormatException, SymbolFormatException, GdlFormatException, MetaGamingException, MoveSelectionException, TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 
-		Gamer st = new StrategyAlphaBeta();
+//		Gamer st = new StrategyAlphaBeta();
 //		Gamer st = new StrategyUCTNeural();
-//		Gamer st = new StrategyUCTSimple();
+		Gamer st = new StrategyUCTSimple();
 		
 		GamePlayer player = new GamePlayer(9000, st);
 		
@@ -61,6 +61,12 @@ public final class StressStrategy {
 		GdlProposition prop =  (GdlProposition) role.getBody().get(0).toSentence();
 		player.getGamer().setRoleName(prop);
 		player.getGamer().metaGame(System.currentTimeMillis() + 5*1000);
-		player.getGamer().selectMove(System.currentTimeMillis() + 10*1000);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		player.getGamer().selectMove(System.currentTimeMillis() + 5*1000);
 	}
 }

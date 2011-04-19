@@ -64,8 +64,8 @@ public class CIL2PManager {
 		this.network = network;
 		if (orderedRole.get(0) instanceof Atom) {
 			try {
-				for (E r : orderedRole) {
-					GdlProposition playerProp = (GdlProposition) GdlFactory.create(r.toString().toUpperCase());
+				for (Atom r : (List<Atom>)orderedRole) {
+					GdlProposition playerProp = (GdlProposition) GdlFactory.create(r.toString().toLowerCase());
 					playerList.add(new Role(playerProp));
 				}
 			} catch (GdlFormatException e) {
@@ -183,6 +183,7 @@ public class CIL2PManager {
 	 */
 	private double getPlayerScore(final Role role) {
 		// get outputs
+		
 		double playerSum = 0f;
 		double totalSum = 0f;
 		for (Entry<Goal, ThresholdNeuron> goal : network.goalHash.entrySet()) {
@@ -200,7 +201,7 @@ public class CIL2PManager {
 
 			// if this neuron is attached to the player we're
 			// looking at add the value to their score
-			if (role.equals(goalClause.player)) {
+			if (role.equals(goalClause.player)){
 				playerSum += nScore;
 			}
 		}

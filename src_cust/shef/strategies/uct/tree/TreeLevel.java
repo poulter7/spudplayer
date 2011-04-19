@@ -1,8 +1,6 @@
 package shef.strategies.uct.tree;
 
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map.Entry;
 
 import util.statemachine.MachineState;
@@ -13,6 +11,9 @@ import util.statemachine.MachineState;
  *
  */
 public class TreeLevel {
+	/**
+	 * A mapping of MachineState to the model which represents auxiliary information about it
+	 */
 	public final HashMap<MachineState, StateModel> states = new HashMap<MachineState, StateModel>(50);
 
 	public void print(StringBuilder b) {

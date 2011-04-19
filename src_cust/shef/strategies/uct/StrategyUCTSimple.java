@@ -1,9 +1,5 @@
 package shef.strategies.uct;
 
-import java.util.List;
-import java.util.Random;
-
-import shef.strategies.BaseGamer;
 import util.statemachine.MachineState;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
@@ -15,7 +11,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  * @author jonathan
  * 
  */
-public final class StrategyUCTSimple extends GamerBaseUCT {
+public final class StrategyUCTSimple extends BaseGamerUCT {
 
 	/**
 	 * Nothing specific for this simple strategy

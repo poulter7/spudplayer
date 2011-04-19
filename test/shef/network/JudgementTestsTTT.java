@@ -18,7 +18,7 @@ public class JudgementTestsTTT extends AbstractJudgementTests {
     
     protected void setUp() throws Exception {
         CIL2PNet cn = CIL2PFactory.createGameNetworkFromFile(gameLocation);
-        cil2p_manager = new CIL2PManager(cn, Arrays.asList(new Atom("XPLAYER"), new Atom("OPLAYER")));
+        cil2p_manager = new CIL2PManager(cn, Arrays.asList(new Atom("xplayer"), new Atom("oplayer")));
         
         super.setUp();
     }
