@@ -28,7 +28,6 @@ public final class UCTTree {
 	/**
 	 * Add an action pair to the hashmap
 	 * 
-	 * @param game
 	 * @param initMatch
 	 * @throws InterruptedException
 	 * @throws TransitionDefinitionException

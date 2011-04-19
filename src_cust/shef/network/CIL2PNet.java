@@ -86,8 +86,9 @@ public class CIL2PNet {
 	/**
 	 * This produces a neural shef.network which represents a set
 	 * 
-	 * @param p
-	 * @param weightOne
+	 * @param goalProofs the GOAL nodes to process
+	 * @param weightOne use Michulke's optimisation
+	 * @param gamenet if true will throw away unnecessary objects after completion
 	 */
 	public CIL2PNet(List<Node> goalProofs, boolean weightOne, boolean gamenet) {
 		n.addLayer(getOutputLayer());

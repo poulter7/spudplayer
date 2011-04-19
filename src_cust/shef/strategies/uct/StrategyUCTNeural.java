@@ -35,7 +35,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	 * 
 	 * 
 	 * @param from the state to rollout from
-	 * @param the level this rollout takes place from
+	 * @param fromLvl the level this rollout takes place from
 	 * 
 	 * @throws MoveDefinitionException 
 	 * @throws TransitionDefinitionException 

@@ -108,8 +108,8 @@ public class CIL2PManager {
 	/**
 	 * Get the value of a given state by querying the CIL2P shef.network.
 	 * 
-	 * @param state
-	 * @param player
+	 * @param state the state to evaluate
+	 * @return the scores for each player in order
 	 */
 	public List<Double> getStateValues(final MachineState state) {
 		inputMachineState(state);
@@ -124,8 +124,8 @@ public class CIL2PManager {
 	/**
 	 * Get the value of a given state by querying the CIL2P shef.network.
 	 * 
-	 * @param state
-	 * @param player
+	 * @param state to evaluate
+	 * @param playerID
 	 */
 	public double getStateValue(final MachineState state, int playerID) {
 		inputMachineState(state);
@@ -133,10 +133,10 @@ public class CIL2PManager {
 	}
 
 	/**
-	 * Get a state Gaussian
+	 * Get a state Gaussian perturbed state value
 	 * 
-	 * @param state
-	 * @param player
+	 * @param state the game state to evaluate
+	 * @param playerID the player to judge for
 	 * @return a Gaussian value for the state and player with a Gaussian random
 	 *         factor
 	 */

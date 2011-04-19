@@ -1,0 +1,7 @@
+shef.instantiator
+shef.instantiator.andortree
+shef.network
+shef.strategies
+shef.strategies.ann
+shef.strategies.uct
+shef.strategies.uct.tree

@@ -22,7 +22,7 @@ public final class StrategyUCTSimple extends BaseGamerUCT {
 	 * Random rollout to a terminal state
 	 * 
 	 * @param from the state to rollout from
-	 * @param the level this rollout takes place from
+	 * @param fromLvl the level this rollout takes place from
 	 * 
 	 * @throws MoveDefinitionException 
 	 * @throws TransitionDefinitionException 

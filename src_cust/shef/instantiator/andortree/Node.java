@@ -98,11 +98,6 @@ public class Node implements Cloneable {
 
 	}
 
-	/**
-	 * Return the list of children
-	 * 
-	 * @return
-	 */
 	public List<Node> getChildren() {
 		return children;
 
@@ -112,43 +107,26 @@ public class Node implements Cloneable {
 	 * Return how deep in the tree is this XXX this may return the wrong value
 	 * don't rely on this
 	 * 
-	 * @return
+	 * @return the best guess of depth
 	 */
 	public int getDepth() {
 		return depth;
 	}
 
-	/**
-	 * Return the consequent of the implication
-	 * 
-	 * @return
-	 */
 	public Expression getHead() {
 		return head;
 	}
 
-	/**
-	 * Return the implication this node represents
-	 * 
-	 * @return
-	 */
 	public Implication getImplication() {
 		return implication;
 	}
 
-	/**
-	 * Return the number of children this node has
-	 * 
-	 * @return
-	 */
 	public int getChildCount() {
 		return children.size();
 	}
 
 	/**
 	 * Return the number of negative children this node has
-	 * 
-	 * @return
 	 */
 	public int getNegChildCount() {
 		return getChildCount() - getPosChildCount();
@@ -156,8 +134,6 @@ public class Node implements Cloneable {
 
 	/**
 	 * Return the node type
-	 * 
-	 * @return
 	 */
 	public NodeType getNodeType() {
 		return nodetype;
@@ -166,7 +142,6 @@ public class Node implements Cloneable {
 	/**
 	 * Returns the number of positive children this node has
 	 * 
-	 * @return
 	 */
 	public int getPosChildCount() {
 		int p = 0;
@@ -180,8 +155,6 @@ public class Node implements Cloneable {
 
 	/**
 	 * Returns the parent node
-	 * 
-	 * @return
 	 */
 	public Node getParent() {
 		return parent;
@@ -190,7 +163,6 @@ public class Node implements Cloneable {
 	/**
 	 * Returns true if the head of every child has no variables
 	 * 
-	 * @return
 	 */
 	public boolean isCompleted() {
 		// should only really be called on TRUE and AND nodes
