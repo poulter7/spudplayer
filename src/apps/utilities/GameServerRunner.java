@@ -78,7 +78,6 @@ public final class GameServerRunner
 		}
 		Match match = new Match(matchname, startClock, playClock, game);
 		GameServer server = new GameServer(match, hostNames, portNumbers, playerNames);
-		Thread.sleep(10000);
 		server.run();
 		server.join();
 		File f = new File(tourneyName);
