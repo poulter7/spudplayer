@@ -21,6 +21,12 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	private static final boolean PRINT_GAUSS_EFFECT = false;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
+	private double sigma;
+	
+	
+	public StrategyUCTNeural(double sigma) {
+		this.sigma  = sigma;
+	}
 
 	/**
 	 * Create the network which will be guiding the out of tree play
@@ -29,7 +35,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		// create network
 		CIL2PNet net = CIL2PFactory.createGameNetworkFromGame(getMatch()
 				.getGame());
-		cil2pManager = new CIL2PManager(net, roles);
+		cil2pManager = new CIL2PManager(net, roles, sigma);
 
 	}
 

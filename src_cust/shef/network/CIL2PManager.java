@@ -48,10 +48,9 @@ public class CIL2PManager {
 	public final CIL2PNet network;
 
 	/** the closer the value is to one the more random the search is, closer to 0 is closer to strictly following the evaluation function */
-	private final double sigmaOverTwo = 0.1;
-	private final double sigmaOverTwoSq = sigmaOverTwo * sigmaOverTwo;
-	private final GaussianRandomizer gauss = new GaussianRandomizer(0,
-			sigmaOverTwoSq);
+	private final double sigmaOverTwo;
+	private final double sigmaOverTwoSq;
+	private final GaussianRandomizer gauss;
 
 	/**
 	 * Create a manager for this network
@@ -61,8 +60,12 @@ public class CIL2PManager {
 	 * @param network
 	 */
 	@SuppressWarnings("unchecked")
-	public <E> CIL2PManager(final CIL2PNet network, final List<E> orderedRole) {
+	public <E> CIL2PManager(final CIL2PNet network, final List<E> orderedRole, double sigmaOverTwo) {
 		this.network = network;
+		this.sigmaOverTwo = sigmaOverTwo;
+		sigmaOverTwoSq = sigmaOverTwo * sigmaOverTwo;
+		gauss = new GaussianRandomizer(0,
+				sigmaOverTwoSq);
 		if (orderedRole.get(0) instanceof Atom) {
 			try {
 				for (Atom r : (List<Atom>)orderedRole) {
@@ -91,6 +94,9 @@ public class CIL2PManager {
 	 */
 	CIL2PManager(CIL2PNet network) {
 		this.network = network;
+		this.sigmaOverTwo = 0.1;
+		sigmaOverTwoSq = sigmaOverTwo * sigmaOverTwo;
+		gauss = new GaussianRandomizer(0, sigmaOverTwoSq);
 	}
 
 	/**

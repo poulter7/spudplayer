@@ -29,12 +29,12 @@ public class StrategyLauncher {
 			int playerIndex = Integer.parseInt(args[1]);
 			switch(playerIndex){
 			case 1: strat = new StrategyUCTSimple(); 		break;
-			case 2: strat = new StrategyUCTNeural(); 		break;
+			case 2: strat = new StrategyUCTNeural(Integer.parseInt(args[2])); 		break;
 			case 3: strat = new SimpleMonteCarloGamer(); 	break;
 			case 4: strat = new StrategyAlphaBeta();		break;
 			default: throw new RuntimeException("Invalid player chosen cannot continue");
 			}
-			GamePlayer player = new GamePlayer(Integer.valueOf(args[0]), strat);
+			GamePlayer player = new GamePlayer(Integer.parseInt(args[0]), strat);
 			player.run();
 		} catch (NumberFormatException e) {
 			System.err.println("Illegal port number: " + args[0]);
