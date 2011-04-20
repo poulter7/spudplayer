@@ -11,13 +11,14 @@ import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
 
 /**
- * UCT Gamer which creates a neural network
- * and completes its rollouts using that
+ * UCT Gamer which creates a neural network and completes its rollouts using
+ * that
  * 
  * @author jonathan poulter
  */
 public final class StrategyUCTNeural extends BaseGamerUCT {
 
+	private static final boolean PRINT_GAUSS_EFFECT = false;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
 
@@ -26,50 +27,58 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	 */
 	public void strategyMetaSetup(final long timeout) {
 		// create network
-		CIL2PNet net = CIL2PFactory.createGameNetworkFromGame(getMatch().getGame());
+		CIL2PNet net = CIL2PFactory.createGameNetworkFromGame(getMatch()
+				.getGame());
 		cil2pManager = new CIL2PManager(net, roles);
-		
+
 	}
 
 	/**
 	 * 
 	 * 
-	 * @param from the state to rollout from
-	 * @param fromLvl the level this rollout takes place from
+	 * @param from
+	 *            the state to rollout from
+	 * @param fromLvl
+	 *            the level this rollout takes place from
 	 * 
-	 * @throws MoveDefinitionException 
-	 * @throws TransitionDefinitionException 
-	 * @throws GoalDefinitionException 
+	 * @throws MoveDefinitionException
+	 * @throws TransitionDefinitionException
+	 * @throws GoalDefinitionException
 	 */
-	public MachineState outOfTreeRollout(final MachineState from, final int fromLvl) throws MoveDefinitionException, TransitionDefinitionException, GoalDefinitionException {
+	public MachineState outOfTreeRollout(final MachineState from,
+			final int fromLvl) throws MoveDefinitionException,
+			TransitionDefinitionException, GoalDefinitionException {
 		int simDepth = fromLvl;
 		int levelPlayer = (simDepth % roleCount);
-		
-		
+
 		MachineState terminal = from;
 		do { // play the best move for the current player
-			
+
 			List<MachineState> nextStates = theMachine.getNextStates(terminal);
 			int nextStateCount = nextStates.size();
 			double bestChildScoreGAUSS = 0;
 			int bestChildIndexGAUSS = 0;
 			for (int i = 0; i < nextStateCount; i++) {
-				double childScoreGAUSS = cil2pManager.getStateValueGaussian(nextStates.get(i), levelPlayer);
+				double childScoreGAUSS = cil2pManager.getStateValueGaussian(
+						nextStates.get(i), levelPlayer);
 				if (childScoreGAUSS > bestChildScoreGAUSS) {
 					bestChildScoreGAUSS = childScoreGAUSS;
 					bestChildIndexGAUSS = i;
 				}
 			}
-//			double bestChildScore = 0;
-//			int bestChildIndex= 0;
-//			for (int i = 0; i < nextStateCount; i++) {
-//				double childScore= cil2pManager.getStateValue(nextStates.get(i), levelPlayer);
-//				if (childScore> bestChildScore) {
-//					bestChildScore= childScore;
-//					bestChildIndex= i;
-//				}
-//			}
-//			System.out.println(bestChildIndexGAUSS == bestChildIndex);
+			if (PRINT_GAUSS_EFFECT) {
+				double bestChildScore = 0;
+				int bestChildIndex = 0;
+				for (int i = 0; i < nextStateCount; i++) {
+					double childScore = cil2pManager.getStateValue(nextStates
+							.get(i), levelPlayer);
+					if (childScore > bestChildScore) {
+						bestChildScore = childScore;
+						bestChildIndex = i;
+					}
+				}
+				System.out.println(bestChildIndexGAUSS == bestChildIndex);
+			}
 			terminal = nextStates.get(bestChildIndexGAUSS);
 			simDepth++;
 			levelPlayer = (simDepth % roleCount);
@@ -82,6 +91,5 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	public String getName() {
 		return "Neural Gamer";
 	}
-
 
 }

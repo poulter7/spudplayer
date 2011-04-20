@@ -9,7 +9,8 @@ import cs227b.teamIago.resolver.Atom;
 
 public class JudgementTestsConnect4 extends AbstractJudgementTests {
 	
-	private static final String gameLocation = "connect4";
+	private static final String gameLocation = "../games/rulesheets/connect4";
+//	private static final String gameLocation = "connect4";
 	private static final List<Atom> playerList = Arrays.asList(new Atom("white"), new Atom("red"));
 	
 	@Override
