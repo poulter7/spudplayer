@@ -19,10 +19,10 @@ public class StrategyLauncher {
 	// It might make sense to factor this out into a separate app sometime,
 	// so that the GamePlayer class doesn't have to import RandomGamer.
 	public static void main(String[] args) {
-		if (args.length != 2) {
-			System.err.println("Usage: GamePlayer <port>");
-			System.exit(1);
-		}
+//		if (args.length != 2) {
+//			System.err.println("Usage: GamePlayer <port>");
+//			System.exit(1);
+//		}
 
 		try {
 			Gamer strat = null;

@@ -99,6 +99,32 @@ public class CIL2PManager {
 		gauss = new GaussianRandomizer(0, sigmaOverTwoSq);
 	}
 
+	public <E> CIL2PManager(CIL2PNet network, List<E> orderedRole) {
+		this.network = network;
+		this.sigmaOverTwo = 0.1;
+		sigmaOverTwoSq = sigmaOverTwo * sigmaOverTwo;
+		gauss = new GaussianRandomizer(0,
+				sigmaOverTwoSq);
+		if (orderedRole.get(0) instanceof Atom) {
+			try {
+				for (Atom r : (List<Atom>)orderedRole) {
+					GdlProposition playerProp = (GdlProposition) GdlFactory.create(r.toString().toLowerCase());
+					playerList.add(new Role(playerProp));
+				}
+			} catch (GdlFormatException e) {
+				e.printStackTrace();
+			} catch (SymbolFormatException e) {
+				e.printStackTrace();
+			}
+		} else if (orderedRole.get(0) instanceof Role) {
+			this.playerList.addAll((List<Role>) orderedRole);
+		} else {
+			throw new RuntimeException(
+					"List of player roles not given as an excepted Class,"
+							+ " use either cs227b.teamIago.resolver.Atom or util.statemachine.Role");
+		}
+	}
+
 	/**
 	 * Prints a set of goal nodes as multiple CIL2P trees
 	 * 
