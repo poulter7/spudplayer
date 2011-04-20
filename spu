@@ -1,2 +1,3 @@
 #!/bin/bash
-ant NeuralPlayer
+java -cp 'bin:src/externalFlyingSaucer/core-renderer/*:src/external/JTidy/Tidy/*:src/external/JGoodiesForms/forms-1.2.1/*:src/external/Jython/jython/*:src/external/Clojure/clojure/*:lib/slf4j-1.6.1/slf4j-simple-1.6.1/*:lib/slf4j-1.6.1/slf4j-api-1.6.1.jar/*:lib/neuroph-2.5b/neuroph-2.5b/*:lib/JavaProver/*:lib/encog-java-core-2.5.3/lib/encog-core-2.5.3/*:lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3/*' shef.strategies.StrategyLauncher 4001 2
+
