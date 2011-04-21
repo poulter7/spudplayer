@@ -19,7 +19,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  */
 public final class StrategyUCTNeural extends BaseGamerUCT {
 
-	private static final boolean PRINT_GAUSS_EFFECT = true;
+	private static final boolean PRINT_GAUSS_EFFECT = false;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
 	private double sigma;
@@ -59,9 +59,15 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		MachineState terminal = from;
 		
 		
-		do { // play the best move for the current player
+		do { 
+			// play the move which results
+			// in the highest amount of reward in the next state for
+			// the current player
+			// get the current player
 			int levelPlayerID = (simDepth % roleCount);
 			Role levelPlayer = roles.get(levelPlayerID);
+			
+			// next states
 			List<MachineState> nextStates = theMachine.getNextStates(terminal);
 			int nextStateCount = nextStates.size();
 			double bestChildScoreGAUSS = 0;
@@ -86,7 +92,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 					}
 				}
 				System.out.println(bestChildIndexGAUSS == bestChildIndex);
-				System.out.println(theMachine.getLegalMoves(terminal, levelPlayer));
+				System.out.println(levelPlayer + " " + theMachine.getLegalMoves(terminal, levelPlayer) );
 			}
 			terminal = nextStates.get(bestChildIndexGAUSS);
 			simDepth++;
