@@ -1,5 +1,8 @@
 package shef.strategies.uct;
 
+import java.util.List;
+
+import shef.strategies.uct.tree.StateActionPair;
 import shef.strategies.uct.tree.StateModel;
 import util.statemachine.MachineState;
 import util.statemachine.exceptions.GoalDefinitionException;
@@ -42,4 +45,10 @@ public interface IUCTStrategy {
 	 */
 	MachineState outOfTreeRollout(final MachineState from, final int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException;
 	
+	/**
+	 * Return the state action pair chosen from those just expanded on the horizon
+	 * @throws TransitionDefinitionException 
+	 * @throws MoveDefinitionException 
+	 */
+	StateActionPair horizonStatePair(final List<StateActionPair> from, int fromLvl) throws MoveDefinitionException, TransitionDefinitionException;
 }

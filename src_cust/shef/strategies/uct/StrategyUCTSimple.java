@@ -1,5 +1,9 @@
 package shef.strategies.uct;
 
+import java.util.List;
+import java.util.Random;
+
+import shef.strategies.uct.tree.StateActionPair;
 import util.statemachine.MachineState;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
@@ -41,6 +45,21 @@ public final class StrategyUCTSimple extends BaseGamerUCT {
 	@Override
 	public String getName() {
 		return "Basic UCT Gamer";
+	}
+
+
+	Random r = new Random();
+	
+	/**
+	 * Returns a random state pair
+	 * @param newStateActionPairs the recently expanded state pairs
+	 * @return a random state pair
+	 */
+	@Override
+	public StateActionPair horizonStatePair(List<StateActionPair> newStateActionPairs, int level)
+			throws MoveDefinitionException, TransitionDefinitionException {
+		int size = newStateActionPairs.size();
+		return newStateActionPairs.get(r.nextInt(size));
 	}
 
 }

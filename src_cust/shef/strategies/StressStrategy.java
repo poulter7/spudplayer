@@ -67,6 +67,6 @@ public final class StressStrategy {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		player.getGamer().selectMove(System.currentTimeMillis() + 5*1000);
+		player.getGamer().selectMove(System.currentTimeMillis() + 10*1000);
 	}
 }

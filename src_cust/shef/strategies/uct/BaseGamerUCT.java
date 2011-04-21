@@ -26,7 +26,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
 public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 	
 	/** UCT tree */
-	private UCTTree tree;
+	protected UCTTree tree;
 	
 	@Override
 	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException{
@@ -170,8 +170,9 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		backupStates.add(traverser);
 		
 		if (expandLeaf && !theMachine.isTerminal(traverser.state)) {
-			StateActionPair nextAction = tree.expandNodeAndReturnRandom(traverser);
-			// add the randomly chosen action
+			List<StateActionPair> newStateActionPairs = tree.expandNode(traverser);
+			StateActionPair nextAction = horizonStatePair(newStateActionPairs, traverser.depth);
+			// add the horizon chosen action
 			traverser = nextAction.RESULT;
 			backupStates.add(traverser);
 			backupSAPs.add(nextAction);

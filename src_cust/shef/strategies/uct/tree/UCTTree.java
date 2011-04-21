@@ -82,6 +82,40 @@ public final class UCTTree {
 		}
 		return randomNext;
 	}
+	
+	/**
+	 * Expand the UCT from this current node
+	 * @param nodeModel
+	 * @throws MoveDefinitionException
+	 * @throws TransitionDefinitionException
+	 * @return StateActionPair list of added STAPs 
+	 */
+	public List<StateActionPair> expandNode(StateModel nodeModel) throws MoveDefinitionException, TransitionDefinitionException {
+		final List<List<Move>> legalMoves = sm.getLegalJointMoves(nodeModel.state);
+		final List<StateActionPair> added = new ArrayList<StateActionPair>();
+		final int moveCount =  legalMoves.size();
+		
+		for(int i = 0; i < moveCount; i++){
+			List<Move> m = legalMoves.get(i);
+			MachineState nextState = sm.getNextState(nodeModel.state, m);
+			StateModel nextStateModel = new StateModel( nextState, nodeModel.depth+1);
+			TreeLevel childLevel = null;
+			if(stateLists.size() <= nodeModel.depth+1){
+				childLevel = new TreeLevel();
+				stateLists.add(childLevel);
+			} else {
+				childLevel = stateLists.get(nodeModel.depth+1);
+			}
+			childLevel.states.put(nextState, nextStateModel);
+			
+			// make a connection between the two
+			StateActionPair act = new StateActionPair(nextStateModel, m, num_players);
+			nodeModel.actionsPairs.put(m, act);
+			added.add(act);
+			
+		}
+		return added;
+	}
 
 	public void print(StringBuilder b) {
 		b.append("UCTTree\n");

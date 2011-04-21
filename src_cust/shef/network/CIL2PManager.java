@@ -166,7 +166,7 @@ public class CIL2PManager {
 	}
 
 	/**
-	 * Get a state Gaussian perturbed state value
+	 * Get a Gaussian peturbed state value for a single player
 	 * 
 	 * @param state the game state to evaluate
 	 * @param playerID the player to judge for
@@ -178,6 +178,22 @@ public class CIL2PManager {
 		double sc = getPlayerScore(player) / 100d;
 		double gaussR = gauss.randomize(0);
 		return sc + gaussR;
+	}
+	
+	/**
+	 * Get a Gaussian peturbed state value for each player
+	 * @param state the game state to evaluate
+	 * @return a Gaussian value for each player
+	 */
+	public List<Double> getStateValueGaussianPlayers(final MachineState state){
+		final List<Double> scores = new ArrayList<Double>();
+		inputMachineState(state);
+		for(Role player: playerList){
+			double sc = getPlayerScore(player) / 100d;
+			double gaussR = gauss.randomize(0);
+			scores.add(sc + gaussR);
+		}
+		return scores;
 	}
 
 	/**

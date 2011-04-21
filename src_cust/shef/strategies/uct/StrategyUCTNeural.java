@@ -1,10 +1,13 @@
 package shef.strategies.uct;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
+import shef.strategies.uct.tree.StateActionPair;
+import shef.strategies.uct.tree.StateModel;
 import util.statemachine.MachineState;
 import util.statemachine.Role;
 import util.statemachine.exceptions.GoalDefinitionException;
@@ -20,13 +23,13 @@ import util.statemachine.exceptions.TransitionDefinitionException;
 public final class StrategyUCTNeural extends BaseGamerUCT {
 
 	private static final boolean PRINT_GAUSS_EFFECT = false;
+	private static final boolean PRINT_EXPAND = true;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
 	private double sigma;
-	
-	
+
 	public StrategyUCTNeural(double sigma) {
-		this.sigma  = sigma;
+		this.sigma = sigma;
 	}
 
 	/**
@@ -55,18 +58,17 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	public MachineState outOfTreeRollout(final MachineState from,
 			final int fromLvl) throws MoveDefinitionException,
 			TransitionDefinitionException, GoalDefinitionException {
-		int simDepth = fromLvl+1;
+		int simDepth = fromLvl + 1;
 		MachineState terminal = from;
-		
-		
-		do { 
+
+		do {
 			// play the move which results
 			// in the highest amount of reward in the next state for
 			// the current player
 			// get the current player
 			int levelPlayerID = (simDepth % roleCount);
 			Role levelPlayer = roles.get(levelPlayerID);
-			
+
 			// next states
 			List<MachineState> nextStates = theMachine.getNextStates(terminal);
 			int nextStateCount = nextStates.size();
@@ -92,7 +94,8 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 					}
 				}
 				System.out.println(bestChildIndexGAUSS == bestChildIndex);
-				System.out.println(levelPlayer + " " + theMachine.getLegalMoves(terminal, levelPlayer) );
+				System.out.println(levelPlayer + " "
+						+ theMachine.getLegalMoves(terminal, levelPlayer));
 			}
 			terminal = nextStates.get(bestChildIndexGAUSS);
 			simDepth++;
@@ -105,6 +108,39 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	@Override
 	public String getName() {
 		return "Neural Gamer";
+	}
+
+	@Override
+	public StateActionPair horizonStatePair(
+			List<StateActionPair> newStateActionPairs, int level)
+			throws MoveDefinitionException, TransitionDefinitionException {
+
+		int nextStateCount = newStateActionPairs.size();
+		List<List<Double>> returns = new ArrayList<List<Double>>(nextStateCount);
+		for (StateActionPair stap : newStateActionPairs) {
+			returns.add(cil2pManager
+					.getStateValueGaussianPlayers(stap.RESULT.state));
+		}
+
+		Role levelPlayer = roles.get(level % roleCount);
+
+		double bestChildScoreGAUSS = 0;
+		int bestChildIndexGAUSS = 0;
+		for (int i = 0; i < nextStateCount; i++) {
+			double childScoreGAUSS = cil2pManager.getStateValueGaussian(
+					newStateActionPairs.get(i).RESULT.state, levelPlayer);
+			if (childScoreGAUSS > bestChildScoreGAUSS) {
+				bestChildScoreGAUSS = childScoreGAUSS;
+				bestChildIndexGAUSS = i;
+			}
+		}
+		if (PRINT_EXPAND) {
+			System.out.println("EXPAND lvl:" + level + " as " + levelPlayer + " " +
+					(newStateActionPairs.get(bestChildIndexGAUSS).ACTION)
+					);
+			System.out.println(roles);
+		}
+		return newStateActionPairs.get(bestChildIndexGAUSS);
 	}
 
 }
