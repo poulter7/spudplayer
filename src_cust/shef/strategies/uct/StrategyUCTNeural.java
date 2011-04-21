@@ -6,6 +6,7 @@ import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
 import util.statemachine.MachineState;
+import util.statemachine.Role;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
@@ -18,7 +19,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  */
 public final class StrategyUCTNeural extends BaseGamerUCT {
 
-	private static final boolean PRINT_GAUSS_EFFECT = false;
+	private static final boolean PRINT_GAUSS_EFFECT = true;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
 	private double sigma;
@@ -54,12 +55,13 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	public MachineState outOfTreeRollout(final MachineState from,
 			final int fromLvl) throws MoveDefinitionException,
 			TransitionDefinitionException, GoalDefinitionException {
-		int simDepth = fromLvl;
-		int levelPlayer = (simDepth % roleCount);
-
+		int simDepth = fromLvl+1;
 		MachineState terminal = from;
+		
+		
 		do { // play the best move for the current player
-
+			int levelPlayerID = (simDepth % roleCount);
+			Role levelPlayer = roles.get(levelPlayerID);
 			List<MachineState> nextStates = theMachine.getNextStates(terminal);
 			int nextStateCount = nextStates.size();
 			double bestChildScoreGAUSS = 0;
@@ -84,10 +86,11 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 					}
 				}
 				System.out.println(bestChildIndexGAUSS == bestChildIndex);
+				System.out.println(theMachine.getLegalMoves(terminal, levelPlayer));
 			}
 			terminal = nextStates.get(bestChildIndexGAUSS);
 			simDepth++;
-			levelPlayer = (simDepth % roleCount);
+			levelPlayerID = (simDepth % roleCount);
 		} while (!theMachine.isTerminal(terminal));
 		// the node was terminal
 		return terminal;

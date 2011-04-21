@@ -160,9 +160,9 @@ public class CIL2PManager {
 	 * @param state to evaluate
 	 * @param playerID
 	 */
-	public double getStateValue(final MachineState state, int playerID) {
+	public double getStateValue(final MachineState state, Role player) {
 		inputMachineState(state);
-		return getPlayerScore(playerList.get(playerID));
+		return getPlayerScore(player);
 	}
 
 	/**
@@ -173,9 +173,9 @@ public class CIL2PManager {
 	 * @return a Gaussian value for the state and player with a Gaussian random
 	 *         factor
 	 */
-	public double getStateValueGaussian(final MachineState state, int playerID) {
+	public double getStateValueGaussian(final MachineState state, Role player) {
 		inputMachineState(state);
-		double sc = getPlayerScore(playerList.get(playerID)) / 100d;
+		double sc = getPlayerScore(player) / 100d;
 		double gaussR = gauss.randomize(0);
 		return sc + gaussR;
 	}

@@ -1,5 +1,7 @@
 package shef.strategies.ann;
 
+import util.statemachine.Role;
+
 
 /**
  * A node capable of taking part in an alpha beta search
@@ -13,7 +15,7 @@ public interface IABNode<T, L> extends Comparable<IABNode<T, L>>{
 	/** get the value of this node */
 	double getValue();
 	/** get a heuristic value for this node */
-	double getHeuristicValue(int player);
+	double getHeuristicValue(Role player);
 	/** does this node represent a terminal state? */
 	boolean isTerminal();
 	/** set the value of this node */

@@ -2,14 +2,20 @@ package shef.network;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import player.request.factory.RequestFactory;
 import util.game.Game;
+import util.gdl.factory.GdlFactory;
+import util.gdl.factory.exceptions.GdlFormatException;
+import util.gdl.grammar.GdlProposition;
 import util.statemachine.MachineState;
+import util.statemachine.Role;
 import util.statemachine.implementation.prover.ProverStateMachine;
 import util.symbol.factory.SymbolFactory;
+import util.symbol.factory.exceptions.SymbolFormatException;
 import util.symbol.grammar.SymbolList;
 import cs227b.teamIago.resolver.Atom;
 
@@ -22,21 +28,37 @@ public class NetworkStress{
 
 	
 	private final long stressTime = 5000;
+	private final String loc = "specs/connect4_strip.kif";
 	private boolean cont = true;
 
 	public static void main(String[] args) {
 		new NetworkStress();
 	}
 
+	
 	public NetworkStress() {
 		CIL2PManager cil2pManager;
 		ProverStateMachine p;
 		List<Atom> players = Arrays.asList(new Atom("WHITE"), new Atom("RED"));
+		List<Role> playerList = new ArrayList<Role>();
+		for (Atom r : (List<Atom>)players) {
+			GdlProposition playerProp;
+			try {
+				playerProp = (GdlProposition) GdlFactory.create(r.toString().toLowerCase());
+				playerList.add(new Role(playerProp));
+			} catch (GdlFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SymbolFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
 
 			RequestFactory rf = new RequestFactory();
 			StringBuilder sb = new StringBuilder();
-			BufferedReader br = new BufferedReader(new FileReader("specs/connect4_strip.kif"));
+			BufferedReader br = new BufferedReader(new FileReader(loc));
 
 			String s;
 			while ((s = br.readLine()) != null) {
@@ -60,7 +82,7 @@ public class NetworkStress{
 			int eval = 0;
 			
 			while (cont ) {
-				cil2pManager.getStateValue(init, 0);
+				cil2pManager.getStateValue(init, playerList.get(0));
 				eval++;
 			}
 			System.out.println("ran evaluation " +eval + " times.");

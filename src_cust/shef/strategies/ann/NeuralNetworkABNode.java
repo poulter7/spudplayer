@@ -3,6 +3,7 @@ package shef.strategies.ann;
 import shef.network.CIL2PManager;
 import util.statemachine.MachineState;
 import util.statemachine.Move;
+import util.statemachine.Role;
 import util.statemachine.StateMachine;
 
 /**
@@ -80,7 +81,7 @@ public class NeuralNetworkABNode implements IABNode<MachineState, Move> {
 	}
 
 	@Override
-	public double getHeuristicValue(int player) {
+	public double getHeuristicValue(Role player) {
 		return cil2pManager.getStateValue(gameState, player);
 	}
 

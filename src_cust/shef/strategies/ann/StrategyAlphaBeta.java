@@ -107,7 +107,7 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 		// it is necessary to return a value as time is up
 		if (depth == 0 || node.isTerminal() || System.currentTimeMillis() > currentTimeout) {
 			// heuristic value of node
-			final double val = node.getHeuristicValue(player);
+			final double val = node.getHeuristicValue(roles.get(player));
 			if (depth == AB_DEPTH - 1) {
 				rootMoves.add(node);
 			}
