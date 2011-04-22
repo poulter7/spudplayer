@@ -5,6 +5,7 @@ import java.util.List;
 import shef.strategies.uct.tree.StateActionPair;
 import shef.strategies.uct.tree.StateModel;
 import util.statemachine.MachineState;
+import util.statemachine.Move;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
@@ -43,12 +44,12 @@ public interface IUCTStrategy {
 	 * @throws TransitionDefinitionException 
 	 * @throws GoalDefinitionException 
 	 */
-	MachineState outOfTreeRollout(final MachineState from, final int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException;
+	MachineState outOfTreeRollout(final MachineState from) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException;
 	
 	/**
 	 * Return the state action pair chosen from those just expanded on the horizon
 	 * @throws TransitionDefinitionException 
 	 * @throws MoveDefinitionException 
 	 */
-	StateActionPair horizonStatePair(final List<StateActionPair> from, int fromLvl) throws MoveDefinitionException, TransitionDefinitionException;
+	List<Move> horizonStatePair(final List<List<Move>> newStateActionPairs, MachineState currentState) throws MoveDefinitionException, TransitionDefinitionException;
 }

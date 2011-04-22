@@ -52,6 +52,8 @@ public class CIL2PManager {
 	private final double sigmaOverTwoSq;
 	private final GaussianRandomizer gauss;
 
+	private int roleCount;
+
 	/**
 	 * Create a manager for this network
 	 * 
@@ -84,6 +86,7 @@ public class CIL2PManager {
 					"List of player roles not given as an excepted Class,"
 							+ " use either cs227b.teamIago.resolver.Atom or util.statemachine.Role");
 		}
+		roleCount = playerList.size();
 	}
 
 	/**
@@ -185,13 +188,13 @@ public class CIL2PManager {
 	 * @param state the game state to evaluate
 	 * @return a Gaussian value for each player
 	 */
-	public List<Double> getStateValueGaussianPlayers(final MachineState state){
-		final List<Double> scores = new ArrayList<Double>();
+	public double[] getStateValueGaussianPlayers(final MachineState state){
+		final double[] scores = new double[roleCount];
 		inputMachineState(state);
-		for(Role player: playerList){
-			double sc = getPlayerScore(player) / 100d;
+		for(int i = 0; i < roleCount; i++){
+			double sc = getPlayerScore(playerList.get(i)) / 100d;
 			double gaussR = gauss.randomize(0);
-			scores.add(sc + gaussR);
+			scores[i] = sc + gaussR;
 		}
 		return scores;
 	}

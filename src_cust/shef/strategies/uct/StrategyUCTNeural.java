@@ -9,6 +9,7 @@ import shef.network.CIL2PNet;
 import shef.strategies.uct.tree.StateActionPair;
 import shef.strategies.uct.tree.StateModel;
 import util.statemachine.MachineState;
+import util.statemachine.Move;
 import util.statemachine.Role;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
@@ -24,6 +25,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 
 	private static final boolean PRINT_GAUSS_EFFECT = false;
 	private static final boolean PRINT_EXPAND = false;
+	private static final boolean SEE_OUT_OUT = true;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
 	private double sigma;
@@ -55,10 +57,9 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	 * @throws TransitionDefinitionException
 	 * @throws GoalDefinitionException
 	 */
-	public MachineState outOfTreeRollout(final MachineState from,
-			final int fromLvl) throws MoveDefinitionException,
-			TransitionDefinitionException, GoalDefinitionException {
-		int simDepth = fromLvl + 1;
+	public MachineState outOfTreeRollout(final MachineState from)
+			throws MoveDefinitionException, TransitionDefinitionException,
+			GoalDefinitionException {
 		MachineState terminal = from;
 
 		do {
@@ -66,40 +67,11 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 			// in the highest amount of reward in the next state for
 			// the current player
 			// get the current player
-			int levelPlayerID = (simDepth % roleCount);
-			Role levelPlayer = roles.get(levelPlayerID);
+			List<List<Move>> movePairs = theMachine
+					.getLegalJointMoves(terminal);
+			List<Move> played = horizonStatePair(movePairs, terminal);
+			terminal = theMachine.getNextState(terminal, played);
 
-			// next states
-			List<MachineState> nextStates = theMachine.getNextStates(terminal);
-			int nextStateCount = nextStates.size();
-			double bestChildScoreGAUSS = 0;
-			int bestChildIndexGAUSS = 0;
-			for (int i = 0; i < nextStateCount; i++) {
-				double childScoreGAUSS = cil2pManager.getStateValueGaussian(
-						nextStates.get(i), levelPlayer);
-				if (childScoreGAUSS > bestChildScoreGAUSS) {
-					bestChildScoreGAUSS = childScoreGAUSS;
-					bestChildIndexGAUSS = i;
-				}
-			}
-			if (PRINT_GAUSS_EFFECT) {
-				double bestChildScore = 0;
-				int bestChildIndex = 0;
-				for (int i = 0; i < nextStateCount; i++) {
-					double childScore = cil2pManager.getStateValue(nextStates
-							.get(i), levelPlayer);
-					if (childScore > bestChildScore) {
-						bestChildScore = childScore;
-						bestChildIndex = i;
-					}
-				}
-				System.out.println(bestChildIndexGAUSS == bestChildIndex);
-				System.out.println(levelPlayer + " "
-						+ theMachine.getLegalMoves(terminal, levelPlayer));
-			}
-			terminal = nextStates.get(bestChildIndexGAUSS);
-			simDepth++;
-			levelPlayerID = (simDepth % roleCount);
 		} while (!theMachine.isTerminal(terminal));
 		// the node was terminal
 		return terminal;
@@ -111,36 +83,36 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	}
 
 	@Override
-	public StateActionPair horizonStatePair(
-			List<StateActionPair> newStateActionPairs, int level)
-			throws MoveDefinitionException, TransitionDefinitionException {
+	public List<Move> horizonStatePair(List<List<Move>> movePairs,
+			MachineState from) throws MoveDefinitionException, TransitionDefinitionException {
+		int movePairCount = movePairs.size();
+		double[][] rewardPairs = new double[movePairCount][roleCount];
 
-		int nextStateCount = newStateActionPairs.size();
-		List<List<Double>> returns = new ArrayList<List<Double>>(nextStateCount);
-		for (StateActionPair stap : newStateActionPairs) {
-			returns.add(cil2pManager
-					.getStateValueGaussianPlayers(stap.RESULT.state));
+		for (int i = 0; i < movePairCount; i++) {
+			rewardPairs[i] = cil2pManager
+					.getStateValueGaussianPlayers(theMachine
+							.getNextStateDestructively(from, movePairs.get(i)));
 		}
 
-		Role levelPlayer = roles.get(level % roleCount);
+		int[] bestIndex = new int[roleCount];
+		double[] bestValue = new double[roleCount];
 
-		double bestChildScoreGAUSS = 0;
-		int bestChildIndexGAUSS = 0;
-		for (int i = 0; i < nextStateCount; i++) {
-			double childScoreGAUSS = cil2pManager.getStateValueGaussian(
-					newStateActionPairs.get(i).RESULT.state, levelPlayer);
-			if (childScoreGAUSS > bestChildScoreGAUSS) {
-				bestChildScoreGAUSS = childScoreGAUSS;
-				bestChildIndexGAUSS = i;
+		for (int i = 0; i < roleCount; i++) {
+			for (int j = 0; j < movePairCount; j++) {
+				if (bestValue[i] < rewardPairs[j][i]) {
+					bestValue[i] = rewardPairs[j][i];
+					bestIndex[i] = j;
+				}
 			}
 		}
-		if (PRINT_EXPAND) {
-			System.out.println("EXPAND lvl:" + level + " as " + levelPlayer + " " +
-					(newStateActionPairs.get(bestChildIndexGAUSS).ACTION)
-					);
-			System.out.println(roles);
+
+		// chosen the action which gave you the best result IF it was your turn
+		// what would you play
+		List<Move> played = new ArrayList<Move>(roleCount);
+		for (int i = 0; i < roleCount; i++) {
+			played.add(movePairs.get(bestIndex[i]).get(i));
 		}
-		return newStateActionPairs.get(bestChildIndexGAUSS);
+		return played;
 	}
 
 }

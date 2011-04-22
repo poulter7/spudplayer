@@ -90,7 +90,7 @@ public final class UCTTree {
 	 * @throws TransitionDefinitionException
 	 * @return StateActionPair list of added STAPs 
 	 */
-	public List<StateActionPair> expandNode(StateModel nodeModel) throws MoveDefinitionException, TransitionDefinitionException {
+	public List<List<Move>> expandNode(StateModel nodeModel) throws MoveDefinitionException, TransitionDefinitionException {
 		final List<List<Move>> legalMoves = sm.getLegalJointMoves(nodeModel.state);
 		final List<StateActionPair> added = new ArrayList<StateActionPair>();
 		final int moveCount =  legalMoves.size();
@@ -114,7 +114,7 @@ public final class UCTTree {
 			added.add(act);
 			
 		}
-		return added;
+		return legalMoves;
 	}
 
 	public void print(StringBuilder b) {

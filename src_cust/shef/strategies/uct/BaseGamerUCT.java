@@ -170,9 +170,10 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		backupStates.add(traverser);
 		
 		if (expandLeaf && !theMachine.isTerminal(traverser.state)) {
-			List<StateActionPair> newStateActionPairs = tree.expandNode(traverser);
-			StateActionPair nextAction = horizonStatePair(newStateActionPairs, traverser.depth);
+			List<List<Move>> newStateActionPairs = tree.expandNode(traverser);
+			List<Move> nextState = horizonStatePair(newStateActionPairs, traverser.state);
 			// add the horizon chosen action
+			StateActionPair nextAction = traverser.actionsPairs.get(nextState);
 			traverser = nextAction.RESULT;
 			backupStates.add(traverser);
 			backupSAPs.add(nextAction);
@@ -181,7 +182,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		MachineState terminal;
 		if (!theMachine.isTerminal(traverser.state)) {
 			// complete the rollouts past this UCT horizon
-			terminal = outOfTreeRollout(traverser.state, traverser.depth+1);
+			terminal = outOfTreeRollout(traverser.state);
 		} else {
 			terminal = traverser.state;
 		}

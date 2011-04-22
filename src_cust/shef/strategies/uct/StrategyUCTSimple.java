@@ -5,6 +5,7 @@ import java.util.Random;
 
 import shef.strategies.uct.tree.StateActionPair;
 import util.statemachine.MachineState;
+import util.statemachine.Move;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
@@ -32,7 +33,7 @@ public final class StrategyUCTSimple extends BaseGamerUCT {
 	 * @throws TransitionDefinitionException 
 	 * @throws GoalDefinitionException 
 	 */
-	public MachineState outOfTreeRollout(MachineState from, int fromLvl) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
+	public MachineState outOfTreeRollout(MachineState from) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 		MachineState terminal = from;
 		do{
             terminal = theMachine.getNextState(terminal, theMachine.getRandomJointMove(terminal));
@@ -56,7 +57,7 @@ public final class StrategyUCTSimple extends BaseGamerUCT {
 	 * @return a random state pair
 	 */
 	@Override
-	public StateActionPair horizonStatePair(List<StateActionPair> newStateActionPairs, int level)
+	public List<Move> horizonStatePair(List<List<Move>> newStateActionPairs, MachineState currentState)
 			throws MoveDefinitionException, TransitionDefinitionException {
 		int size = newStateActionPairs.size();
 		return newStateActionPairs.get(r.nextInt(size));
