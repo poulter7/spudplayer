@@ -23,7 +23,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  */
 public final class StrategyUCTNeural extends BaseGamerUCT {
 
-	private static final boolean PRINT_GAUSS_EFFECT = true;
+	private static final boolean PRINT_GAUSS_EFFECT = false;
 	private static final boolean PRINT_EXPAND = false;
 	private static final boolean SEE_OUT_OUT = true;
 	/** Method of interacting with the network */
