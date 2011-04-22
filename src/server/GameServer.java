@@ -54,7 +54,7 @@ public final class GameServer extends Thread implements Subject
         this.playerNames = playerNames;
         
         playerGetsUnlimitedTime = new Boolean[hosts.size()];
-        Arrays.fill(playerGetsUnlimitedTime, Boolean.FALSE);        
+        Arrays.fill(playerGetsUnlimitedTime, Boolean.TRUE);        
 
         stateMachine = new ProverStateMachine();
         stateMachine.initialize(match.getGame().getRules());
