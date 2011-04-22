@@ -27,7 +27,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 	
 	/** UCT tree */
 	protected UCTTree tree;
-	private final int rollNum = 250;
+	private final int rollNum = 25;
 	
 	@Override
 	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException{
@@ -77,6 +77,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 	 */
 	@Override
 	public Move stateMachineSelectMove(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
+		System.out.println("GO");
 		final long start = System.currentTimeMillis();
 		final long finishBy = timeout - 1000;
 		final MachineState cState = getCurrentState();

@@ -25,6 +25,6 @@ PORT2=$(getport $NAME2);
 START=$3;
 PLAY=$4;
 for ((i=0;i<$R;i++)); do
-	java -cp $(cat classpath) apps.utilities.GameServerRunner test connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
-	java -cp $(cat classpath) apps.utilities.GameServerRunner test connect4 $START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
+	java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
+	java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
 done
