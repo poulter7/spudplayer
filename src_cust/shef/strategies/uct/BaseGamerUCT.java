@@ -27,6 +27,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 	
 	/** UCT tree */
 	protected UCTTree tree;
+	private final int rollNum = 250;
 	
 	@Override
 	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException{
@@ -52,7 +53,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		int rollCount = 0;
 		System.out.println("beginning rollouts");
 //		while (System.currentTimeMillis() < finishBy) {
-		while (rollCount < 500) {
+		while (rollCount < rollNum) {
 			inTreeRollout(currentSM);
 			rollCount++;
 		}
@@ -87,7 +88,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 
 		while (true) {
 //			if (System.currentTimeMillis() > finishBy ) {
-			if (rollCount >= 500) {
+			if (rollCount >= rollNum) {
 				// select best move!
 				double maxVal = Float.NEGATIVE_INFINITY;
 				List<Move> maxMove = null;
