@@ -23,7 +23,7 @@ import util.statemachine.exceptions.TransitionDefinitionException;
  */
 public final class StrategyUCTNeural extends BaseGamerUCT {
 
-	private static final boolean PRINT_GAUSS_EFFECT = false;
+	private static final boolean PRINT_GAUSS_EFFECT = true;
 	private static final boolean PRINT_EXPAND = false;
 	private static final boolean SEE_OUT_OUT = true;
 	/** Method of interacting with the network */
@@ -70,6 +70,10 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 			List<List<Move>> movePairs = theMachine
 					.getLegalJointMoves(terminal);
 			List<Move> played = horizonStatePair(movePairs, terminal);
+			if(PRINT_GAUSS_EFFECT){
+				List<Move> playedNonRandom = horizonStatePair(movePairs, terminal);
+				System.out.println(playedNonRandom.equals(played));
+			}
 			terminal = theMachine.getNextState(terminal, played);
 
 		} while (!theMachine.isTerminal(terminal));
@@ -83,14 +87,48 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	}
 
 	@Override
-	public List<Move> horizonStatePair(List<List<Move>> movePairs,
-			MachineState from) throws MoveDefinitionException, TransitionDefinitionException {
+	public List<Move> horizonStatePair(List<List<Move>> movePairs, MachineState from) 
+			throws MoveDefinitionException,
+			TransitionDefinitionException {
 		int movePairCount = movePairs.size();
 		double[][] rewardPairs = new double[movePairCount][roleCount];
 
 		for (int i = 0; i < movePairCount; i++) {
 			rewardPairs[i] = cil2pManager
 					.getStateValueGaussianPlayers(theMachine
+							.getNextStateDestructively(from, movePairs.get(i)));
+		}
+
+		int[] bestIndex = new int[roleCount];
+		double[] bestValue = new double[roleCount];
+
+		for (int i = 0; i < roleCount; i++) {
+			for (int j = 0; j < movePairCount; j++) {
+				if (bestValue[i] < rewardPairs[j][i]) {
+					bestValue[i] = rewardPairs[j][i];
+					bestIndex[i] = j;
+				}
+			}
+		}
+
+		// chosen the action which gave you the best result IF it was your turn
+		// what would you play
+		List<Move> played = new ArrayList<Move>(roleCount);
+		for (int i = 0; i < roleCount; i++) {
+			played.add(movePairs.get(bestIndex[i]).get(i));
+		}
+		return played;
+	}
+	
+	public List<Move> horizonStatePairNonRandom(List<List<Move>> movePairs, MachineState from) 
+			throws MoveDefinitionException,
+			TransitionDefinitionException {
+		int movePairCount = movePairs.size();
+		double[][] rewardPairs = new double[movePairCount][roleCount];
+
+		for (int i = 0; i < movePairCount; i++) {
+			rewardPairs[i] = cil2pManager
+					.getStateValuePlayers(theMachine
 							.getNextStateDestructively(from, movePairs.get(i)));
 		}
 

@@ -39,7 +39,7 @@ public final class StressStrategy {
 	public static void main(String[] args) throws IOException, RequestFormatException, SymbolFormatException, GdlFormatException, MetaGamingException, MoveSelectionException, TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 
 //		Gamer st = new StrategyAlphaBeta();
-		Gamer st = new StrategyUCTNeural(0.2);
+		Gamer st = new StrategyUCTNeural(0.05);
 //		Gamer st = new StrategyUCTSimple();
 		
 		GamePlayer player = new GamePlayer(9000, st);

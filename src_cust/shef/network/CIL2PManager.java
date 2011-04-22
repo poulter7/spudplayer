@@ -144,28 +144,28 @@ public class CIL2PManager {
 	/**
 	 * Get the value of a given state by querying the CIL2P shef.network.
 	 * 
-	 * @param state the state to evaluate
-	 * @return the scores for each player in order
-	 */
-	public List<Double> getStateValues(final MachineState state) {
-		inputMachineState(state);
-
-		ArrayList<Double> scores = new ArrayList<Double>();
-		for (Role playerName : playerList) {
-			scores.add(getPlayerScore(playerName));
-		}
-		return scores;
-	}
-
-	/**
-	 * Get the value of a given state by querying the CIL2P shef.network.
-	 * 
 	 * @param state to evaluate
 	 * @param playerID
 	 */
 	public double getStateValue(final MachineState state, Role player) {
 		inputMachineState(state);
 		return getPlayerScore(player);
+	}
+
+	/**
+	 * Get the value of a given state by querying the CIL2P shef.network.
+	 * 
+	 * @param state the state to evaluate
+	 * @return the scores for each player in order
+	 */
+	public double[] getStateValuePlayers(final MachineState state) {
+		inputMachineState(state);
+		double[] scores = new double[roleCount];
+		for(int i = 0; i < roleCount; i++){
+			scores[i] = getPlayerScore(playerList.get(i)) / 100d;
+		}
+		
+		return scores;
 	}
 
 	/**
