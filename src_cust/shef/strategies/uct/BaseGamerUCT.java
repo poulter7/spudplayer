@@ -110,9 +110,9 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		}
 		final long stop = System.currentTimeMillis();
 		moveCount++;
-		 StringBuilder sb = new StringBuilder();
-		 tree.print(sb);
-		 System.out.println(sb.toString());
+//		 StringBuilder sb = new StringBuilder();
+//		 tree.print(sb);
+//		 System.out.println(sb.toString());
 		notifyObservers(new ReflexMoveSelectionEvent(moves, selection, stop - start));
 		System.out.println(rollCount + " " + selection);
 		return selection;
