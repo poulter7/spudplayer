@@ -51,7 +51,8 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		
 		int rollCount = 0;
 		System.out.println("beginning rollouts");
-		while (System.currentTimeMillis() < finishBy && rollCount < 500) {
+//		while (System.currentTimeMillis() < finishBy) {
+		while (rollCount < 500) {
 			inTreeRollout(currentSM);
 			rollCount++;
 		}
@@ -85,7 +86,8 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		int rollCount = 0;
 
 		while (true) {
-			if (System.currentTimeMillis() > finishBy || rollCount >= 500) {
+//			if (System.currentTimeMillis() > finishBy ) {
+			if (rollCount >= 500) {
 				// select best move!
 				double maxVal = Float.NEGATIVE_INFINITY;
 				List<Move> maxMove = null;
