@@ -24,8 +24,14 @@ PORT1=$(getport $NAME1)
 PORT2=$(getport $NAME2);
 START=$3;
 PLAY=$4;
+for ((i=0;i<$R;i++)); do
+	RES=$(java -jar ./lib/gamecontroller-cli-r466.jar M ./specs/connect4.kif 15 15 1 -remote 1 $NAME1 localhost $PORT1 4002 1 -remote 2 $NAME2 localhost $PORT2 1 | grep 'Game over')
+	set -- $RES;
+	echo " $NAME1 $5, $NAME2 $6" >> "out$X.data" #echo the result to the file
+	echo " $NAME1 $5, $NAME2 $6" #echo the result to console
 
-#for ((i=0;i<$R;i++)); do
-	java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
-#	java -cp $(cat classpath) apps.utilities.GameServerRunner test connect4 $START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1 
-#done
+	RES=$(java -jar ./lib/gamecontroller-cli-r466.jar M ./specs/connect4.kif 15 15 1 -remote 1 $NAME1 localhost $PORT1 4002 1 -remote 2 $NAME2 localhost $PORT2 1 | grep 'Game over')
+	set -- $RES;
+	echo "-$NAME1 $6, $NAME2 $5" >> "out$X.data" #echo the result to the file
+	echo "-$NAME1 $6, $NAME2 $5" #echo the result to console
+done
