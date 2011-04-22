@@ -1,0 +1,30 @@
+#!/bin/bash
+function getport()
+{
+    	case $1 in
+		SPU )
+			local port=4001 ;;
+		UCT )
+			local port=4002 ;;
+		MC )
+			local port=4003 ;;
+		AB )
+			local port=4004 ;;
+	esac
+	echo "$port"
+}
+
+X=$(date +%s);
+FILE="out$X.data";
+R=100;
+NAME1=$1;
+NAME2=$2;
+
+PORT1=$(getport $NAME1)
+PORT2=$(getport $NAME2);
+START=$3;
+PLAY=$4;
+for ((i=0;i<$R;i++)); do
+	java -cp $(cat classpath) apps.utilities.GameServerRunner test connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
+	java -cp $(cat classpath) apps.utilities.GameServerRunner test connect4 $START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
+done
