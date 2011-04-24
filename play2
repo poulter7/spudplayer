@@ -10,6 +10,10 @@ function getport()
 			local port=4003 ;;
 		AB )
 			local port=4004 ;;
+		SPU2 )
+			local port=4010 ;;
+		UCT2 )
+			local port=4011 ;;
 	esac
 	echo "$port"
 }
