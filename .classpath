@@ -17,6 +17,6 @@
 	<classpathentry kind="lib" path="lib/JavaProver.jar"/>
 	<classpathentry kind="lib" path="lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
 	<classpathentry kind="lib" path="lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
-	<classpathentry kind="lib" path="lib/neuroph-2.5b/neuroph-2.5b.jar"/>
+	<classpathentry kind="lib" path="lib/neuroph-2.5b/neuroph-2.5b.jar" sourcepath="/home/jonathan/development/neuroph/trunk/neuroph-2.5/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

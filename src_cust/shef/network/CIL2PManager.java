@@ -11,11 +11,15 @@ import org.encog.mathutil.randomize.GaussianRandomizer;
 import org.neuroph.core.Connection;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.Neuron;
+import org.neuroph.core.learning.SupervisedTrainingElement;
+import org.neuroph.core.learning.TrainingElement;
+import org.neuroph.core.learning.TrainingSet;
 import org.neuroph.nnet.comp.ThresholdNeuron;
 
 import shef.instantiator.andortree.Node;
 import util.gdl.factory.GdlFactory;
 import util.gdl.factory.exceptions.GdlFormatException;
+import util.gdl.grammar.Gdl;
 import util.gdl.grammar.GdlProposition;
 import util.gdl.grammar.GdlRelation;
 import util.gdl.grammar.GdlSentence;
@@ -197,6 +201,26 @@ public class CIL2PManager {
 			scores[i] = sc + gaussR;
 		}
 		return scores;
+	}
+
+	public void train(final MachineState terminal) {
+		Set<GdlSentence> stateElements = terminal.getContents();
+		int inputVectorSize = network.n.getInputNeurons().size();
+		int outputVectorSize = network.n.getOutputNeurons().size();
+		double[] inp = new double[inputVectorSize];
+		double[] out = new double[inputVectorSize];
+		final List<Gdl> inputs = network.inpOrderGDL;
+		final List<Gdl> outputs = network.inpOrderGDL;
+		for(int i = 0; i < inputVectorSize; i++){
+			inp[i] = stateElements.contains(inputs.get(i)) ? 1: -1;
+		}
+		for(int i = 0; i < outputVectorSize; i++){
+			out[i] = stateElements.contains(outputs.get(i)) ? 1: -1;
+		}
+		TrainingSet trainingSetToLearn = new TrainingSet(inputVectorSize);
+		trainingSetToLearn.addElement(new SupervisedTrainingElement(inp, out));
+		network.n.learnInNewThread(trainingSetToLearn );
+		
 	}
 
 	/**

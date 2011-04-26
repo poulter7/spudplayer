@@ -63,4 +63,10 @@ public final class StrategyUCTSimple extends BaseGamerUCT {
 		return newStateActionPairs.get(r.nextInt(size));
 	}
 
+	@Override
+	void strategyCleanUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

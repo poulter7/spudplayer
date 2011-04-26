@@ -57,10 +57,13 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 			inTreeRollout(currentSM);
 			rollCount++;
 		}
-
+		
+		strategyCleanUp();
 		System.out.println(rollCount + " initial");
 	}
 	
+	abstract void strategyCleanUp();
+
 	/**
 	 * Perform any extra setup needed in the time remaining
 	 * @param timeout

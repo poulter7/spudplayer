@@ -3,6 +3,9 @@ package shef.strategies.uct;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.neuroph.core.learning.TrainingElement;
+import org.neuroph.core.learning.TrainingSet;
+
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
@@ -26,6 +29,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	private static final boolean PRINT_GAUSS_EFFECT = false;
 	private static final boolean PRINT_EXPAND = false;
 	private static final boolean SEE_OUT_OUT = true;
+	private static boolean train = true;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
 	private double sigma;
@@ -78,6 +82,12 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 
 		} while (!theMachine.isTerminal(terminal));
 		// the node was terminal
+		
+		if(train){
+			cil2pManager.train(terminal);
+		}
+		//
+		
 		return terminal;
 	}
 
@@ -120,6 +130,14 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		return played;
 	}
 	
+	/**
+	 * Get the state pair using n
+	 * @param movePairs
+	 * @param from
+	 * @return
+	 * @throws MoveDefinitionException
+	 * @throws TransitionDefinitionException
+	 */
 	public List<Move> horizonStatePairNonRandom(List<List<Move>> movePairs, MachineState from) 
 			throws MoveDefinitionException,
 			TransitionDefinitionException {
@@ -151,6 +169,12 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 			played.add(movePairs.get(bestIndex[i]).get(i));
 		}
 		return played;
+	}
+
+	@Override
+	void strategyCleanUp() {
+		train = false;
+		
 	}
 
 }
