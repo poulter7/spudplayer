@@ -112,7 +112,6 @@ public class NetworkStress{
 			timeToLeave = time;
 		}
 
-		@Override
 		public void run() {
 			System.out.println("starting");
 			try {

@@ -198,7 +198,6 @@ public final class Tiltyard extends JPanel implements ActionListener {
     private String gameName;
     private Game theGame;
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameSelector.getGameList()) {
             theGame = gameSelector.getSelectedGame();

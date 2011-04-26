@@ -23,7 +23,6 @@ public class PublishButton extends JButton implements ActionListener {
         this.setEnabled(true);
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this) {
             if (theServer != null) {

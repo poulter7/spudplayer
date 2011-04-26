@@ -108,7 +108,6 @@ public final class ValidatorPanel extends JPanel implements ActionListener
         gameSelector.repopulateGameList();      		
 	}
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameSelector.getGameList()) {
             theGame = gameSelector.getSelectedGame();
