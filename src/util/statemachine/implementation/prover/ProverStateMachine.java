@@ -25,7 +25,7 @@ import util.statemachine.implementation.prover.result.ProverResultParser;
 public class ProverStateMachine extends StateMachine
 {
 	private MachineState initialState;
-	private Prover prover;
+	public Prover prover;
 	private List<Role> roles;
 
 	/**

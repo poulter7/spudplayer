@@ -29,7 +29,7 @@ public class StrategyLauncher {
 			int playerIndex = Integer.parseInt(args[1]);
 			switch(playerIndex){
 			case 1: strat = new StrategyUCTSimple(); 		break;
-			case 2: strat = new StrategyUCTNeural(Double.parseDouble(args[2])); 		break;
+			case 2: strat = new StrategyUCTNeural(Double.parseDouble(args[2]), Boolean.parseBoolean(args[3])); 		break;
 			case 3: strat = new SimpleMonteCarloGamer(); 	break;
 			case 4: strat = new StrategyAlphaBeta();		break;
 			default: throw new RuntimeException("Invalid player chosen cannot continue");

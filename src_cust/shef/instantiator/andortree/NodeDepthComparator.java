@@ -12,7 +12,6 @@ import java.util.Comparator;
  */
 public class NodeDepthComparator implements Comparator<Node> {
 
-	@Override
 	public int compare(Node o1, Node o2) {
 		// TODO Auto-generated method stub
 		if (o1.getDepth() > o2.getDepth())

@@ -11,16 +11,21 @@ import org.encog.mathutil.randomize.GaussianRandomizer;
 import org.neuroph.core.Connection;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.Neuron;
+import org.neuroph.core.learning.SupervisedTrainingElement;
+import org.neuroph.core.learning.TrainingElement;
+import org.neuroph.core.learning.TrainingSet;
 import org.neuroph.nnet.comp.ThresholdNeuron;
 
 import shef.instantiator.andortree.Node;
 import util.gdl.factory.GdlFactory;
 import util.gdl.factory.exceptions.GdlFormatException;
+import util.gdl.grammar.Gdl;
 import util.gdl.grammar.GdlProposition;
 import util.gdl.grammar.GdlRelation;
 import util.gdl.grammar.GdlSentence;
 import util.statemachine.MachineState;
 import util.statemachine.Role;
+import util.statemachine.implementation.prover.ProverStateMachine;
 import util.symbol.factory.exceptions.SymbolFormatException;
 import cs227b.teamIago.resolver.Atom;
 import cs227b.teamIago.resolver.Expression;
@@ -199,8 +204,13 @@ public class CIL2PManager {
 		return scores;
 	}
 
+	public void train(final MachineState terminal, final ProverStateMachine theMachine) {
+		network.train(terminal, theMachine);
+		
+	}
+
 	/**
-	 * Input the current MachineState into the network a turn the crank
+	 * Input the current MachineState into the network and turn the crank
 	 * 
 	 * @param state
 	 *            the machine state to evaluate

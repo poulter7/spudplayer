@@ -351,7 +351,7 @@ public class Assignments implements Iterable<Map<GdlVariable, GdlConstant>> {
 			}
 		}
 	}
-	@Override
+
 	public Iterator<Map<GdlVariable, GdlConstant>> iterator() {
 		return new AssignmentIterator();
 	}
@@ -665,7 +665,7 @@ public class Assignments implements Iterable<Map<GdlVariable, GdlConstant>> {
 		}
 
 
-		@Override
+		
 		public boolean hasNext() {
 			if(empty)
 				return false;
@@ -675,7 +675,7 @@ public class Assignments implements Iterable<Map<GdlVariable, GdlConstant>> {
 			return (nextAssignment != null);
 		}
 
-		@Override
+		
 		public Map<GdlVariable, GdlConstant> next() {
 			if(headOnly) {
 				if(allDone || done)
@@ -700,7 +700,7 @@ public class Assignments implements Iterable<Map<GdlVariable, GdlConstant>> {
 			}
 		}
 
-		@Override
+		
 		public void remove() {
 			//Not implemented
 		}
@@ -1696,7 +1696,7 @@ public class Assignments implements Iterable<Map<GdlVariable, GdlConstant>> {
 		}
 
 		//This class has a natural ordering that is inconsistent with equals.
-		@Override
+		
 		public int compareTo(IterationOrderCandidate o) {
 			long diff = getHeuristicValue() - o.getHeuristicValue();
 			if(diff < 0)
@@ -1706,7 +1706,7 @@ public class Assignments implements Iterable<Map<GdlVariable, GdlConstant>> {
 			else
 				return 1;
 		}
-		@Override
+		
 		public String toString() {
 			return varOrdering.toString() + " with sources " + getSourceConjuncts().toString() + "; functional?: " + functionalConjunctIndices;
 		}

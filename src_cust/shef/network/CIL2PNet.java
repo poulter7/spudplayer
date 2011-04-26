@@ -12,14 +12,23 @@ import org.neuroph.core.Layer;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.Neuron;
 import org.neuroph.core.input.InputFunction;
+import org.neuroph.core.learning.SupervisedTrainingElement;
+import org.neuroph.core.learning.TrainingSet;
 import org.neuroph.core.transfer.Linear;
 import org.neuroph.core.transfer.TransferFunction;
 import org.neuroph.nnet.comp.ThresholdNeuron;
+import org.neuroph.nnet.learning.BackPropagation;
+import org.neuroph.nnet.learning.PerceptronLearning;
+import org.neuroph.nnet.learning.SupervisedHebbianLearning;
 
 import shef.instantiator.andortree.Node;
 import util.gdl.factory.GdlFactory;
 import util.gdl.factory.exceptions.GdlFormatException;
+import util.gdl.grammar.Gdl;
 import util.gdl.grammar.GdlRelation;
+import util.gdl.grammar.GdlSentence;
+import util.statemachine.MachineState;
+import util.statemachine.implementation.prover.ProverStateMachine;
 import util.symbol.factory.exceptions.SymbolFormatException;
 import cs227b.teamIago.resolver.ExpList;
 import cs227b.teamIago.resolver.Expression;
@@ -32,22 +41,22 @@ import cs227b.teamIago.resolver.Predicate;
  */
 public class CIL2PNet {
 	/** will save the network using Neuroph's save feature if true */
-	private boolean SAVE_NETWORK = false;
-	
+	private boolean SAVE_NETWORK = true;
+
 	/*
-	 * Once the network is finalized these are the main access points for querying the network
+	 * Once the network is finalized these are the main access points for
+	 * querying the network
 	 */
 	/** Map of GDL relation (truths) to Neuron in input layer */
 	final HashMap<GdlRelation, Neuron> queryHashGGPBase = new HashMap<GdlRelation, Neuron>();
 	/** Map of Goal to Neuron in output layer */
 	final HashMap<Goal, ThresholdNeuron> goalHash = new HashMap<Goal, ThresholdNeuron>();
 	/** The network itself */
-	final NeuralNetwork n = new NeuralNetwork();
+	final public NeuralNetwork n = new NeuralNetwork();
 
 	/*
-	 *  Dispensible datastructures used in building the network
-	 *  if the game is considered a GAME_NETWORK then these are made null
-	 *  after finalising.
+	 * Dispensible datastructures used in building the network if the game is
+	 * considered a GAME_NETWORK then these are made null after finalising.
 	 */
 	private HashMap<Predicate, Neuron> queryHash = new HashMap<Predicate, Neuron>();
 	private HashMap<Expression, Neuron> inputHash = new HashMap<Expression, Neuron>();
@@ -60,7 +69,12 @@ public class CIL2PNet {
 	private Layer inputLayer = new Layer();
 	private Layer outputLayer = new Layer();
 	private Layer hiddenLayer = new Layer();
-	
+
+	private List<Expression> inpOrder = new ArrayList<Expression>();
+	private List<Expression> outOrder = new ArrayList<Expression>();
+	public List<Gdl> inpOrderGDL = new ArrayList<Gdl>();
+	public List<Gdl> outOrderGDL = new ArrayList<Gdl>();
+
 	/*
 	 * Network constants
 	 */
@@ -72,9 +86,9 @@ public class CIL2PNet {
 	private static final TransferFunction h = new Bipolar(BETA);
 	private static final InputFunction inputNeuronIn = new InputFunction();
 	private static final InputFunction outputNeuronIn = new InputFunction();
-	
+
 	/*
-	 * Network properties 
+	 * Network properties
 	 */
 	private final boolean weightOne;
 	private final boolean GAME_NETWORK;
@@ -82,20 +96,26 @@ public class CIL2PNet {
 	/** Minimum activation of a neuron for it to be TRUE */
 	private double Amin;
 
-
 	/**
 	 * This produces a neural shef.network which represents a set
 	 * 
-	 * @param goalProofs the GOAL nodes to process
-	 * @param weightOne use Michulke's optimisation
-	 * @param gamenet if true will throw away unnecessary objects after completion
+	 * @param goalProofs
+	 *            the GOAL nodes to process
+	 * @param weightOne
+	 *            use Michulke's optimisation
+	 * @param gamenet
+	 *            if true will throw away unnecessary objects after completion
 	 */
-	public CIL2PNet(List<Node> goalProofs, boolean weightOne, boolean gamenet) {
+	public CIL2PNet(final List<Node> goalProofs, final boolean weightOne, final boolean gamenet) {
 		n.addLayer(getOutputLayer());
 		n.addLayer(getHiddenLayer());
 		n.addLayer(inputLayer);
 		n.setInputNeurons(inputLayer.getNeurons());
 		n.setOutputNeurons(getOutputLayer().getNeurons());
+		BackPropagation bp = new BackPropagation();
+		bp.setLearningRate(0.001);
+		bp.setMaxIterations(1);
+		n.setLearningRule(bp);
 		this.weightOne = weightOne;
 		this.GAME_NETWORK = gamenet;
 
@@ -249,7 +269,7 @@ public class CIL2PNet {
 			double thresh = (thetaANum / 2.0) * W;
 			outNeuron.setThresh(thresh);
 		}
-		
+
 		// save the shef.network externally to view in EasyNeuron
 		if (SAVE_NETWORK) {
 			n.save("network.nnet");
@@ -266,6 +286,7 @@ public class CIL2PNet {
 				Neuron trueNeuron = inputLayer.getNeuronAt(t.getValue());
 				queryHash.put(truePred, trueNeuron);
 				queryHashGGPBase.put(gdlTruePred, trueNeuron);
+
 			} catch (GdlFormatException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -273,6 +294,27 @@ public class CIL2PNet {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+
+		try {
+			// Save order for inp and out expression
+			for (Expression t : inpOrder) {
+				Gdl gdlPred = GdlFactory.create(t.toString().toLowerCase());
+				inpOrderGDL.add(gdlPred);
+
+			}
+			for (Expression t : outOrder) {
+				Gdl gdlPred = GdlFactory.create(t
+						.toString().toLowerCase());
+				outOrderGDL.add(gdlPred);
+
+			}
+		} catch (GdlFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SymbolFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
 		// not more modifications can be made
@@ -308,6 +350,7 @@ public class CIL2PNet {
 			inNeuron = new Neuron(inputNeuronIn, g);
 			inputLayer.addNeuron(inNeuron);
 			getInputHash().put(key, inNeuron);
+			inpOrder.add(key);
 
 			if (asQueryNode) {
 				SimpleImmutableEntry<Expression, Integer> indexMap = new SimpleImmutableEntry<Expression, Integer>(
@@ -331,6 +374,7 @@ public class CIL2PNet {
 			outNeuron = new ThresholdNeuron(outputNeuronIn, h);
 			getOutputLayer().addNeuron(outNeuron);
 			getOutputHash().put(key, outNeuron);
+			outOrder.add(key);
 			sameConsequent.put(key, 1);
 
 			// if it is a goal record it to the GOAL list
@@ -350,6 +394,32 @@ public class CIL2PNet {
 			Integer i = sameConsequent.get(key);
 			sameConsequent.put(key, i + 1);
 		}
+	}
+
+	/**
+	 * Perform simple training on the network.
+	 * This should move closer to fulfilling the given terminal state.
+	 * @param terminal
+	 * @param theMachine
+	 */
+	void train(MachineState terminal, ProverStateMachine theMachine) {
+		Set<GdlSentence> stateElements = terminal.getContents();
+		int inputVectorSize = n.getInputNeurons().size();
+		int outputVectorSize = n.getOutputNeurons().size();
+		double[] inp = new double[inputVectorSize];
+		double[] out = new double[inputVectorSize];
+		final List<Gdl> inputs = inpOrderGDL;
+		final List<Gdl> outputs = outOrderGDL;
+		for(int i = 0; i < inputVectorSize; i++){
+			inp[i] = theMachine.prover.prove((GdlSentence)inputs.get(i), stateElements) ? 1: -1;
+		}
+		for(int i = 0; i < outputVectorSize; i++){
+			out[i] = theMachine.prover.prove((GdlSentence)outputs.get(i), stateElements)  ? 1: -1;
+		}
+		TrainingSet trainingSetToLearn = new TrainingSet(inputVectorSize);
+		trainingSetToLearn.addElement(new SupervisedTrainingElement(inp, out));
+		n.learnInNewThread(trainingSetToLearn );
+		
 	}
 
 	/**

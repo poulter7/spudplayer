@@ -1,4 +1,5 @@
 #!/bin/bash
+cd ~/new_ggp;
 function getport()
 {
     	case $1 in
@@ -18,7 +19,8 @@ function getport()
 	echo "$port"
 }
 
-X="$(date +%s)-$6";
+X=$(date +%s);
+FILE="out$X.data";
 R=$5;
 NAME1=$1;
 NAME2=$2;
@@ -31,3 +33,5 @@ for ((i=0;i<$R;i++)); do
 	java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
 	java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
 done
+cat scores >> ../"$6-scores.data"
+

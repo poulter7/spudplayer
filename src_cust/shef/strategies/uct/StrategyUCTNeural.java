@@ -2,6 +2,10 @@ package shef.strategies.uct;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+
+import org.neuroph.core.learning.TrainingElement;
+import org.neuroph.core.learning.TrainingSet;
 
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
@@ -14,6 +18,7 @@ import util.statemachine.Role;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
+import util.statemachine.implementation.prover.ProverStateMachine;
 
 /**
  * UCT Gamer which creates a neural network and completes its rollouts using
@@ -26,12 +31,14 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	private static final boolean PRINT_GAUSS_EFFECT = false;
 	private static final boolean PRINT_EXPAND = false;
 	private static final boolean SEE_OUT_OUT = true;
+	private boolean prep_train = true;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
 	private double sigma;
 
-	public StrategyUCTNeural(double sigma) {
+	public StrategyUCTNeural(double sigma, boolean training) {
 		this.sigma = sigma;
+		this.prep_train = training;
 	}
 
 	/**
@@ -78,15 +85,19 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 
 		} while (!theMachine.isTerminal(terminal));
 		// the node was terminal
+		
+		if(prep_train){
+			cil2pManager.train(terminal,  ((ProverStateMachine) theMachine) );
+		}
+		
 		return terminal;
 	}
 
 	@Override
 	public String getName() {
-		return "Neural Gamer";
+		return "Neural Gamer Training";
 	}
 
-	@Override
 	public List<Move> horizonStatePair(List<List<Move>> movePairs, MachineState from) 
 			throws MoveDefinitionException,
 			TransitionDefinitionException {
@@ -120,6 +131,14 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		return played;
 	}
 	
+	/**
+	 * Get the state pair using n
+	 * @param movePairs
+	 * @param from
+	 * @return
+	 * @throws MoveDefinitionException
+	 * @throws TransitionDefinitionException
+	 */
 	public List<Move> horizonStatePairNonRandom(List<List<Move>> movePairs, MachineState from) 
 			throws MoveDefinitionException,
 			TransitionDefinitionException {
@@ -151,6 +170,12 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 			played.add(movePairs.get(bestIndex[i]).get(i));
 		}
 		return played;
+	}
+
+	@Override
+	void strategyCleanUp() {
+		prep_train = false;
+		
 	}
 
 }
