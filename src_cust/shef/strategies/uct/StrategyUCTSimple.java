@@ -56,7 +56,6 @@ public final class StrategyUCTSimple extends BaseGamerUCT {
 	 * @param newStateActionPairs the recently expanded state pairs
 	 * @return a random state pair
 	 */
-	@Override
 	public List<Move> horizonStatePair(List<List<Move>> newStateActionPairs, MachineState currentState)
 			throws MoveDefinitionException, TransitionDefinitionException {
 		int size = newStateActionPairs.size();

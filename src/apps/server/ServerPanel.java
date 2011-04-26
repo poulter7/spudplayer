@@ -184,7 +184,6 @@ public final class ServerPanel extends JPanel implements ActionListener
 		};
 	}
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameSelector.getGameList()) {
             theGame = gameSelector.getSelectedGame();

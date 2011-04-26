@@ -151,15 +151,12 @@ public class ConstantFinder {
 				System.out.println("No set found for form " + form);
 			return new Iterator<List<GdlConstant>>() {
 				Iterator<GdlSentence> sentenceItr = sentencesByForm.get(finalForm).iterator();
-				@Override
 				public boolean hasNext() {
 					return sentenceItr.hasNext();
 				}
-				@Override
 				public List<GdlConstant> next() {
 					return SentenceModel.getTupleFromGroundSentence(sentenceItr.next());
 				}
-				@Override
 				public void remove() {
 					//Unimplemented
 				}

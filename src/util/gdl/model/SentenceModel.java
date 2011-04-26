@@ -1041,7 +1041,6 @@ public class SentenceModel {
 			}
 			return true;
 		}
-		@Override
 		public Iterator<GdlSentence> iterator() {
 			if(functionalElements.isEmpty())
 				return new SentenceFormPropositionIterator();
@@ -1050,16 +1049,13 @@ public class SentenceModel {
 		}
 		private class SentenceFormPropositionIterator implements Iterator<GdlSentence> {
 			boolean used = false;
-			@Override
 			public boolean hasNext() {
 				return !used;
 			}
-			@Override
 			public GdlSentence next() {
 				used = true;
 				return GdlPool.getProposition(sentenceName);
 			}
-			@Override
 			public void remove() {
 				//Not implemented
 			}
@@ -1094,14 +1090,12 @@ public class SentenceModel {
 					}
 				}
 			}
-			@Override
 			public boolean hasNext() {
 				for(Iterator<GdlConstant> itr : bodyIterators)
 					if(itr.hasNext())
 						return true;
 				return false;
 			}
-			@Override
 			public GdlSentence next() {
 				if(currentTuple.isEmpty()) {
 					//Fill it for the first time
@@ -1125,7 +1119,6 @@ public class SentenceModel {
 				//Now the current tuple is updated
 				return getSentenceFromTuple(currentTuple);
 			}
-			@Override
 			public void remove() {
 				//Not applicable
 			}

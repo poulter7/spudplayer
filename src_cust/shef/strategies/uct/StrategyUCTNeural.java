@@ -98,7 +98,6 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		return "Neural Gamer Training";
 	}
 
-	@Override
 	public List<Move> horizonStatePair(List<List<Move>> movePairs, MachineState from) 
 			throws MoveDefinitionException,
 			TransitionDefinitionException {

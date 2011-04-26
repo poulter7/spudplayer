@@ -63,24 +63,20 @@ public class NeuralNetworkABNode implements IABNode<MachineState, Move> {
 	}
 
 
-	@Override
 	public boolean isTerminal() {
 		return machine.isTerminal(gameState);
 	}
 
-	@Override
 	public void setValue(double val) {
 		this.gameValue = val;
 	}
 
-	@Override
 	public int compareTo(IABNode<MachineState, Move> o) {
 		if (this.getValue() >= o.getValue())
 			return 1;
 		return -1;
 	}
 
-	@Override
 	public double getHeuristicValue(Role player) {
 		return cil2pManager.getStateValue(gameState, player);
 	}
