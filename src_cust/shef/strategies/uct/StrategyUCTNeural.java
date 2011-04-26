@@ -17,6 +17,7 @@ import util.statemachine.Role;
 import util.statemachine.exceptions.GoalDefinitionException;
 import util.statemachine.exceptions.MoveDefinitionException;
 import util.statemachine.exceptions.TransitionDefinitionException;
+import util.statemachine.implementation.prover.ProverStateMachine;
 
 /**
  * UCT Gamer which creates a neural network and completes its rollouts using
@@ -84,7 +85,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		// the node was terminal
 		
 		if(train){
-			cil2pManager.train(terminal);
+			cil2pManager.train(terminal,  ((ProverStateMachine) theMachine) );
 		}
 		//
 		

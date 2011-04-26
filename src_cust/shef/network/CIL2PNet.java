@@ -35,7 +35,7 @@ import cs227b.teamIago.resolver.Predicate;
  */
 public class CIL2PNet {
 	/** will save the network using Neuroph's save feature if true */
-	private boolean SAVE_NETWORK = false;
+	private boolean SAVE_NETWORK = true;
 
 	/*
 	 * Once the network is finalized these are the main access points for
@@ -290,7 +290,6 @@ public class CIL2PNet {
 		try {
 			// Save order for inp and out expression
 			for (Expression t : inpOrder) {
-				System.out.println(t);
 				Gdl gdlPred = GdlFactory.create(t.toString().toLowerCase());
 				inpOrderGDL.add(gdlPred);
 

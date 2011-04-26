@@ -25,6 +25,7 @@ import util.gdl.grammar.GdlRelation;
 import util.gdl.grammar.GdlSentence;
 import util.statemachine.MachineState;
 import util.statemachine.Role;
+import util.statemachine.implementation.prover.ProverStateMachine;
 import util.symbol.factory.exceptions.SymbolFormatException;
 import cs227b.teamIago.resolver.Atom;
 import cs227b.teamIago.resolver.Expression;
@@ -203,19 +204,19 @@ public class CIL2PManager {
 		return scores;
 	}
 
-	public void train(final MachineState terminal) {
+	public void train(final MachineState terminal, ProverStateMachine theMachine) {
 		Set<GdlSentence> stateElements = terminal.getContents();
 		int inputVectorSize = network.n.getInputNeurons().size();
 		int outputVectorSize = network.n.getOutputNeurons().size();
 		double[] inp = new double[inputVectorSize];
 		double[] out = new double[inputVectorSize];
 		final List<Gdl> inputs = network.inpOrderGDL;
-		final List<Gdl> outputs = network.inpOrderGDL;
+		final List<Gdl> outputs = network.outOrderGDL;
 		for(int i = 0; i < inputVectorSize; i++){
-			inp[i] = stateElements.contains(inputs.get(i)) ? 1: -1;
+			inp[i] = theMachine.prover.prove((GdlSentence)inputs.get(i), stateElements) ? 1: -1;
 		}
 		for(int i = 0; i < outputVectorSize; i++){
-			out[i] = stateElements.contains(outputs.get(i)) ? 1: -1;
+			out[i] = theMachine.prover.prove((GdlSentence)outputs.get(i), stateElements)  ? 1: -1;
 		}
 		TrainingSet trainingSetToLearn = new TrainingSet(inputVectorSize);
 		trainingSetToLearn.addElement(new SupervisedTrainingElement(inp, out));
@@ -224,7 +225,7 @@ public class CIL2PManager {
 	}
 
 	/**
-	 * Input the current MachineState into the network a turn the crank
+	 * Input the current MachineState into the network and turn the crank
 	 * 
 	 * @param state
 	 *            the machine state to evaluate
