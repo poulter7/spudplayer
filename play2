@@ -18,9 +18,8 @@ function getport()
 	echo "$port"
 }
 
-X=$(date +%s);
-FILE="out$X.data";
-R=100;
+X="$(date +%s)-$6";
+R=$5;
 NAME1=$1;
 NAME2=$2;
 
