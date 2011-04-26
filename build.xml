@@ -27,6 +27,7 @@
         <path refid="JUnit 4.libraryclasspath"/>
         <pathelement location="lib/neuroph-2.5b/neuroph-2.5b.jar"/>
         <pathelement location="lib/JavaProver.jar"/>
+        <pathelement location="lib/junit.jar"/>
         <pathelement location="lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
         <pathelement location="lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
     </path>
