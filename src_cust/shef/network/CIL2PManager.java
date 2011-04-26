@@ -220,7 +220,7 @@ public class CIL2PManager {
 		}
 		TrainingSet trainingSetToLearn = new TrainingSet(inputVectorSize);
 		trainingSetToLearn.addElement(new SupervisedTrainingElement(inp, out));
-		network.n.learnInNewThread(trainingSetToLearn );
+		network.n.learnInSameThread(trainingSetToLearn );
 		
 	}
 

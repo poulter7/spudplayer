@@ -15,6 +15,7 @@ import org.neuroph.core.input.InputFunction;
 import org.neuroph.core.transfer.Linear;
 import org.neuroph.core.transfer.TransferFunction;
 import org.neuroph.nnet.comp.ThresholdNeuron;
+import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.nnet.learning.PerceptronLearning;
 import org.neuroph.nnet.learning.SupervisedHebbianLearning;
 
@@ -106,7 +107,10 @@ public class CIL2PNet {
 		n.addLayer(inputLayer);
 		n.setInputNeurons(inputLayer.getNeurons());
 		n.setOutputNeurons(getOutputLayer().getNeurons());
-		n.setLearningRule(new SupervisedHebbianLearning());
+		BackPropagation bp = new BackPropagation();
+		bp.setLearningRate(0.001);
+		bp.setMaxIterations(1);
+		n.setLearningRule(bp);
 		this.weightOne = weightOne;
 		this.GAME_NETWORK = gamenet;
 
