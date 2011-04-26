@@ -30,13 +30,14 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	private static final boolean PRINT_GAUSS_EFFECT = false;
 	private static final boolean PRINT_EXPAND = false;
 	private static final boolean SEE_OUT_OUT = true;
-	private static boolean train = true;
+	private boolean prep_train = true;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;
 	private double sigma;
 
-	public StrategyUCTNeural(double sigma) {
+	public StrategyUCTNeural(double sigma, boolean training) {
 		this.sigma = sigma;
+		this.prep_train = training;
 	}
 
 	/**
@@ -84,10 +85,9 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		} while (!theMachine.isTerminal(terminal));
 		// the node was terminal
 		
-		if(train){
+		if(prep_train){
 			cil2pManager.train(terminal,  ((ProverStateMachine) theMachine) );
 		}
-		//
 		
 		return terminal;
 	}
@@ -174,7 +174,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 
 	@Override
 	void strategyCleanUp() {
-		train = false;
+		prep_train = false;
 		
 	}
 

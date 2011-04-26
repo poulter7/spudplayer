@@ -204,23 +204,8 @@ public class CIL2PManager {
 		return scores;
 	}
 
-	public void train(final MachineState terminal, ProverStateMachine theMachine) {
-		Set<GdlSentence> stateElements = terminal.getContents();
-		int inputVectorSize = network.n.getInputNeurons().size();
-		int outputVectorSize = network.n.getOutputNeurons().size();
-		double[] inp = new double[inputVectorSize];
-		double[] out = new double[inputVectorSize];
-		final List<Gdl> inputs = network.inpOrderGDL;
-		final List<Gdl> outputs = network.outOrderGDL;
-		for(int i = 0; i < inputVectorSize; i++){
-			inp[i] = theMachine.prover.prove((GdlSentence)inputs.get(i), stateElements) ? 1: -1;
-		}
-		for(int i = 0; i < outputVectorSize; i++){
-			out[i] = theMachine.prover.prove((GdlSentence)outputs.get(i), stateElements)  ? 1: -1;
-		}
-		TrainingSet trainingSetToLearn = new TrainingSet(inputVectorSize);
-		trainingSetToLearn.addElement(new SupervisedTrainingElement(inp, out));
-		network.n.learnInSameThread(trainingSetToLearn );
+	public void train(final MachineState terminal, final ProverStateMachine theMachine) {
+		network.train(terminal, theMachine);
 		
 	}
 

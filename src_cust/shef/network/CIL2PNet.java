@@ -12,6 +12,8 @@ import org.neuroph.core.Layer;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.Neuron;
 import org.neuroph.core.input.InputFunction;
+import org.neuroph.core.learning.SupervisedTrainingElement;
+import org.neuroph.core.learning.TrainingSet;
 import org.neuroph.core.transfer.Linear;
 import org.neuroph.core.transfer.TransferFunction;
 import org.neuroph.nnet.comp.ThresholdNeuron;
@@ -24,6 +26,9 @@ import util.gdl.factory.GdlFactory;
 import util.gdl.factory.exceptions.GdlFormatException;
 import util.gdl.grammar.Gdl;
 import util.gdl.grammar.GdlRelation;
+import util.gdl.grammar.GdlSentence;
+import util.statemachine.MachineState;
+import util.statemachine.implementation.prover.ProverStateMachine;
 import util.symbol.factory.exceptions.SymbolFormatException;
 import cs227b.teamIago.resolver.ExpList;
 import cs227b.teamIago.resolver.Expression;
@@ -389,6 +394,32 @@ public class CIL2PNet {
 			Integer i = sameConsequent.get(key);
 			sameConsequent.put(key, i + 1);
 		}
+	}
+
+	/**
+	 * Perform simple training on the network.
+	 * This should move closer to fulfilling the given terminal state.
+	 * @param terminal
+	 * @param theMachine
+	 */
+	void train(MachineState terminal, ProverStateMachine theMachine) {
+		Set<GdlSentence> stateElements = terminal.getContents();
+		int inputVectorSize = n.getInputNeurons().size();
+		int outputVectorSize = n.getOutputNeurons().size();
+		double[] inp = new double[inputVectorSize];
+		double[] out = new double[inputVectorSize];
+		final List<Gdl> inputs = inpOrderGDL;
+		final List<Gdl> outputs = outOrderGDL;
+		for(int i = 0; i < inputVectorSize; i++){
+			inp[i] = theMachine.prover.prove((GdlSentence)inputs.get(i), stateElements) ? 1: -1;
+		}
+		for(int i = 0; i < outputVectorSize; i++){
+			out[i] = theMachine.prover.prove((GdlSentence)outputs.get(i), stateElements)  ? 1: -1;
+		}
+		TrainingSet trainingSetToLearn = new TrainingSet(inputVectorSize);
+		trainingSetToLearn.addElement(new SupervisedTrainingElement(inp, out));
+		n.learnInNewThread(trainingSetToLearn );
+		
 	}
 
 	/**
