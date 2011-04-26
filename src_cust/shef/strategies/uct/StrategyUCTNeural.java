@@ -94,7 +94,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 
 	@Override
 	public String getName() {
-		return "Neural Gamer";
+		return "Neural Gamer Training";
 	}
 
 	@Override
