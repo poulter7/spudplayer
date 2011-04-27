@@ -96,8 +96,9 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 				double maxVal = Float.NEGATIVE_INFINITY;
 				List<Move> maxMove = null;
 				HashMap<List<Move>, StateActionPair> saps = currentSM.actionsPairs;
+				
 				for (Entry<List<Move>, StateActionPair> sap : saps.entrySet()) {
-					System.out.println("Move " + sap.getKey() + " explored " + sap.getValue().timesExplored + " " + Arrays.toString(sap.getValue().VALUE));
+					System.out.println(this.getName()+"\tMove " + sap.getKey() + " explored " + sap.getValue().timesExplored + " " + Arrays.toString(sap.getValue().VALUE));
 					double v = sap.getValue().VALUE[myRoleID];
 					if (v > maxVal || maxMove == null) {
 						maxMove = sap.getKey();
