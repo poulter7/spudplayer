@@ -24,7 +24,8 @@ public class RemoteResourceLoader {
         try {
             return new JSONObject(loadRaw(theURL));
         } catch (Exception e) {
-            throw new IOException(e);
+        	throw new RuntimeException();
+//            throw new IOException(e);
         }
     }
     
@@ -32,7 +33,8 @@ public class RemoteResourceLoader {
         try {
             return new JSONArray(loadRaw(theURL));
         } catch (Exception e) {
-            throw new IOException(e);
+        	throw new RuntimeException();
+//            throw new IOException(e);
         }                
     }
     

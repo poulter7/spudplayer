@@ -44,7 +44,7 @@ public class NeuralNetworkABNode implements IABNode<MachineState, Move> {
 		return move;
 	}
 
-	@Override
+	
 	public String toString() {
 		return getValue() + " \t" + getContents();
 	}

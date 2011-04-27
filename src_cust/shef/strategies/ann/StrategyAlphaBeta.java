@@ -38,7 +38,7 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 	 * @param timeout
 	 *            the time this must be completed by
 	 */
-	@Override
+	
 	public void stateMachineMetaGame(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 		// setup essential items
 		super.stateMachineMetaGame(timeout);
@@ -56,7 +56,7 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 	 *            the time this must be completed by
 	 * @return the selected move
 	 */
-	@Override
+	
 	public Move stateMachineSelectMove(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 		currentTimeout = timeout - 1000;
 		Move chosenMove = null;
@@ -148,7 +148,7 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 
 	}
 
-	@Override
+	
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "Alpha beta ANN";

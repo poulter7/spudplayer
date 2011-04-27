@@ -93,7 +93,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		return terminal;
 	}
 
-	@Override
+	
 	public String getName() {
 		return "Neural Gamer Training";
 	}
@@ -172,7 +172,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		return played;
 	}
 
-	@Override
+	
 	void strategyCleanUp() {
 		prep_train = false;
 		

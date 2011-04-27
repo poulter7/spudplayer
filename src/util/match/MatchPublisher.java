@@ -12,7 +12,8 @@ import java.net.URLEncoder;
 public class MatchPublisher {
     public static String publishToSpectatorServer(String spectatorURL, Match theMatch) throws IOException {
         if (theMatch.getGameRepositoryURL().isEmpty()) {
-            throw new IOException("Match doesn't have appropriate metadata for publication to a spectator server: " + theMatch);
+        	throw new RuntimeException();
+//            throw new IOException("Match doesn't have appropriate metadata for publication to a spectator server: " + theMatch);
         } else {
             return performPOST(spectatorURL, theMatch.getSpectatorAuthToken(), theMatch.toJSON());
         }

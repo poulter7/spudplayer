@@ -42,7 +42,7 @@ public abstract class BaseGamer extends StateMachineGamer {
 	/**
 	 * Uses a CachedProverStateMachine
 	 */
-	@Override
+	 
 	public StateMachine getInitialStateMachine() {
 		return new CachedProverStateMachine();
 	}
@@ -50,7 +50,7 @@ public abstract class BaseGamer extends StateMachineGamer {
 	/**
 	 * Returns the standard ReflexDetailPanel
 	 */
-	@Override
+	 
 	public DetailPanel getDetailPanel() {
 		return new ReflexDetailPanel();
 	}
@@ -61,7 +61,7 @@ public abstract class BaseGamer extends StateMachineGamer {
 	 * @param timeout
 	 *            time in ms this meta game stage should be finished by
 	 */
-	@Override
+	
 	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 		// setup essential items
 		theMachine = getStateMachine();

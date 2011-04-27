@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import player.gamer.statemachine.reflex.event.ReflexMoveSelectionEvent;
-
 import shef.strategies.BaseGamer;
 import shef.strategies.uct.tree.StateActionPair;
 import shef.strategies.uct.tree.StateModel;
@@ -29,7 +28,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 	protected UCTTree tree;
 	private final int rollNum = 500;
 	
-	@Override
+	
 	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException{
 		final long finishBy = timeout - 1000;
 		
@@ -78,7 +77,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 	 *            when in ms this move selection should be completed by
 	 * @return the move attributed to the most promising {@link StateActionPair}
 	 */
-	@Override
+	
 	public Move stateMachineSelectMove(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
 		System.out.println("GO");
 		final long start = System.currentTimeMillis();

@@ -32,7 +32,6 @@ public class Goal {
 		this.score = Integer.parseInt(score.toString());
     }
 
-    @Override
     public String toString() {
         return super.toString();
     }
