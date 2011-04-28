@@ -1,0 +1,15 @@
+for i in {1..200}
+do
+ qsub job-0
+ qsub  job-0.05
+ qsub job-0.1
+ qsub job-0.125
+ qsub job-0.15
+ qsub job-0.175
+ qsub job-0.225
+ qsub job-0.25
+ qsub job-0.275
+ qsub job-0.3
+ qsub job-0.4
+
+done

@@ -1,0 +1,9 @@
+#
+#$ -l h_rt=1:00:00
+#$ -j yes
+#$ -wd /home/pha07jrp/new_ggp
+# below -m option can have any combination of b , e or a  to imply when to to send email where;
+#    b = begining of job  e = end of job  a = in case job gets aborted unexpectedly 
+#$ -m be
+#$ -M poulter7@gmail.com
+./single_run 0.175

@@ -3,31 +3,33 @@ function getport()
 {
         case $1 in
                 SPU )
-                        local port=4001 ;;
+                        local port=40001 ;;
                 UCT )
-                        local port=4002 ;;
+                        local port=40002 ;;
                 MC )
-                        local port=4003 ;;
+                        local port=40003 ;;
                 AB )
-                        local port=4004 ;;
+                        local port=40004 ;;
                 SPU2 )
-                        local port=4010 ;;
+                        local port=40010 ;;
                 UCT2 )
-                        local port=4011 ;;
+                        local port=40011 ;;
         esac
         echo "$port"
 }
-X="$(date +%s)-$1";
 NAME1=UCT;
 NAME2=SPU;
-
+SIGMA=$1
+echo $SIGMA
 PORT1=$(getport $NAME1);
 PORT2=$(getport $NAME2);
 START=15;
 PLAY=15;
-./uct &
-./spu  $1 false &
+X="$(date +%s)-$SIGMA";
+./uct $PORT1 &
+./spu $PORT2 $SIGMA false &
 sleep 3
+echo running
 java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
 java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
 killall java
