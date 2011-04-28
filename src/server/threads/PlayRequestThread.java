@@ -87,6 +87,7 @@ public final class PlayRequestThread extends Thread
 		}
 		catch (IOException e)
 		{
+			System.out.println("No move recieved");
 			System.exit(99);
 			gameServer.notifyObservers(new ServerConnectionErrorEvent(role));
 			move = legalMoves.get(0);
