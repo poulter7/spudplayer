@@ -3,9 +3,9 @@ function getport()
 {
         case $1 in
                 SPU )
-                        local port=40001 ;;
+                        local port=$((50000+$PBS_JOBID)) ;;
                 UCT )
-                        local port=40002 ;;
+                        local port=$((50001+$PBS_JOBID)) ;;
                 MC )
                         local port=40003 ;;
                 AB )
@@ -17,6 +17,7 @@ function getport()
         esac
         echo "$port"
 }
+
 NAME1=UCT;
 NAME2=SPU;
 SIGMA=$1
@@ -28,7 +29,11 @@ PLAY=15;
 X="$(date +%s)-$SIGMA";
 ./uct $PORT1 &
 ./spu $PORT2 $SIGMA false &
-#sleep 3
+
+sleep 3
 echo running
-java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
-java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
+java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $
+START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
+java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $
+START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
+
