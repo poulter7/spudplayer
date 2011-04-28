@@ -26,7 +26,7 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 	
 	/** UCT tree */
 	protected UCTTree tree;
-	private final int rollNum = 2;
+	private final int rollNum = 500;
 	
 	
 	public void stateMachineMetaGame(final long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException{
