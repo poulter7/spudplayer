@@ -104,13 +104,12 @@ public final class GameServer extends Thread implements Subject
             notifyObservers(new ServerNewMatchEvent(stateMachine.getRoles()));                        
             notifyObservers(new ServerTimeEvent(match.getStartClock() * 1000));
             sendStartRequests();
-
             while (!stateMachine.isTerminal(currentState)) {
                 publishWhenNecessary();
                 notifyObservers(new ServerNewGameStateEvent((ProverMachineState)currentState));
                 notifyObservers(new ServerTimeEvent(match.getPlayClock() * 1000));
                 previousMoves = sendPlayRequests();
-
+                
                 notifyObservers(new ServerNewMovesEvent(previousMoves));
                 history.add(currentState.toXML());
                 currentState = stateMachine.getNextState(currentState, previousMoves);
@@ -119,6 +118,7 @@ public final class GameServer extends Thread implements Subject
                     movesAsGDL.add(m.getContents());
                 match.appendMoves(movesAsGDL);
                 match.appendState(currentState.getContents());
+                
             }
             match.markCompleted(stateMachine.getGoals(currentState));
             publishWhenNecessary();
