@@ -22,8 +22,8 @@ NAME1=UCT;
 NAME2=SPU;
 SIGMA=$1
 echo $SIGMA
-PORT1=$(getport $NAME1);
-PORT2=$(getport $NAME2);
+PORT1=50000;
+PORT2=50001;
 START=15;
 PLAY=15;
 X="$(date +%s)-$SIGMA";
@@ -32,8 +32,7 @@ X="$(date +%s)-$SIGMA";
 
 sleep 3
 echo running
-java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $
-START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
-java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $
-START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
+java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
+java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT2 $NAME2 localhost $PORT1 $NAME1
 
+killall java

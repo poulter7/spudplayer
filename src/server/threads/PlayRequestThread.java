@@ -72,37 +72,29 @@ public final class PlayRequestThread extends Thread
 			move = gameServer.getStateMachine().getMoveFromSentence((GdlSentence) GdlFactory.create(response));
 			if (!new HashSet<Move>(legalMoves).contains(move))
 			{
-				System.out.println("Invalid move");
 				gameServer.notifyObservers(new ServerIllegalMoveEvent(role, move));
 				move = legalMoves.get(0);
-				System.exit(0);
 			}
 
 			socket.close();
 		}
 		catch (SocketTimeoutException e)
 		{
-			System.out.println("No move recieved");
 			gameServer.notifyObservers(new ServerTimeoutEvent(role));
 			move = legalMoves.get(0);
 		}
 		catch (IOException e)
 		{
-			System.out.println("IO Exception");
-			System.exit(99);
 			gameServer.notifyObservers(new ServerConnectionErrorEvent(role));
 			move = legalMoves.get(0);
-			// XXX not connected
 		}
 		catch (GdlFormatException e)
 		{
-			System.out.println("GDL format");
 			gameServer.notifyObservers(new ServerIllegalMoveEvent(role, move));
 			move = legalMoves.get(0);
 		}
 		catch (SymbolFormatException e)
 		{
-			System.out.println("Symbol format");
 			gameServer.notifyObservers(new ServerIllegalMoveEvent(role, move));
 			move = legalMoves.get(0);
 		}
