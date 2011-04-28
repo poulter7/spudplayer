@@ -72,9 +72,10 @@ public final class PlayRequestThread extends Thread
 			move = gameServer.getStateMachine().getMoveFromSentence((GdlSentence) GdlFactory.create(response));
 			if (!new HashSet<Move>(legalMoves).contains(move))
 			{
-				
+				System.out.println("fail");
 				gameServer.notifyObservers(new ServerIllegalMoveEvent(role, move));
 				move = legalMoves.get(0);
+				System.exit(99);
 			}
 
 			socket.close();

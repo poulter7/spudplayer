@@ -26,8 +26,8 @@ PORT2=$(getport $NAME2);
 START=15;
 PLAY=15;
 X="$(date +%s)-$SIGMA";
-#./uct $PORT1 &
-#./spu $PORT2 $SIGMA false &
+./uct $PORT1 &
+./spu $PORT2 $SIGMA false &
 #sleep 3
 echo running
 java -cp $(cat classpath) apps.utilities.GameServerRunner $X connect4 $START $PLAY localhost $PORT1 $NAME1 localhost $PORT2 $NAME2
