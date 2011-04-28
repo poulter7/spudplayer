@@ -29,15 +29,16 @@ public final class GamePlayer extends Thread implements Subject {
 		observers = new ArrayList<Observer>();
 		listener = null;
 
-		while (listener == null) {
+//		while (listener == null) {
 			try {
 				listener = new ServerSocket(port);
 			} catch (IOException ex) {
 				listener = null;
 				port++;
 				System.err.println("Failed to start gamer on port: " + (port - 1) + " trying port " + port);
+				System.exit(99);
 			}
-		}
+//		}
 
 		this.port = port;
 		this.gamer = gamer;
