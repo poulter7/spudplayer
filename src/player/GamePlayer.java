@@ -35,7 +35,8 @@ public final class GamePlayer extends Thread implements Subject {
 			} catch (IOException ex) {
 				listener = null;
 				port++;
-				System.err.println("Failed to start gamer on port: " + (port - 1) + " trying port " + port);
+				System.err.println("Failed to launch port taken");
+//				System.err.println("Failed to start gamer on port: " + (port - 1) + " trying port " + port);
 				System.exit(99);
 			}
 //		}
