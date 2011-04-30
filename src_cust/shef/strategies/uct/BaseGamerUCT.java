@@ -51,8 +51,8 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		
 		int rollCount = 0;
 		System.out.println("beginning rollouts");
-		while (System.currentTimeMillis() < finishBy) {
-//		while (rollCount < rollNum) {
+//		while (System.currentTimeMillis() < finishBy) {
+		while (rollCount < rollNum) {
 			inTreeRollout(currentSM);
 			rollCount++;
 		}

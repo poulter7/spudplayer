@@ -34,15 +34,20 @@ import util.symbol.grammar.SymbolList;
  */
 public final class StressStrategy {
 
-	
+	/*
+	 * Values for testing effect of random results
+	 */
+	public static int valChanged=0;
+	public static int valLooked = 0;
 	
 	public static void main(String[] args) throws IOException, RequestFormatException, SymbolFormatException, GdlFormatException, MetaGamingException, MoveSelectionException, TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException {
-
+		double[] vs = new double[]{0, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7};
+		for(int i = 0; i < vs.length; i++){
 //		Gamer st = new StrategyAlphaBeta();
-		Gamer st = new StrategyUCTNeural(0.05, false);
+		Gamer st = new StrategyUCTNeural(vs[i], false);
 //		Gamer st = new StrategyUCTSimple();
 		
-		GamePlayer player = new GamePlayer(9000, st);
+		GamePlayer player = new GamePlayer(9000+i, st);
 		
 		RequestFactory rf = new RequestFactory();
 		StringBuilder sb = new StringBuilder();
@@ -60,13 +65,15 @@ public final class StressStrategy {
 		GdlRelation role = (GdlRelation) GdlFactory.create(list.get(0));
 		GdlProposition prop =  (GdlProposition) role.getBody().get(0).toSentence();
 		player.getGamer().setRoleName(prop);
-		player.getGamer().metaGame(System.currentTimeMillis() + 5*1000);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		player.getGamer().selectMove(System.currentTimeMillis() + 20*1000);
+		player.getGamer().metaGame(System.currentTimeMillis() + 600*1000);
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		System.out.println("R:"+(float)(valLooked-valChanged)/valLooked *100 + "% random of " + valLooked);
+	}
+//		player.getGamer().selectMove(System.currentTimeMillis() + 20*1000);
 	}
 }

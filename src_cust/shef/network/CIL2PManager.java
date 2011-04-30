@@ -169,7 +169,7 @@ public class CIL2PManager {
 		for(int i = 0; i < roleCount; i++){
 			scores[i] = getPlayerScore(playerList.get(i)) / 100d;
 		}
-		
+//		System.out.println(Arrays.toString(scores));
 		return scores;
 	}
 
@@ -264,9 +264,12 @@ public class CIL2PManager {
 			// if this neuron is attached to the player we're
 			// looking at add the value to their score
 			if (role.equals(goalClause.player)){
+//				System.out.println("n");
 				playerSum += nScore;
 			}
 		}
+//		System.out.println(totalSum);
+//		System.out.println(playerSum);
 		double stateScore = (playerSum / totalSum) * 100f;
 		return stateScore;
 	}

@@ -10,6 +10,7 @@ import org.neuroph.core.learning.TrainingSet;
 import shef.network.CIL2PFactory;
 import shef.network.CIL2PManager;
 import shef.network.CIL2PNet;
+import shef.strategies.StressStrategy;
 import shef.strategies.uct.tree.StateActionPair;
 import shef.strategies.uct.tree.StateModel;
 import util.statemachine.MachineState;
@@ -77,29 +78,33 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 			List<List<Move>> movePairs = theMachine
 					.getLegalJointMoves(terminal);
 			List<Move> played = horizonStatePair(movePairs, terminal);
-			if(PRINT_GAUSS_EFFECT){
-				List<Move> playedNonRandom = horizonStatePair(movePairs, terminal);
-				System.out.println(playedNonRandom.equals(played));
+			if (PRINT_GAUSS_EFFECT) {
+				List<Move> playedNonRandom = horizonStatePairNonRandom(
+						movePairs, terminal);
+				boolean swapped = playedNonRandom.equals(played);
+				if (swapped) {
+					StressStrategy.valChanged++;
+				}
+				StressStrategy.valLooked++;
 			}
 			terminal = theMachine.getNextState(terminal, played);
 
 		} while (!theMachine.isTerminal(terminal));
 		// the node was terminal
-		
-		if(prep_train){
-			cil2pManager.train(terminal,  ((ProverStateMachine) theMachine) );
+
+		if (prep_train) {
+			cil2pManager.train(terminal, ((ProverStateMachine) theMachine));
 		}
-		
+
 		return terminal;
 	}
 
-	
 	public String getName() {
 		return "Neural Gamer Training";
 	}
 
-	public List<Move> horizonStatePair(List<List<Move>> movePairs, MachineState from) 
-			throws MoveDefinitionException,
+	public List<Move> horizonStatePair(List<List<Move>> movePairs,
+			MachineState from) throws MoveDefinitionException,
 			TransitionDefinitionException {
 		int movePairCount = movePairs.size();
 		double[][] rewardPairs = new double[movePairCount][roleCount];
@@ -130,25 +135,25 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		}
 		return played;
 	}
-	
+
 	/**
 	 * Get the state pair using n
+	 * 
 	 * @param movePairs
 	 * @param from
 	 * @return
 	 * @throws MoveDefinitionException
 	 * @throws TransitionDefinitionException
 	 */
-	public List<Move> horizonStatePairNonRandom(List<List<Move>> movePairs, MachineState from) 
-			throws MoveDefinitionException,
+	public List<Move> horizonStatePairNonRandom(List<List<Move>> movePairs,
+			MachineState from) throws MoveDefinitionException,
 			TransitionDefinitionException {
 		int movePairCount = movePairs.size();
 		double[][] rewardPairs = new double[movePairCount][roleCount];
 
 		for (int i = 0; i < movePairCount; i++) {
-			rewardPairs[i] = cil2pManager
-					.getStateValuePlayers(theMachine
-							.getNextStateDestructively(from, movePairs.get(i)));
+			rewardPairs[i] = cil2pManager.getStateValuePlayers(theMachine
+					.getNextStateDestructively(from, movePairs.get(i)));
 		}
 
 		int[] bestIndex = new int[roleCount];
@@ -172,10 +177,9 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 		return played;
 	}
 
-	
 	void strategyCleanUp() {
 		prep_train = false;
-		
+
 	}
 
 }

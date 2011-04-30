@@ -5,9 +5,9 @@ function getport()
 		SPU )
 			local port=4001 ;;
 		UCT )
-			local port=4002 ;;
-		MC )
-			local port=4003 ;;
+			local port=10000 ;;
+		FLUX )
+			local port=8000 ;;
 		AB )
 			local port=4004 ;;
 		SPU2 )
@@ -18,7 +18,7 @@ function getport()
 	echo "$port"
 }
 
-X="$(date +%s)-$6";
+X="$(date +%s)";
 R=$5;
 NAME1=$1;
 NAME2=$2;
