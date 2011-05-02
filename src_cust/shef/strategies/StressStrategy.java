@@ -51,7 +51,7 @@ public final class StressStrategy {
 		
 		RequestFactory rf = new RequestFactory();
 		StringBuilder sb = new StringBuilder();
-		BufferedReader br = new BufferedReader(new FileReader("specs/connect4_strip.kif"));
+		BufferedReader br = new BufferedReader(new FileReader("specs/skirmishfinal_strip.kif"));
 		
 		String s;
 		while((s = br.readLine()) != null){

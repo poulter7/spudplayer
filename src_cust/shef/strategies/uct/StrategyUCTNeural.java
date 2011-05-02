@@ -1,6 +1,7 @@
 package shef.strategies.uct;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -31,7 +32,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 
 	private static final boolean PRINT_GAUSS_EFFECT = false;
 	private static final boolean PRINT_EXPAND = false;
-	private static final boolean SEE_OUT_OUT = true;
+	private static final boolean SEE_OUT_OUT = false;
 	private boolean prep_train = true;
 	/** Method of interacting with the network */
 	protected CIL2PManager cil2pManager;

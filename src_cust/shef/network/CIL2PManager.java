@@ -38,6 +38,8 @@ import cs227b.teamIago.resolver.Expression;
  */
 public class CIL2PManager {
 
+	private static final boolean PRINT_SCORE = false;
+
 	/** List of player names */
 	public final List<Role> playerList = new ArrayList<Role>();
 
@@ -201,6 +203,8 @@ public class CIL2PManager {
 			double gaussR = gauss.randomize(0);
 			scores[i] = sc + gaussR;
 		}
+		if(PRINT_SCORE)
+			System.out.println(Arrays.toString(scores));
 		return scores;
 	}
 
