@@ -51,7 +51,7 @@ public final class StressStrategy {
 		
 		RequestFactory rf = new RequestFactory();
 		StringBuilder sb = new StringBuilder();
-		BufferedReader br = new BufferedReader(new FileReader("specs/skirmishfinal_strip.kif"));
+		BufferedReader br = new BufferedReader(new FileReader("games/rulesheets/han.kif"));
 		
 		String s;
 		while((s = br.readLine()) != null){
@@ -65,7 +65,7 @@ public final class StressStrategy {
 		GdlRelation role = (GdlRelation) GdlFactory.create(list.get(0));
 		GdlProposition prop =  (GdlProposition) role.getBody().get(0).toSentence();
 		player.getGamer().setRoleName(prop);
-		player.getGamer().metaGame(System.currentTimeMillis() + 600*1000);
+		player.getGamer().metaGame(System.currentTimeMillis() + 10*1000);
 //		try {
 //			Thread.sleep(2000);
 //		} catch (InterruptedException e) {
