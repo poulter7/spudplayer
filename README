@@ -1,0 +1,64 @@
+spudplayer GGP Agent
+
+This is the main project of the agent created as part of the Undergraduate dissertation of Jonathan Poulter (reg: 070172258) at Sheffield University.
+
+-------------------------------------------------------------------------------
+
+Anatomy of the Project:
+	FOLDER		USAGE					PROJECT
+	doc/		JavaDoc details for the 		spudplayer
+			spudplayer packages
+
+	games/		storage of gamedata and rulesets 	GGPBase
+			from GGP servers for 
+			Kiosk and Server
+	lib/		the libraries (other than GGPBase) 
+			which are used by
+			spudplayer
+
+	licences/	licences necessary for GGPBase		GGPBase
+
+	scripts/	useful scripts for various tasks	spudplayer
+			(running tournaments or 
+			HPC cluster jobs)	
+
+	src/		main GGPBase source			GGPBase
+
+	src_cust/	spudplayer source			spudplayer
+
+	test/		source code and games			spudplayer
+			for unit tests
+
+-------------------------------------------------------------------------------
+
+Building the Project:
+Prerequisites:
+	JDK6 		http://goo.gl/GYNS5
+	Apache ANT	http://ant.apache.org/
+
+- Running the command "ant build" in the root directory will build the code from source
+
+-------------------------------------------------------------------------------
+
+Running the Project:
+The ANT build file can also run parts of the project
+
+	COMMAND				ACTION
+	ant AlphaBetaPlayer		Launch the ANN guided 	on port 4003
+	ant Kiosk			Launch the GGPBase interactive Kiosk
+	ant PlayerPanel			Launch the GGPBase Player UI 
+	ant ServerPanel			Launch the GGPBase Server UI
+	ant NeuralPlayer		Launch spudplayer 	on port 4001
+	ant UCTPlayer			Launch pure UCT player 	on port 4002
+
+-------------------------------------------------------------------------------
+
+Other Information:
+scripts/iceberg-jobs contains scripts for launching jobs onto the Sun HPC 
+and running batch performance testing jobs
+ 	
+-------------------------------------------------------------------------------
+
+Note about GGP-Base:
+The project contains the entire source of the project GGP-Base a GGP framework constructed by Sam Schreiber and editted somewhat by the author of this project. Later iterations of this may simply package GGP-Base but as Sam has chosen to distribute the project as source and not packaged, it remains in source for easy editting.
+

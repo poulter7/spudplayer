@@ -13,7 +13,7 @@
 	<!-- symlink junit in-->
         <pathelement location="lib/junit.jar"/>
     </path>
-    <!-- libraries added by jplayer -->
+    <!-- libraries added by spudplayer -->
     <path id="jplayer.classpath" >
         <pathelement location="lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
         <pathelement location="lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
@@ -22,6 +22,7 @@
         <pathelement location="lib/neuroph-2.5b/neuroph-2.5b.jar"/>
         <pathelement location="lib/JavaProver.jar"/>
     </path>
+    <!-- main classpath -->
     <path id="GGP_Base.classpath">
         <pathelement location="bin"/>
         <pathelement location="src/external/FlyingSaucer/core-renderer.jar"/>
@@ -32,7 +33,7 @@
         <path refid="JUnit 4.libraryclasspath"/>
 	<path refid="jplayer.classpath"/>
     </path>
-   
+    <!-- setup build environment -->
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -44,10 +45,13 @@
                 <exclude name="shef/instantiator/andortree/package-info.java"/>
                 <exclude name="shef/instantiator/package-info.java"/>
             </fileset>
-	    <fileset dir="src_clj,src_py,src,test">
+	    <fileset dir="src">
                 <exclude name="**/*.java"/>
             </fileset>
-            <fileset dir="src_py">
+	    <fileset dir="test">
+                <exclude name="**/*.java"/>
+            </fileset>
+            <!--<fileset dir="src_py">
                 <exclude name="**/*.java"/>
             </fileset>
              <fileset dir="src">
@@ -55,29 +59,25 @@
             </fileset>
 	    <fileset dir="test">
                 <exclude name="**/*.java"/>
-            </fileset>
+            </fileset>-->
         </copy>
     </target>
+    <!-- remove any build componenents -->
     <target name="clean">
         <delete dir="bin"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
+    <!-- build the main project and tests -->
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
+       	<!-- build the GGP-Base project -->
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src"/>
             <classpath refid="GGP_Base.classpath"/>
         </javac>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
-            <src path="src_py"/>
-            <classpath refid="GGP_Base.classpath"/>
-        </javac>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
-            <src path="src_clj"/>
-            <classpath refid="GGP_Base.classpath"/>
-        </javac>
+        <!-- for spudplayer, this is the main build section -->
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src_cust"/>
             <exclude name="strategies/uct/tree/package-info.java"/>
@@ -115,6 +115,7 @@
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
+    <!-- targets for running players on their own with the Strategy Launcher -->
     <target name="NeuralPlayer">
         <java classname="shef.strategies.StrategyLauncher" failonerror="true" fork="yes">
             <arg line="4001 2"/>

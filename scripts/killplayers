@@ -1,0 +1,35 @@
+#!/bin/bash
+
+user=`whoami`
+
+bashspid=`ps aux | grep -E "^$user .* /bin/bash ./spu " | grep -v grep | sed -e "s/^[a-z0-9]* *\([0-9]*\) .*/\1/"`
+if [ "$bashpid" != "" ] ; then
+	echo "killing bash process(es):" $bashpid
+	echo $bashpid | xargs kill
+fi
+
+bashupid=`ps aux | grep -E "^$user .* /bin/bash ./uct " | grep -v grep | sed -e "s/^[a-z0-9]* *\([0-9]*\) .*/\1/"`
+if [ "$bashpid" != "" ] ; then
+	echo "killing bash process(es):" $bashpid
+	echo $bashpid | xargs kill
+fi
+
+echo "waiting until processes vanish ..."
+stopped=0
+while [ $stopped -eq 0 ] ; do
+	bashspid=`ps aux | grep -E "^$user .* /bin/bash ./spu.sh" | grep -v grep | sed -e "s/^[a-z0-9]* *\([0-9]*\) .*/\1/"`
+
+	bashupid=`ps aux | grep -E "^$user .* /bin/bash ./uct.sh" | grep -v grep | sed -e "s/^[a-z0-9]* *\([0-9]*\) .*/\1/"`
+
+
+	if [ "$bashspid" == "" -o "$bashupid" == ""  ] ; then
+		stopped=1
+		echo "processes killed!"
+	else
+		stopped=0
+	date
+		echo "processes still running: $bashpid / $javapid / $eclipsepid"
+		sleep 1
+	fi
+done
+
