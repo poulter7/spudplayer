@@ -12,7 +12,8 @@ Anatomy of the Project:
 	games/		storage of gamedata and rulesets 	GGPBase
 			from GGP servers for 
 			Kiosk and Server
-	lib/		the libraries (other than GGPBase) 
+
+	lib/		the libraries (other than GGPBase) 	spudplayer
 			which are used by
 			spudplayer
 
