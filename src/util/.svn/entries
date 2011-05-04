@@ -1,76 +1,0 @@
-10
-
-dir
-306
-http://ggp-base.googlecode.com/svn/trunk/ggp-base/src/util
-http://ggp-base.googlecode.com/svn
-
-
-
-2011-04-03T20:02:59.363727Z
-306
-sam.schreiber@gmail.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-716a755e-b13f-cedc-210d-596dafc6fb9b
-
-http
-dir
-
-logging
-dir
-
-observer
-dir
-
-propnet
-dir
-
-reflection
-dir
-
-match
-dir
-
-xhtml
-dir
-
-files
-dir
-
-cache
-dir
-
-symbol
-dir
-
-statemachine
-dir
-
-gdl
-dir
-
-configuration
-dir
-
-game
-dir
-
-kif
-dir
-
-prover
-dir
-
