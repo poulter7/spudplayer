@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. -->
 <project basedir="." default="build" name="GGP_Base">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="/usr/lib/eclipse"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.5"/>
-    <property name="source" value="1.5"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
     <path id="JUnit 4.libraryclasspath">
+	<!-- Either the JUnit testing class is installed OR-->
         <pathelement location="${ECLIPSE_HOME}/plugins/org.junit4_4.5.0.v20090824/junit.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.jar"/>
+	<!-- symlink junit in-->
+        <pathelement location="lib/junit.jar"/>
+    </path>
+    <!-- libraries added by jplayer -->
+    <path id="jplayer.classpath" >
+        <pathelement location="lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
+        <pathelement location="lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
+    	<pathelement location="lib/slf4j-1.6.1/slf4j-simple-1.6.1.jar"/>
+	<pathelement location="lib/slf4j-1.6.1/slf4j-api-1.6.1.jar"/>
+        <pathelement location="lib/neuroph-2.5b/neuroph-2.5b.jar"/>
+        <pathelement location="lib/JavaProver.jar"/>
     </path>
     <path id="GGP_Base.classpath">
         <pathelement location="bin"/>
@@ -22,162 +29,31 @@
         <pathelement location="src/external/JGoodiesForms/forms-1.2.1.jar"/>
         <pathelement location="src/external/Jython/jython.jar"/>
         <pathelement location="src/external/Clojure/clojure.jar"/>
-    	<pathelement location="lib/slf4j-1.6.1/slf4j-simple-1.6.1.jar"/>
-		<pathelement location="lib/slf4j-1.6.1/slf4j-api-1.6.1.jar"/>
         <path refid="JUnit 4.libraryclasspath"/>
-        <pathelement location="lib/neuroph-2.5b/neuroph-2.5b.jar"/>
-        <pathelement location="lib/JavaProver.jar"/>
-        <pathelement location="lib/junit.jar"/>
-        <pathelement location="lib/encog-java-core-2.5.3/lib/encog-core-2.5.3.jar"/>
-        <pathelement location="lib/encog-java-core-2.5.3/lib/encog-engine-2.5.3.jar"/>
+	<path refid="jplayer.classpath"/>
     </path>
+   
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src">
-                <exclude name="**/*.uad"/>
-                <exclude name="**/*.ucd"/>
-                <exclude name="**/*.uld"/>
-                <exclude name="**/*.upd"/>
-                <exclude name="**/*.udd"/>
-                <exclude name="**/*.uod"/>
-                <exclude name="**/*.usd"/>
-                <exclude name="**/*.utd"/>
-                <exclude name="**/*.uud"/>
-                <exclude name="**/*.odd"/>
-                <exclude name="**/*.ead"/>
-                <exclude name="**/*.ecd"/>
-                <exclude name="**/*.eld"/>
-                <exclude name="**/*.epd"/>
-                <exclude name="**/*.edd"/>
-                <exclude name="**/*.eod"/>
-                <exclude name="**/*.esd"/>
-                <exclude name="**/*.etd"/>
-                <exclude name="**/*.eud"/>
-                <exclude name="**/*.urd"/>
-                <exclude name="**/*.uml"/>
-                <exclude name="**/*.ecore"/>
-                <exclude name="**/*.launch"/>
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src_py">
-                <exclude name="**/*.uad"/>
-                <exclude name="**/*.ucd"/>
-                <exclude name="**/*.uld"/>
-                <exclude name="**/*.upd"/>
-                <exclude name="**/*.udd"/>
-                <exclude name="**/*.uod"/>
-                <exclude name="**/*.usd"/>
-                <exclude name="**/*.utd"/>
-                <exclude name="**/*.uud"/>
-                <exclude name="**/*.odd"/>
-                <exclude name="**/*.ead"/>
-                <exclude name="**/*.ecd"/>
-                <exclude name="**/*.eld"/>
-                <exclude name="**/*.epd"/>
-                <exclude name="**/*.edd"/>
-                <exclude name="**/*.eod"/>
-                <exclude name="**/*.esd"/>
-                <exclude name="**/*.etd"/>
-                <exclude name="**/*.eud"/>
-                <exclude name="**/*.urd"/>
-                <exclude name="**/*.uml"/>
-                <exclude name="**/*.ecore"/>
-                <exclude name="**/*.launch"/>
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src_clj">
-                <exclude name="**/*.uad"/>
-                <exclude name="**/*.ucd"/>
-                <exclude name="**/*.uld"/>
-                <exclude name="**/*.upd"/>
-                <exclude name="**/*.udd"/>
-                <exclude name="**/*.uod"/>
-                <exclude name="**/*.usd"/>
-                <exclude name="**/*.utd"/>
-                <exclude name="**/*.uud"/>
-                <exclude name="**/*.odd"/>
-                <exclude name="**/*.ead"/>
-                <exclude name="**/*.ecd"/>
-                <exclude name="**/*.eld"/>
-                <exclude name="**/*.epd"/>
-                <exclude name="**/*.edd"/>
-                <exclude name="**/*.eod"/>
-                <exclude name="**/*.esd"/>
-                <exclude name="**/*.etd"/>
-                <exclude name="**/*.eud"/>
-                <exclude name="**/*.urd"/>
-                <exclude name="**/*.uml"/>
-                <exclude name="**/*.ecore"/>
-                <exclude name="**/*.launch"/>
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="bin">
             <fileset dir="src_cust">
-                <exclude name="**/*.uad"/>
-                <exclude name="**/*.ucd"/>
-                <exclude name="**/*.uld"/>
-                <exclude name="**/*.upd"/>
-                <exclude name="**/*.udd"/>
-                <exclude name="**/*.uod"/>
-                <exclude name="**/*.usd"/>
-                <exclude name="**/*.utd"/>
-                <exclude name="**/*.uud"/>
-                <exclude name="**/*.odd"/>
-                <exclude name="**/*.ead"/>
-                <exclude name="**/*.ecd"/>
-                <exclude name="**/*.eld"/>
-                <exclude name="**/*.epd"/>
-                <exclude name="**/*.edd"/>
-                <exclude name="**/*.eod"/>
-                <exclude name="**/*.esd"/>
-                <exclude name="**/*.etd"/>
-                <exclude name="**/*.eud"/>
-                <exclude name="**/*.urd"/>
-                <exclude name="**/*.uml"/>
-                <exclude name="**/*.ecore"/>
-                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
-                <exclude name="strategies/uct/tree/package-info.java"/>
-                <exclude name="network/package-info.java"/>
-                <exclude name="strategies/uct/package-info.java"/>
                 <exclude name="shef/strategies/uct/package-info.java"/>
                 <exclude name="shef/network/package-info.java"/>
                 <exclude name="shef/strategies/uct/tree/package-info.java"/>
                 <exclude name="shef/instantiator/andortree/package-info.java"/>
                 <exclude name="shef/instantiator/package-info.java"/>
             </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="test">
-                <exclude name="**/*.uad"/>
-                <exclude name="**/*.ucd"/>
-                <exclude name="**/*.uld"/>
-                <exclude name="**/*.upd"/>
-                <exclude name="**/*.udd"/>
-                <exclude name="**/*.uod"/>
-                <exclude name="**/*.usd"/>
-                <exclude name="**/*.utd"/>
-                <exclude name="**/*.uud"/>
-                <exclude name="**/*.odd"/>
-                <exclude name="**/*.ead"/>
-                <exclude name="**/*.ecd"/>
-                <exclude name="**/*.eld"/>
-                <exclude name="**/*.epd"/>
-                <exclude name="**/*.edd"/>
-                <exclude name="**/*.eod"/>
-                <exclude name="**/*.esd"/>
-                <exclude name="**/*.etd"/>
-                <exclude name="**/*.eud"/>
-                <exclude name="**/*.urd"/>
-                <exclude name="**/*.uml"/>
-                <exclude name="**/*.ecore"/>
-                <exclude name="**/*.launch"/>
+	    <fileset dir="src_clj,src_py,src,test">
+                <exclude name="**/*.java"/>
+            </fileset>
+            <fileset dir="src_py">
+                <exclude name="**/*.java"/>
+            </fileset>
+             <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+	    <fileset dir="test">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -219,16 +95,20 @@
             <classpath refid="GGP_Base.classpath"/>
         </javac>
     </target>
+    <!-- run the project -->
+    <!-- run the server to host games -->
     <target name="ServerPanel">
         <java classname="apps.server.ServerPanel" failonerror="true" fork="yes">
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
+    <!-- run the Kiosk to play against a human player -->
     <target name="Kiosk">
         <java classname="apps.kiosk.Kiosk" failonerror="true" fork="yes">
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
+    <!-- run a server to play remotely -->
     <target name="PlayerPanel">
         <java classname="apps.player.PlayerPanel" failonerror="true" fork="yes">
             <arg line="4001"/>

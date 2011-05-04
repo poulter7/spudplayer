@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="src_py"/>
 	<classpathentry kind="src" path="src_clj"/>
 	<classpathentry excluding="strategies/uct/tree/package-info.java|network/package-info.java|strategies/uct/package-info.java|shef/strategies/uct/package-info.java|shef/network/package-info.java|shef/strategies/uct/tree/package-info.java|shef/instantiator/andortree/package-info.java|shef/instantiator/package-info.java|shef/strategies/package-info.java" kind="src" path="src_cust"/>
-	<classpathentry kind="src" path="test"/>
 	<classpathentry excluding="apps/kiosk/" kind="src" path="src"/>
+	<classpathentry kind="src" path="test/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="src/external/FlyingSaucer/core-renderer.jar"/>

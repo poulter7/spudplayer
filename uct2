@@ -1,3 +1,0 @@
-#!/bin/bash
-java -cp $(cat classpath) shef.strategies.StrategyLauncher 4011 1
-
