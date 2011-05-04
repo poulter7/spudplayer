@@ -32,9 +32,9 @@ public class ProjectSearcher {
 			} catch (ClassNotFoundException ex)  { 
 				throw new RuntimeException(ex); 
 			}
-			
-			if(ofThisType.isAssignableFrom(c) && (!mustBeConcrete || !Modifier.isAbstract(c.getModifiers())) )
-				rval.add(c);	
+			if(ofThisType.isAssignableFrom(c) && (!mustBeConcrete || !Modifier.isAbstract(c.getModifiers())) ){
+				rval.add(c);
+			}
 		}
 		return rval;
 	}

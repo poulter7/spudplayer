@@ -38,6 +38,9 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	protected CIL2PManager cil2pManager;
 	private double sigma;
 
+	public StrategyUCTNeural(){
+		this(4, false);
+	}
 	public StrategyUCTNeural(double sigma, boolean training) {
 		this.sigma = sigma;
 		this.prep_train = training;
@@ -99,9 +102,10 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 
 		return terminal;
 	}
-
+	
+	@Override
 	public String getName() {
-		return "Neural Gamer Training";
+		return "spudplayer";
 	}
 
 	public List<Move> horizonStatePair(List<List<Move>> movePairs,
@@ -180,7 +184,7 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 
 	void strategyCleanUp() {
 		prep_train = false;
-
 	}
+
 
 }

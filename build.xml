@@ -51,15 +51,12 @@
 	    <fileset dir="test">
                 <exclude name="**/*.java"/>
             </fileset>
-            <!--<fileset dir="src_py">
+            <fileset dir="src_py">
                 <exclude name="**/*.java"/>
             </fileset>
-             <fileset dir="src">
+             <fileset dir="src_clj">
                 <exclude name="**/*.java"/>
             </fileset>
-	    <fileset dir="test">
-                <exclude name="**/*.java"/>
-            </fileset>-->
         </copy>
     </target>
     <!-- remove any build componenents -->
@@ -75,6 +72,14 @@
        	<!-- build the GGP-Base project -->
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </javac>
+	<javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
+            <src path="src_cust"/>
+            <classpath refid="GGP_Base.classpath"/>
+        </javac>
+	<javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
+            <src path="src_py"/>
             <classpath refid="GGP_Base.classpath"/>
         </javac>
         <!-- for spudplayer, this is the main build section -->

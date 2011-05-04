@@ -81,6 +81,7 @@ public final class PlayerPanel extends JPanel
 		portTextField.setColumns(15);
 
 		List<Class<?>> gamersCopy = new ArrayList<Class<?>>(gamers);
+		System.out.println(gamers);
 		for(Class<?> gamer : gamersCopy)
 		{
 			Gamer g;
