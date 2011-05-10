@@ -111,8 +111,11 @@ public final class Kiosk extends JPanel implements ActionListener, ItemListener,
         List<Class<?>> theAvailableCanvasList = ProjectSearcher.getAllClassesThatAre(GameCanvas.class);
         for(Class<?> availableCanvas : theAvailableCanvasList) {
             try {
-                GameCanvas theCanvas = (GameCanvas) availableCanvas.newInstance();                
-                theAvailableGames.add(new AvailableGame(theCanvas.getGameName(), theCanvas.getGameKey(), availableCanvas));
+                GameCanvas theCanvas = (GameCanvas) availableCanvas.newInstance();
+                if(theCanvas.getListMe()){
+                	theAvailableGames.add(new AvailableGame(theCanvas.getGameName(), theCanvas.getGameKey(), availableCanvas));
+                	
+                }
             } catch(Exception e) {
                 ;
             }

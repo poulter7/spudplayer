@@ -77,4 +77,9 @@ public class PentagoCanvas extends GameCanvas_FancyGrid {
             else return 3;
         }
     }
+	@Override
+	public boolean getListMe() {
+		// TODO -generated method stub
+		return true;
+	}
 }

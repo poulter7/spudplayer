@@ -50,4 +50,9 @@ public class ChessCanvas extends GameCanvas_Chessboard {
             CommonGraphics.fillWithString(g, "X", 3);
         }
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

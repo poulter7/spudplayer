@@ -141,4 +141,10 @@ public class TicTacToeCanvas_Reference extends GameCanvas {
         
         repaint();
     }
+
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

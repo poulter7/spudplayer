@@ -59,4 +59,9 @@ public class ConnectFourCanvas extends GameCanvas_SimpleGrid {
         
         repaint();
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

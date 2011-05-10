@@ -104,4 +104,9 @@ public class BiddingTicTacToeCanvas extends GameCanvas_FancyGrid {
         if(xCell == 6 && yCell == 4) return -2;
         return yCell + (xCell == 6 ? 4 : 0);
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

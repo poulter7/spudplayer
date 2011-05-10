@@ -31,6 +31,7 @@ public abstract class GameCanvas extends JPanel implements Subject {
     protected StateMachine stateMachine; 
     protected MachineState gameState;    
     protected Role myRole;
+    public abstract boolean getListMe();
     
     // Cache the location of the last click 
     private int lastClickX;

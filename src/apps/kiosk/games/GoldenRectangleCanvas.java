@@ -61,4 +61,9 @@ public class GoldenRectangleCanvas extends GameCanvas_SimpleGrid {
         
         repaint();
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

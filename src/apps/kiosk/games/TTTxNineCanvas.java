@@ -95,6 +95,11 @@ public class TTTxNineCanvas extends GameCanvas_SimpleGrid {
         
         repaint();
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 
 /*

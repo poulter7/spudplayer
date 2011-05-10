@@ -39,5 +39,10 @@ public class TicTacToeCanvas extends GameCanvas_FancyGrid {
             g.setColor(Color.BLACK);
             CommonGraphics.fillWithString(g, cellFacts[4], 1.2);
         }
-    }   
+    }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return true;
+	}   
 }

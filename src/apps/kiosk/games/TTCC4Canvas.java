@@ -133,4 +133,9 @@ public class TTCC4Canvas extends GameCanvas_FancyGrid {
             }
         }
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

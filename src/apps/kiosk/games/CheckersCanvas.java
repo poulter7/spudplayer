@@ -71,4 +71,9 @@ public class CheckersCanvas extends GameCanvas_Chessboard {
             }
         }
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

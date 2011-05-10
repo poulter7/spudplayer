@@ -35,4 +35,9 @@ public class ChickenTicTacToeCanvas extends GameCanvas_FancyGrid {
             CommonGraphics.fillWithString(g, cellFacts[4], 1.2);
         }
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

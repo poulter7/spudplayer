@@ -46,4 +46,9 @@ public class BreakthroughCanvas extends GameCanvas_Chessboard {
             CommonGraphics.fillWithString(g, "X", 3);
         }
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

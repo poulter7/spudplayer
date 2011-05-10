@@ -57,4 +57,9 @@ public class BlockerCanvas extends GameCanvas_FancyGrid {
     protected Set<String> getLegalMovesForCell(int xCell, int yCell) {
         return gameStateHasLegalMovesMatching("\\( mark " + xCell + " " + yCell + " \\)");
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

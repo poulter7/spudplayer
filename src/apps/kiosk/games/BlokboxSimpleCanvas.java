@@ -226,5 +226,10 @@ public class BlokboxSimpleCanvas extends GameCanvas_SimpleGrid {
         selectedRow = -1;
         
         repaint();
-    }        
+    }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}        
 }

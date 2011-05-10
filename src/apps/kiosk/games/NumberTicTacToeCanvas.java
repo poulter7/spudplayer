@@ -43,4 +43,9 @@ public class NumberTicTacToeCanvas extends GameCanvas_FancyGrid {
         String[] moveFacts = theMove.split(" ");        
         CommonGraphics.fillWithString(g, "" + moveFacts[4], 1.2);
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -80,4 +80,9 @@ public class QyshinsuCanvas extends StyledGameCanvas_FancyRectangles {
         }
         return theRectangles;
     }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

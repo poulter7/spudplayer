@@ -64,5 +64,10 @@ public class CephalopodCanvas extends GameCanvas_FancyGrid {
         if(rightBit) g.drawRect(17*width/20, 3*height/10, width/20, 4*height/10);
         if(topBit) g.drawRect(3*width/10, height/10, 4*width/10, height/20);
         if(bottomBit) g.drawRect(3*width/10, 17*height/20, 4*width/10, height/20);
-    }    
+    }
+	@Override
+	public boolean getListMe() {
+		// TODO Auto-generated method stub
+		return false;
+	}    
 }
