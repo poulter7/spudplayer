@@ -90,8 +90,8 @@ public abstract class BaseGamerUCT extends BaseGamer implements IUCTStrategy{
 		int rollCount = 0;
 
 		while (true) {
-//			if (System.currentTimeMillis() > finishBy ) {
-			if (rollCount >= rollNum) {
+			if (System.currentTimeMillis() > finishBy ) {
+//			if (rollCount >= rollNum) {
 				// select best move!
 				double maxVal = Float.NEGATIVE_INFINITY;
 				List<Move> maxMove = null;
