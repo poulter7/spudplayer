@@ -80,6 +80,6 @@ public class PentagoCanvas extends GameCanvas_FancyGrid {
 	@Override
 	public boolean getListMe() {
 		// TODO -generated method stub
-		return true;
+		return false;
 	}
 }

@@ -13,4 +13,9 @@ public final class ClojureLegalGamerStub extends ClojureGamer
 {
     protected String getClojureGamerFile() { return "legal_gamer"; }
     protected String getClojureGamerName() { return "LegalGamer"; }
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

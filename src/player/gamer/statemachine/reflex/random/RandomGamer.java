@@ -67,5 +67,10 @@ public final class RandomGamer extends StateMachineGamer
 	public DetailPanel getDetailPanel() {
 		return new ReflexDetailPanel();
 	}
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

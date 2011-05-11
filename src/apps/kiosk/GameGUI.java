@@ -35,13 +35,14 @@ public class GameGUI extends JPanel implements Subject, Observer, ActionListener
     
     private boolean moveBeingSubmitted = false;
     private boolean stillMetagaming = true;
+    private JLabel theTitleLabel;
     
     public GameGUI(GameCanvas theCanvas) {
         super(new BorderLayout());        
         
         this.theCanvas = theCanvas;
 
-        JLabel theTitleLabel = new JLabel(theCanvas.getGameName());
+        theTitleLabel = new JLabel(theCanvas.getGameName());
         theTitleLabel.setFont(new Font(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()[0], Font.BOLD, 36));        
         
         JPanel northPanel = new JPanel(new FlowLayout());
@@ -110,6 +111,12 @@ public class GameGUI extends JPanel implements Subject, Observer, ActionListener
         submitMoveButton.setEnabled(!gameOver && !moveBeingSubmitted && !stillMetagaming);
         clearSelectionButton.setEnabled(!gameOver && !moveBeingSubmitted && !stillMetagaming);
         theCanvas.setEnabled(!gameOver && !moveBeingSubmitted && !stillMetagaming);
+        
+        if(!gameOver && !moveBeingSubmitted && !stillMetagaming){
+        	theTitleLabel.setText(theCanvas.getGameName());
+        } else {
+        	theTitleLabel.setText(theCanvas.getGameName() + " - AGENT THINKING");
+        }
         
         if(gameOver) return;        
         if(workingMove == null) {

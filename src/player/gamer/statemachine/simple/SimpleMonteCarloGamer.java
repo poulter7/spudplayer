@@ -118,4 +118,10 @@ public final class SimpleMonteCarloGamer extends StateMachineGamer
 	public DetailPanel getDetailPanel() {
 		return new ReflexDetailPanel();
 	}
+
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

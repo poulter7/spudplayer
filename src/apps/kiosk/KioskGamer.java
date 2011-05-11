@@ -115,5 +115,11 @@ public class KioskGamer extends StateMachineGamer implements Observer {
             
             theGUI.showFinalMessage(finalMessage.toString());
         }
-    }    
+    }
+
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}    
 }

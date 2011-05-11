@@ -68,4 +68,10 @@ public final class LegalGamer extends StateMachineGamer
 		return new ReflexDetailPanel();
 	}
 
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

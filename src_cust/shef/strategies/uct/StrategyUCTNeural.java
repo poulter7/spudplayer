@@ -185,6 +185,11 @@ public final class StrategyUCTNeural extends BaseGamerUCT {
 	void strategyCleanUp() {
 		prep_train = false;
 	}
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 
 }

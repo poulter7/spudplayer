@@ -25,6 +25,7 @@ public abstract class Gamer implements Subject
 {	
 	private Match match;
 	private GdlProposition roleName;
+	public abstract boolean isUsable();
 
 	public Gamer()
 	{

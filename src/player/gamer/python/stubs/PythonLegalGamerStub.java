@@ -13,4 +13,9 @@ public final class PythonLegalGamerStub extends PythonGamer
 {
     protected String getPythonGamerModule() { return "legal_gamer"; }
     protected String getPythonGamerName() { return "LegalGamer"; }
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

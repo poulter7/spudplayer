@@ -68,4 +68,10 @@ public final class StrategyUCTSimple extends BaseGamerUCT {
 		
 	}
 
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

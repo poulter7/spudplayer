@@ -13,4 +13,9 @@ public final class PythonRandomGamerStub extends PythonGamer
 {
     protected String getPythonGamerModule() { return "random_gamer"; }
     protected String getPythonGamerName() { return "RandomGamer"; }
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

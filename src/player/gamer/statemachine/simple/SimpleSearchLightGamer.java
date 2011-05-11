@@ -181,4 +181,9 @@ public final class SimpleSearchLightGamer extends StateMachineGamer
 	public DetailPanel getDetailPanel() {
 		return new ReflexDetailPanel();
 	}
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

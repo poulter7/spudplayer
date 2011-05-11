@@ -154,4 +154,10 @@ public final class StrategyAlphaBeta extends BaseGamer  {
 		return "Alpha beta ANN";
 	}
 
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }

@@ -76,4 +76,9 @@ public final class HumanGamer extends StateMachineGamer
 	public DetailPanel getDetailPanel() {
 		return new HumanDetailPanel();
 	}
+	@Override
+	public boolean isUsable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

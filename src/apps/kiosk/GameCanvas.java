@@ -98,6 +98,7 @@ public abstract class GameCanvas extends JPanel implements Subject {
         if(!isEnabled()) {
         	g.setColor(Color.red);
         	g.drawRect(5, 5, getWidth() - 10, getHeight() - 10);
+        	
         }
         
         Graphics newG = g.create(BORDER_SIZE, BORDER_SIZE, getWidth() - 2*BORDER_SIZE, getHeight() - 2*BORDER_SIZE);
