@@ -1,0 +1,9 @@
+(<= (GOAL W 100)
+	(TRUE (P ?x ?y ?z)))
+	
+(<= (next (P ?x ?y ?z))
+	(D ?x ?y)
+	(P ?z))
+	
+(D 1 2)
+(P 4)

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="tree" size="1498,531" id="strategies.uct.tree" metadata="uml2-1.0" initialized="true" scrolledX="365" tag="1000" key="32303037303533312D31303030206767705F6167656E742F6A6F6E617468616E">
+  <children xsi:type="editmodel:ClassEditModel" name="StateActionPair" location="180,450" size="196,76" id="strategies.uct.tree/StateActionPair" runTimeClassModel="runningTotal,value,timesExplored,updateAverage(F)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="timesExplored" id="strategies.uct.tree/StateActionPair#timesExplored"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="value" id="strategies.uct.tree/StateActionPair#value"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Tree" location="180,165" size="203,58" id="strategies.uct.tree/Tree" runTimeClassModel="prune(I),print(Ljava.lang.StringBuilder;),expandNode(Lorg.eclipse.palamedes.gdl.core.model.IGameNode;),randomMove(Lorg.eclipse.palamedes.gdl.core.model.IGameNode;),getStateModel(Lorg.eclipse.palamedes.gdl.core.model.IGameNode;),Tree(Lorg.eclipse.palamedes.gdl.core.model.IGame;Lorg.eclipse.palamedes.gdl.core.simulation.Match;),game,add(Lorg.eclipse.palamedes.gdl.core.model.IGameNode;Lorg.eclipse.palamedes.gdl.core.model.IGameNode;[Lorg.eclipse.palamedes.gdl.core.model.IMove;),stateLists">
+    <children xsi:type="editmodel:CompartmentEditModel" size="180,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="stateLists" id="strategies.uct.tree/Tree#stateLists"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Level" location="181,255" size="316,58" id="strategies.uct.tree/Level" runTimeClassModel="print(Ljava.lang.StringBuilder;),addState(Lorg.eclipse.palamedes.gdl.core.model.IGameState;Lstrategies.uct.tree.State;),getStateModelAtCurrentLevel(Lorg.eclipse.palamedes.gdl.core.model.IGameState;),addStateActionPair(Lstrategies.uct.tree.State;[Lorg.eclipse.palamedes.gdl.core.model.IMove;),actions">
+    <children xsi:type="editmodel:CompartmentEditModel" size="244,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="actions" id="strategies.uct.tree/Level#actions"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="strategies.uct.tree/Level-Soyatec::Import->org.eclipse.palamedes.gdl.core.model/IGameState" source="//@children.2" target="//@children.4" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="51,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="316,29" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,28"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="State" location="180,345" size="317,76" id="strategies.uct.tree/State" runTimeClassModel="print(Ljava.lang.StringBuilder;),randomMove(),r,State(Lorg.eclipse.palamedes.gdl.core.model.IGameState;),getBestAction(),getActions(),state,addActionPair([Lorg.eclipse.palamedes.gdl.core.model.IMove;),actionsPairs,timesExplored,getStateActionPair([Lorg.eclipse.palamedes.gdl.core.model.IMove;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="294,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="actionsPairs" id="strategies.uct.tree/State#actionsPairs"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="timesExplored" id="strategies.uct.tree/State#timesExplored"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="strategies.uct.tree/State-Soyatec::Import->org.eclipse.palamedes.gdl.core.model/IMove" source="//@children.3" target="//@children.5" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="51,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="317,27" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,27"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.0" name="IGameState" location="597,256" size="242,56" id="org.eclipse.palamedes.gdl.core.model/IGameState" runTimeClassModel="getGoalValues(),getFluents(),getFluentByName(Ljava.lang.String;),getNativeState(),setTerminal(),setLegalMoves([[Lorg.eclipse.palamedes.gdl.core.model.IMove;),getLegalMoves(),setGoalValues([I),getFluentNames(),getCombinedLegalMoves(),getGoalValue(I),isTerminal()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="172,216"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.3/@sourceConnections.0" name="IMove" location="597,345" size="242,56" id="org.eclipse.palamedes.gdl.core.model/IMove" runTimeClassModel="getRole(),getMoveTerm(),getRoleTerm(),getMove(),toString()">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="106,90"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=0;Product=eUML2"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

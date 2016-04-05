@@ -1,0 +1,140 @@
+LOG 1385942253105 [L0]: [Received at 1385942253105] ( START kiosk.knightfight-1385942253091 black (( role white ) ( role black ) ( init ( cell 1 1 white ) ) ( init ( cell 10 10 black ) ) ( init ( movecontrol white ) ) ( <= ( legal ?role ( move ?x1 ?y1 ?x2 ?y2 ) ) ( true ( movecontrol ?role ) ) ( true ( cell ?x1 ?y1 ?role ) ) ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( opponent ?role ?opponent ) ( not ( true ( cell ?x2 ?y2 ?opponent ) ) ) ) ( <= ( legal ?role ortho ) ( true ( attackcontrol ?role ) ) ) ( <= ( legal ?role diag ) ( true ( attackcontrol ?role ) ) ) ( <= ( legal ?role noop ) ( true ( attackcontrol ?opponent ) ) ( opponent ?opponent ?role ) ) ( <= ( legal ?role noop ) ( true ( movecontrol ?opponent ) ) ( opponent ?opponent ?role ) ) ( <= ( next ( attackcontrol ?opponent ) ) ( true ( movecontrol ?role ) ) ( opponent ?role ?opponent ) ) ( <= ( next ( movecontrol ?role ) ) ( true ( attackcontrol ?role ) ) ) ( <= ( next ( cell ?x ?y ?state ) ) ( true ( cell ?x ?y ?state ) ) ( does ?role ortho ) ) ( <= ( next ( cell ?x2 ?y2 arrow ) ) ( does ?role ortho ) ( opponent ?role ?opponent ) ( true ( cell ?x1 ?y1 ?opponent ) ) ( orthogonal ?x1 ?y1 ?x2 ?y2 ) ) ( <= ( next ( cell ?x ?y ?state ) ) ( true ( cell ?x ?y ?state ) ) ( does ?role diag ) ) ( <= ( next ( cell ?x2 ?y2 arrow ) ) ( does ?role diag ) ( opponent ?role ?opponent ) ( true ( cell ?x1 ?y1 ?opponent ) ) ( diagonal ?x1 ?y1 ?x2 ?y2 ) ) ( <= ( next ( cell ?x ?y ?state ) ) ( true ( cell ?x ?y ?state ) ) ( does ?role ( move ?x1 ?y1 ?x2 ?y2 ) ) ( distinctcell ?x ?y ?x1 ?y1 ) ) ( <= ( next ( cell ?x1 ?y1 arrow ) ) ( does ?role ( move ?x1 ?y1 ?x2 ?y2 ) ) ) ( <= ( next ( cell ?x2 ?y2 ?role ) ) ( does ?role ( move ?x1 ?y1 ?x2 ?y2 ) ) ) ( <= terminal whitewin ) ( <= terminal blackwin ) ( <= ( goal white 100 ) whitewin ) ( <= ( goal white 0 ) blackwin ) ( <= ( goal black 100 ) blackwin ) ( <= ( goal black 0 ) whitewin ) ( <= whitewin ( true ( cell ?x ?y black ) ) ( true ( cell ?x ?y arrow ) ) ) ( <= blackwin ( true ( cell ?x ?y white ) ) ( true ( cell ?x ?y arrow ) ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x1 ?x2 ) ( plus 2 ?y1 ?y2 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x1 ?x2 ) ( plus 2 ?y2 ?y1 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x2 ?x1 ) ( plus 2 ?y1 ?y2 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x2 ?x1 ) ( plus 2 ?y2 ?y1 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 2 ?x1 ?x2 ) ( plus 1 ?y1 ?y2 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 2 ?x1 ?x2 ) ( plus 1 ?y2 ?y1 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 2 ?x2 ?x1 ) ( plus 1 ?y1 ?y2 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 2 ?x2 ?x1 ) ( plus 1 ?y2 ?y1 ) ) ( <= ( orthogonal ?x ?y1 ?x ?y2 ) ( index ?x ) ( plus 1 ?y1 ?y2 ) ) ( <= ( orthogonal ?x ?y1 ?x ?y2 ) ( index ?x ) ( plus 1 ?y2 ?y1 ) ) ( <= ( orthogonal ?x1 ?y ?x2 ?y ) ( plus 1 ?x1 ?x2 ) ( index ?y ) ) ( <= ( orthogonal ?x1 ?y ?x2 ?y ) ( plus 1 ?x2 ?x1 ) ( index ?y ) ) ( <= ( diagonal ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x1 ?x2 ) ( plus 1 ?y1 ?y2 ) ) ( <= ( diagonal ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x1 ?x2 ) ( plus 1 ?y2 ?y1 ) ) ( <= ( diagonal ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x2 ?x1 ) ( plus 1 ?y1 ?y2 ) ) ( <= ( diagonal ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x2 ?x1 ) ( plus 1 ?y2 ?y1 ) ) ( <= ( onboard ?x ?y ) ( index ?x ) ( index ?y ) ) ( <= ( distinctcell ?x1 ?y1 ?x2 ?y2 ) ( onboard ?x1 ?y1 ) ( onboard ?x2 ?y2 ) ( distinct ?x1 ?x2 ) ) ( <= ( distinctcell ?x1 ?y1 ?x2 ?y2 ) ( onboard ?x1 ?y1 ) ( onboard ?x2 ?y2 ) ( distinct ?y1 ?y2 ) ) ( opponent white black ) ( opponent black white ) ( index 1 ) ( index 2 ) ( index 3 ) ( index 4 ) ( index 5 ) ( index 6 ) ( index 7 ) ( index 8 ) ( index 9 ) ( index 10 ) ( plus 1 1 2 ) ( plus 1 2 3 ) ( plus 1 3 4 ) ( plus 1 4 5 ) ( plus 1 5 6 ) ( plus 1 6 7 ) ( plus 1 7 8 ) ( plus 1 8 9 ) ( plus 1 9 10 ) ( plus 2 1 3 ) ( plus 2 2 4 ) ( plus 2 3 5 ) ( plus 2 4 6 ) ( plus 2 5 7 ) ( plus 2 6 8 ) ( plus 2 7 9 ) ( plus 2 8 10 ) ) 30 10)
+LOG 1385942253105 [L0]: [Received at 1385942253105] ( START kiosk.knightfight-1385942253091 white (( role white ) ( role black ) ( init ( cell 1 1 white ) ) ( init ( cell 10 10 black ) ) ( init ( movecontrol white ) ) ( <= ( legal ?role ( move ?x1 ?y1 ?x2 ?y2 ) ) ( true ( movecontrol ?role ) ) ( true ( cell ?x1 ?y1 ?role ) ) ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( opponent ?role ?opponent ) ( not ( true ( cell ?x2 ?y2 ?opponent ) ) ) ) ( <= ( legal ?role ortho ) ( true ( attackcontrol ?role ) ) ) ( <= ( legal ?role diag ) ( true ( attackcontrol ?role ) ) ) ( <= ( legal ?role noop ) ( true ( attackcontrol ?opponent ) ) ( opponent ?opponent ?role ) ) ( <= ( legal ?role noop ) ( true ( movecontrol ?opponent ) ) ( opponent ?opponent ?role ) ) ( <= ( next ( attackcontrol ?opponent ) ) ( true ( movecontrol ?role ) ) ( opponent ?role ?opponent ) ) ( <= ( next ( movecontrol ?role ) ) ( true ( attackcontrol ?role ) ) ) ( <= ( next ( cell ?x ?y ?state ) ) ( true ( cell ?x ?y ?state ) ) ( does ?role ortho ) ) ( <= ( next ( cell ?x2 ?y2 arrow ) ) ( does ?role ortho ) ( opponent ?role ?opponent ) ( true ( cell ?x1 ?y1 ?opponent ) ) ( orthogonal ?x1 ?y1 ?x2 ?y2 ) ) ( <= ( next ( cell ?x ?y ?state ) ) ( true ( cell ?x ?y ?state ) ) ( does ?role diag ) ) ( <= ( next ( cell ?x2 ?y2 arrow ) ) ( does ?role diag ) ( opponent ?role ?opponent ) ( true ( cell ?x1 ?y1 ?opponent ) ) ( diagonal ?x1 ?y1 ?x2 ?y2 ) ) ( <= ( next ( cell ?x ?y ?state ) ) ( true ( cell ?x ?y ?state ) ) ( does ?role ( move ?x1 ?y1 ?x2 ?y2 ) ) ( distinctcell ?x ?y ?x1 ?y1 ) ) ( <= ( next ( cell ?x1 ?y1 arrow ) ) ( does ?role ( move ?x1 ?y1 ?x2 ?y2 ) ) ) ( <= ( next ( cell ?x2 ?y2 ?role ) ) ( does ?role ( move ?x1 ?y1 ?x2 ?y2 ) ) ) ( <= terminal whitewin ) ( <= terminal blackwin ) ( <= ( goal white 100 ) whitewin ) ( <= ( goal white 0 ) blackwin ) ( <= ( goal black 100 ) blackwin ) ( <= ( goal black 0 ) whitewin ) ( <= whitewin ( true ( cell ?x ?y black ) ) ( true ( cell ?x ?y arrow ) ) ) ( <= blackwin ( true ( cell ?x ?y white ) ) ( true ( cell ?x ?y arrow ) ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x1 ?x2 ) ( plus 2 ?y1 ?y2 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x1 ?x2 ) ( plus 2 ?y2 ?y1 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x2 ?x1 ) ( plus 2 ?y1 ?y2 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x2 ?x1 ) ( plus 2 ?y2 ?y1 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 2 ?x1 ?x2 ) ( plus 1 ?y1 ?y2 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 2 ?x1 ?x2 ) ( plus 1 ?y2 ?y1 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 2 ?x2 ?x1 ) ( plus 1 ?y1 ?y2 ) ) ( <= ( knightmove ?x1 ?y1 ?x2 ?y2 ) ( plus 2 ?x2 ?x1 ) ( plus 1 ?y2 ?y1 ) ) ( <= ( orthogonal ?x ?y1 ?x ?y2 ) ( index ?x ) ( plus 1 ?y1 ?y2 ) ) ( <= ( orthogonal ?x ?y1 ?x ?y2 ) ( index ?x ) ( plus 1 ?y2 ?y1 ) ) ( <= ( orthogonal ?x1 ?y ?x2 ?y ) ( plus 1 ?x1 ?x2 ) ( index ?y ) ) ( <= ( orthogonal ?x1 ?y ?x2 ?y ) ( plus 1 ?x2 ?x1 ) ( index ?y ) ) ( <= ( diagonal ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x1 ?x2 ) ( plus 1 ?y1 ?y2 ) ) ( <= ( diagonal ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x1 ?x2 ) ( plus 1 ?y2 ?y1 ) ) ( <= ( diagonal ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x2 ?x1 ) ( plus 1 ?y1 ?y2 ) ) ( <= ( diagonal ?x1 ?y1 ?x2 ?y2 ) ( plus 1 ?x2 ?x1 ) ( plus 1 ?y2 ?y1 ) ) ( <= ( onboard ?x ?y ) ( index ?x ) ( index ?y ) ) ( <= ( distinctcell ?x1 ?y1 ?x2 ?y2 ) ( onboard ?x1 ?y1 ) ( onboard ?x2 ?y2 ) ( distinct ?x1 ?x2 ) ) ( <= ( distinctcell ?x1 ?y1 ?x2 ?y2 ) ( onboard ?x1 ?y1 ) ( onboard ?x2 ?y2 ) ( distinct ?y1 ?y2 ) ) ( opponent white black ) ( opponent black white ) ( index 1 ) ( index 2 ) ( index 3 ) ( index 4 ) ( index 5 ) ( index 6 ) ( index 7 ) ( index 8 ) ( index 9 ) ( index 10 ) ( plus 1 1 2 ) ( plus 1 2 3 ) ( plus 1 3 4 ) ( plus 1 4 5 ) ( plus 1 5 6 ) ( plus 1 6 7 ) ( plus 1 7 8 ) ( plus 1 8 9 ) ( plus 1 9 10 ) ( plus 2 1 3 ) ( plus 2 2 4 ) ( plus 2 3 5 ) ( plus 2 4 6 ) ( plus 2 5 7 ) ( plus 2 6 8 ) ( plus 2 7 9 ) ( plus 2 8 10 ) ) 30 10)
+LOG 1385942253175 [L0]: [Sent at 1385942253175] ready
+LOG 1385942282117 [L0]: [Sent at 1385942282117] ready
+LOG 1385942282121 [L0]: [Received at 1385942282121] ( PLAY kiosk.knightfight-1385942253091 NIL )
+LOG 1385942282121 [L0]: [Received at 1385942282121] ( PLAY kiosk.knightfight-1385942253091 NIL )
+LOG 1385942291161 [L0]: [Sent at 1385942291161] noop
+LOG 1385942303173 [L0]: [Sent at 1385942303173] ( move 1 1 2 3 )
+LOG 1385942303176 [L0]: [Received at 1385942303176] ( PLAY kiosk.knightfight-1385942253091 (( move 1 1 2 3 ) noop ) )
+LOG 1385942303176 [L0]: [Received at 1385942303176] ( PLAY kiosk.knightfight-1385942253091 (( move 1 1 2 3 ) noop ) )
+LOG 1385942303194 [L0]: [Sent at 1385942303194] noop
+LOG 1385942312198 [L0]: [Sent at 1385942312198] diag
+LOG 1385942312203 [L0]: [Received at 1385942312203] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942312203 [L0]: [Received at 1385942312203] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942312219 [L0]: [Sent at 1385942312219] noop
+LOG 1385942321272 [L0]: [Sent at 1385942321272] ( move 10 10 9 8 )
+LOG 1385942321276 [L0]: [Received at 1385942321276] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 10 10 9 8 ) ) )
+LOG 1385942321276 [L0]: [Received at 1385942321276] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 10 10 9 8 ) ) )
+LOG 1385942324336 [L0]: [Sent at 1385942324336] diag
+LOG 1385942330290 [L0]: [Sent at 1385942330290] noop
+LOG 1385942330294 [L0]: [Received at 1385942330294] ( PLAY kiosk.knightfight-1385942253091 (diag noop ) )
+LOG 1385942330294 [L0]: [Received at 1385942330294] ( PLAY kiosk.knightfight-1385942253091 (diag noop ) )
+LOG 1385942339342 [L0]: [Sent at 1385942339342] noop
+LOG 1385942344551 [L0]: [Sent at 1385942344551] ( move 2 3 3 5 )
+LOG 1385942344557 [L0]: [Received at 1385942344557] ( PLAY kiosk.knightfight-1385942253091 (( move 2 3 3 5 ) noop ) )
+LOG 1385942344557 [L0]: [Received at 1385942344557] ( PLAY kiosk.knightfight-1385942253091 (( move 2 3 3 5 ) noop ) )
+LOG 1385942344566 [L0]: [Sent at 1385942344566] noop
+LOG 1385942353584 [L0]: [Sent at 1385942353584] ortho
+LOG 1385942353589 [L0]: [Received at 1385942353589] ( PLAY kiosk.knightfight-1385942253091 (noop ortho ) )
+LOG 1385942353589 [L0]: [Received at 1385942353589] ( PLAY kiosk.knightfight-1385942253091 (noop ortho ) )
+LOG 1385942353603 [L0]: [Sent at 1385942353603] noop
+LOG 1385942362664 [L0]: [Sent at 1385942362664] ( move 9 8 7 7 )
+LOG 1385942362669 [L0]: [Received at 1385942362669] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 9 8 7 7 ) ) )
+LOG 1385942362669 [L0]: [Received at 1385942362669] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 9 8 7 7 ) ) )
+LOG 1385942371767 [L0]: [Sent at 1385942371767] noop
+LOG 1385942374416 [L0]: [Sent at 1385942374416] ortho
+LOG 1385942374421 [L0]: [Received at 1385942374421] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942374421 [L0]: [Received at 1385942374421] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942383447 [L0]: [Sent at 1385942383447] noop
+LOG 1385942398959 [L0]: [Sent at 1385942398959] ( move 3 5 2 7 )
+LOG 1385942398965 [L0]: [Received at 1385942398965] ( PLAY kiosk.knightfight-1385942253091 (( move 3 5 2 7 ) noop ) )
+LOG 1385942398965 [L0]: [Received at 1385942398965] ( PLAY kiosk.knightfight-1385942253091 (( move 3 5 2 7 ) noop ) )
+LOG 1385942398977 [L0]: [Sent at 1385942398977] noop
+LOG 1385942408078 [L0]: [Sent at 1385942408078] diag
+LOG 1385942408082 [L0]: [Received at 1385942408082] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942408082 [L0]: [Received at 1385942408082] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942408096 [L0]: [Sent at 1385942408096] noop
+LOG 1385942417108 [L0]: [Sent at 1385942417108] ( move 7 7 5 8 )
+LOG 1385942417114 [L0]: [Received at 1385942417114] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 7 7 5 8 ) ) )
+LOG 1385942417114 [L0]: [Received at 1385942417114] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 7 7 5 8 ) ) )
+LOG 1385942424931 [L0]: [Sent at 1385942424931] diag
+LOG 1385942426120 [L0]: [Sent at 1385942426119] noop
+LOG 1385942426124 [L0]: [Received at 1385942426124] ( PLAY kiosk.knightfight-1385942253091 (diag noop ) )
+LOG 1385942426125 [L0]: [Received at 1385942426124] ( PLAY kiosk.knightfight-1385942253091 (diag noop ) )
+LOG 1385942435143 [L0]: [Sent at 1385942435143] noop
+LOG 1385942500081 [L0]: [Sent at 1385942500081] ( move 2 7 4 8 )
+LOG 1385942500359 [L0]: [Received at 1385942500359] ( PLAY kiosk.knightfight-1385942253091 (( move 2 7 4 8 ) noop ) )
+LOG 1385942500359 [L0]: [Received at 1385942500359] ( PLAY kiosk.knightfight-1385942253091 (( move 2 7 4 8 ) noop ) )
+LOG 1385942500379 [L0]: [Sent at 1385942500379] noop
+LOG 1385942509380 [L0]: [Sent at 1385942509380] diag
+LOG 1385942509662 [L0]: [Received at 1385942509662] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942509662 [L0]: [Received at 1385942509662] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942509695 [L0]: [Sent at 1385942509695] noop
+LOG 1385942518685 [L0]: [Sent at 1385942518685] ( move 5 8 6 6 )
+LOG 1385942519399 [L0]: [Received at 1385942519399] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 5 8 6 6 ) ) )
+LOG 1385942519399 [L0]: [Received at 1385942519399] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 5 8 6 6 ) ) )
+LOG 1385942528407 [L0]: [Sent at 1385942528407] noop
+LOG 1385942528761 [L0]: [Sent at 1385942528761] ortho
+LOG 1385942529057 [L0]: [Received at 1385942529057] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942529057 [L0]: [Received at 1385942529057] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942538060 [L0]: [Sent at 1385942538060] noop
+LOG 1385942547292 [L0]: [Sent at 1385942547292] ( move 4 8 5 10 )
+LOG 1385942548052 [L0]: [Received at 1385942548052] ( PLAY kiosk.knightfight-1385942253091 (( move 4 8 5 10 ) noop ) )
+LOG 1385942548052 [L0]: [Received at 1385942548052] ( PLAY kiosk.knightfight-1385942253091 (( move 4 8 5 10 ) noop ) )
+LOG 1385942548064 [L0]: [Sent at 1385942548064] noop
+LOG 1385942557057 [L0]: [Sent at 1385942557057] diag
+LOG 1385942557387 [L0]: [Received at 1385942557387] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942557387 [L0]: [Received at 1385942557387] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942557399 [L0]: [Sent at 1385942557399] noop
+LOG 1385942566425 [L0]: [Sent at 1385942566425] ( move 6 6 7 4 )
+LOG 1385942566748 [L0]: [Received at 1385942566748] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 6 6 7 4 ) ) )
+LOG 1385942566748 [L0]: [Received at 1385942566748] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 6 6 7 4 ) ) )
+LOG 1385942575143 [L0]: [Sent at 1385942575143] ortho
+LOG 1385942575791 [L0]: [Sent at 1385942575790] noop
+LOG 1385942576122 [L0]: [Received at 1385942576122] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942576122 [L0]: [Received at 1385942576122] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942585130 [L0]: [Sent at 1385942585130] noop
+LOG 1385942586266 [L0]: [Sent at 1385942586266] ( move 5 10 7 9 )
+LOG 1385942586610 [L0]: [Received at 1385942586610] ( PLAY kiosk.knightfight-1385942253091 (( move 5 10 7 9 ) noop ) )
+LOG 1385942586610 [L0]: [Received at 1385942586610] ( PLAY kiosk.knightfight-1385942253091 (( move 5 10 7 9 ) noop ) )
+LOG 1385942586623 [L0]: [Sent at 1385942586623] noop
+LOG 1385942595616 [L0]: [Sent at 1385942595616] diag
+LOG 1385942595967 [L0]: [Received at 1385942595967] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942595967 [L0]: [Received at 1385942595967] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942595992 [L0]: [Sent at 1385942595992] noop
+LOG 1385942604981 [L0]: [Sent at 1385942604981] ( move 7 4 9 5 )
+LOG 1385942605348 [L0]: [Received at 1385942605348] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 7 4 9 5 ) ) )
+LOG 1385942605348 [L0]: [Received at 1385942605348] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 7 4 9 5 ) ) )
+LOG 1385942614350 [L0]: [Sent at 1385942614350] noop
+LOG 1385942616127 [L0]: [Sent at 1385942616127] ortho
+LOG 1385942616508 [L0]: [Received at 1385942616508] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942616508 [L0]: [Received at 1385942616508] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942625509 [L0]: [Sent at 1385942625509] noop
+LOG 1385942631948 [L0]: [Sent at 1385942631948] ( move 7 9 9 10 )
+LOG 1385942632419 [L0]: [Received at 1385942632419] ( PLAY kiosk.knightfight-1385942253091 (( move 7 9 9 10 ) noop ) )
+LOG 1385942632419 [L0]: [Received at 1385942632419] ( PLAY kiosk.knightfight-1385942253091 (( move 7 9 9 10 ) noop ) )
+LOG 1385942632442 [L0]: [Sent at 1385942632442] noop
+LOG 1385942641421 [L0]: [Sent at 1385942641421] diag
+LOG 1385942642178 [L0]: [Received at 1385942642178] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942642178 [L0]: [Received at 1385942642178] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942642203 [L0]: [Sent at 1385942642203] noop
+LOG 1385942651179 [L0]: [Sent at 1385942651179] ( move 9 5 10 3 )
+LOG 1385942651613 [L0]: [Received at 1385942651613] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 9 5 10 3 ) ) )
+LOG 1385942651613 [L0]: [Received at 1385942651613] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 9 5 10 3 ) ) )
+LOG 1385942660615 [L0]: [Sent at 1385942660615] noop
+LOG 1385942663061 [L0]: [Sent at 1385942663061] ortho
+LOG 1385942663503 [L0]: [Received at 1385942663503] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942663503 [L0]: [Received at 1385942663503] ( PLAY kiosk.knightfight-1385942253091 (ortho noop ) )
+LOG 1385942672505 [L0]: [Sent at 1385942672505] noop
+LOG 1385942680582 [L0]: [Sent at 1385942680582] ( move 9 10 10 8 )
+LOG 1385942681014 [L0]: [Received at 1385942681014] ( PLAY kiosk.knightfight-1385942253091 (( move 9 10 10 8 ) noop ) )
+LOG 1385942681014 [L0]: [Received at 1385942681014] ( PLAY kiosk.knightfight-1385942253091 (( move 9 10 10 8 ) noop ) )
+LOG 1385942681028 [L0]: [Sent at 1385942681028] noop
+LOG 1385942690024 [L0]: [Sent at 1385942690024] diag
+LOG 1385942690467 [L0]: [Received at 1385942690467] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942690467 [L0]: [Received at 1385942690467] ( PLAY kiosk.knightfight-1385942253091 (noop diag ) )
+LOG 1385942690481 [L0]: [Sent at 1385942690481] noop
+LOG 1385942699469 [L0]: [Sent at 1385942699469] ( move 10 3 8 2 )
+LOG 1385942699923 [L0]: [Received at 1385942699923] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 10 3 8 2 ) ) )
+LOG 1385942699923 [L0]: [Received at 1385942699923] ( PLAY kiosk.knightfight-1385942253091 (noop ( move 10 3 8 2 ) ) )
+LOG 1385942704269 [L0]: [Sent at 1385942704268] diag
+LOG 1385942708925 [L0]: [Sent at 1385942708925] noop
+LOG 1385942709391 [L0]: [Received at 1385942709391] ( PLAY kiosk.knightfight-1385942253091 (diag noop ) )
+LOG 1385942709391 [L0]: [Received at 1385942709391] ( PLAY kiosk.knightfight-1385942253091 (diag noop ) )
+LOG 1385942714902 [L0]: [Sent at 1385942714902] ( move 10 8 9 6 )
+LOG 1385942718393 [L0]: [Sent at 1385942718393] noop
+LOG 1385942718881 [L0]: [Received at 1385942718881] ( STOP kiosk.knightfight-1385942253091 (( move 10 8 9 6 ) noop ) )
+LOG 1385942718881 [L0]: [Received at 1385942718881] ( STOP kiosk.knightfight-1385942253091 (( move 10 8 9 6 ) noop ) )
+LOG 1385942718881 [L0]: [Sent at 1385942718881] done
+LOG 1385942718881 [L0]: [Sent at 1385942718881] done

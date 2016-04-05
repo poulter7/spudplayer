@@ -1,0 +1,4 @@
+(<= (goal W 100)
+	(true B))
+(<= (goal W 100)
+	(true C))
